@@ -83,36 +83,50 @@ public class loadparam {
 		taskNames = new String[numTaskTypes];
 		taskPrty = new int[numTaskTypes][];
 		arrDists = new char[numTaskTypes];
+		arrPms = new double[numTaskTypes][];
+		serDists = new char[numTaskTypes];
+		serPms = new double[numTaskTypes][];
+		expDists = new char[numTaskTypes];
+	   	expPmsLo = new double[numTaskTypes][];
+	    expPmsHi = new double[numTaskTypes][];
+		affByTraff = new int[numTaskTypes][];
+		opNums = new int[numTaskTypes][];
+		
 		
 		//Read in person type and tasks they can do
 		
 		for (int i = 0; i< numOps; i++){
 			opNames[i] = readString(in);
 			opTasks[i] = readIntArr(in);
+			ops[i] = i;
 		}
 		
 		//Read in the task parameters
 		
 		for (int i = 0; i< numTaskTypes; i++){
+			
 			taskNames[i] = readString(in);
 			taskPrty[i] = readIntArr(in);
 			arrDists[i] = readChar(in);
+			arrPms[i] = invertArr(readDoubleArr(in));
+			serDists[i] = readChar(in);
+			serPms[i] = invertArr(readDoubleArr(in));
+			expDists[i] = readChar(in);
+			expPmsLo[i] = invertArr(readDoubleArr(in));
+			expPmsHi[i] = invertArr(readDoubleArr(in));
+			affByTraff[i] = readIntArr(in);
+			
 		}
 		
-//		for (int i = 0; i < numTaskTypes; i++)
-//		{
-//			readString(fin, taskNames[i]);						// name
-//			readArr(fin, taskPrty[i]);							// priority
-//			readVal(fin, arrDists[i]);							// arrival dist
-//			readArr(fin, arrPms[i]); //, isInverted(arrDists[i]));	// arrival params
-//			readVal(fin, serDists[i]);							// service dist
-//			readArr(fin, serPms[i]); //, isInverted(serDists[i]));	// service params
-//			readVal(fin, expDists[i]);							// expiration dist
-//			readArr(fin, expPmsLo[i]); //, isInverted(expDists[i]));	// expiration params
-//			readArr(fin, expPmsHi[i]); //, isInverted(expDists[i]));	// expiration params
-//			readArr(fin, affByTraff[i]);						// traffic
-//		}
-		
+		for (int i = 0; i < numTaskTypes; i++){
+			ArrayList<Integer> wha = new ArrayList<Integer>();
+			for (int j = 0; j < numOps; j++){
+				if (Arrays.asList(opTasks[j]).contains(i)){
+					wha.add(j);
+				}
+			}
+			opNums[i] = wha.stream().mapToInt(Integer::intValue).toArray();
+		}
 	}
 	
 	/****************************************************************************
@@ -281,6 +295,25 @@ public class loadparam {
 		char myChar = input.next().charAt(0);
 		input.close();
 		return myChar;
+		
+	}
+	
+	/****************************************************************************
+	*																			
+	*	Method:		invertArr													
+	*																			
+	*	Purpose:	read a double array and invert each element of it unless 0
+	*																			
+	****************************************************************************/
+	
+	public double[] invertArr(double[] input){
+		
+		for (int i = 0; i<input.length ; i++){
+			if (input[i] != 0.0){
+				input[i] = 1.0/input[i];
+			}
+		}
+		return input;
 		
 	}
 }
