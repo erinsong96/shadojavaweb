@@ -22,46 +22,43 @@ public class loadparam {
 	
 	// General input variables
 	
-	public
-		String outputPath;
-		double numHours;
-        double[] traffic;
-        int numReps;
-        int[] ops;
+	public String outputPath;
+	public double numHours;
+    public double[] traffic;
+    public int numReps;
+    public int[] ops;
         
     // Operator settings
         
-    public
-	    int numOps;
-		String[] opNames;
-		int[][] opTasks;
+    public int numOps;
+	public String[] opNames;
+	public int[][] opTasks;
 		
 	// Task Settings
 		
-	public
-		int numTaskTypes;
-	    String[] taskNames;
-	    int[][] taskPrty;
-	    char[] arrDists;
-	    double[][] arrPms;
-	    char[] serDists;
-	    double[][] serPms;
-	    char[] expDists;
-	   	double[][] expPmsLo;
-	    double[][] expPmsHi;
-		int[][] affByTraff;
-		int[][] opNums;
+	public int numTaskTypes;
+    public String[] taskNames;
+    public int[][] taskPrty;
+    public char[] arrDists;
+    public double[][] arrPms;
+    public char[] serDists;
+    public double[][] serPms;
+    public char[] expDists;
+   	public double[][] expPmsLo;
+    public double[][] expPmsHi;
+	public int[][] affByTraff;
+	public int[][] opNums;
 		
 	
 	/****************************************************************************
 	*																			
-	*	Main Method:	loadparameter													
+	*	Main Object:	loadparameter													
 	*																			
 	*	Purpose:		Load ALL parameter in text
 	*																			
 	****************************************************************************/
 		
-	public void loadparameter(String file) throws FileNotFoundException{
+	public loadparam(String file) throws FileNotFoundException{
 		
 		//Declare a scanner for the file
 		
