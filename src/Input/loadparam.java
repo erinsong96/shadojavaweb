@@ -48,6 +48,14 @@ public class loadparam {
     public double[][] expPmsHi;
 	public int[][] affByTraff;
 	public int[][] opNums;
+	
+	// Toggle Global Variables
+	
+	public static boolean TRAFFIC_ON = true;
+	public static boolean FATIGUE_ON = true;
+	public static boolean DEBUG_ON = false;
+	public static boolean OUTPUT_ON = true;
+	public static boolean RAND_RUN_ON = true;
 		
 	
 	/****************************************************************************

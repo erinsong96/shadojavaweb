@@ -22,6 +22,7 @@ public class Task {
 	public int Type;
 	public int Phase;
 	public int Priority;
+	public double prevTime;
 	public double arrTime;
 	public double serTime;
 	public double expTime;
@@ -42,9 +43,11 @@ public class Task {
 		
 	public Task (int type, double PrevTime, loadparam Param){
 		Type = type;
-		Phase = getPhase(PrevTime, Param.numHours);
+		prevTime = PrevTime;
+		parameters = Param;
+		Phase = getPhase(PrevTime, parameters.numHours);
 		Priority = Param.taskPrty[Type][Phase];
-		arrTime = genArrTime(PrevTime, Phase);
+		arrTime = genArrTime(PrevTime);
 		serTime = genSerTime();
 		expTime = genExpTime(Phase);
 		beginTime = 0;
@@ -130,53 +133,52 @@ public class Task {
 	
 	public double genArrTime(double PrevTime){
 		
-		double newArrTime = Exponential(parameters.arrPms[Type][Phase]);
+		double TimeTaken = Exponential(parameters.arrPms[Type][Phase]);
 		
-//		float interArrTime = genRandNum(ARR_DISTS[type], rand(), ARR_DIST_PARAMS[type][phase]);
-//	    
-//	//  Adjust for arrival time for traffic, if applicable
-//	    
-//	    float newArrTime = prevArrTime + interArrTime;
-//	    if (isinf(newArrTime)) return INFINITY;
-//	    
-//	    if (AFF_BY_TRAFF[type][phase] && TRAFFIC_ON)
-//	    {
-//	        float budget = interArrTime;
-//	        float currTime = prevArrTime;
-//	        int currHour = currTime/60;
-//	        float traffLevel = TRAFFIC[currHour];
-//	        float timeToAdj = (currHour + 1) * 60 - currTime;
-//	        float adjTime = timeToAdj * traffLevel;
-//	        
-//	    //  If time is left in budget, proceed
-//	        
-//	        while (budget > adjTime)
-//	        {
-//	        //  Decrement budget
-//	            
-//	            budget -= adjTime;
-//	            
-//	        //	Calculate new values
-//	            
-//	            currTime += timeToAdj;
-//	            currHour++;
-//	            
-//	            if (currHour >= TRAFFIC.size())
-//	            {
-//	                if (DEBUG_ON) cout << "OVERFLOW" << endl;
-//	                return INFINITY;
-//	            }
-//	            
-//	            traffLevel = TRAFFIC[currHour];
-//	            timeToAdj = (currHour + 1) * 60 - currTime;
-//	            adjTime = timeToAdj * traffLevel;
-//	        }
-//	        
-//	        newArrTime = currTime + budget/traffLevel;
-//	    }
-//	    
-//		return newArrTime;
+		if (TimeTaken == Double.POSITIVE_INFINITY){
+			return Double.POSITIVE_INFINITY;
+		}
+		
+		double newArrTime = TimeTaken + prevTime;
+		
+		if (parameters.affByTraff[Type][Phase] == 1 && loadparam.TRAFFIC_ON){
+			
+			double budget = TimeTaken;
+			double currTime = prevTime;
+			int currHour = (int) currTime/60;
+			double traffLevel = parameters.traffic[currHour];
+			double TimeToAdj = (currHour+1)*60 - currTime;
+			double adjTime = TimeToAdj * traffLevel;
+			
+			while (budget > adjTime){
+				
+				budget -= adjTime;
+				currTime += TimeToAdj;
+				currHour ++;
+				
+				if (currHour >= parameters.traffic.length){
+					return Double.POSITIVE_INFINITY;
+				}
+				
+				traffLevel = parameters.traffic[currHour];
+				TimeToAdj = (currHour + 1)*60 - currTime;
+				adjTime = TimeToAdj * traffLevel;
+				
+			}
+			
+			newArrTime = currTime + budget/traffLevel;
+		}
+		
+		return newArrTime;
 	}
+	
+	/****************************************************************************
+	*																			
+	*	Method:			genSerTime												
+	*																			
+	*	Purpose:		Generate a new service time.
+	*																			
+	****************************************************************************/
 	
 	public double genSerTime(){
 		return 0;
