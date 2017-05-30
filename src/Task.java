@@ -17,7 +17,7 @@ import Input.loadparam;
  * 
  **************************************************************************/
 
-public class Task {
+	public class Task implements Comparable<Task> {
 	
 	//Task specific variables.
 	
@@ -58,6 +58,19 @@ public class Task {
 	
 	/****************************************************************************
 	*																			
+	*	Method:			compareTo													
+	*																			
+	*	Purpose:		Compare two task based on their priority
+	*																			
+	****************************************************************************/
+	
+	@Override
+	public int compareTo(Task other){
+		return this.Priority - other.Priority;
+	}
+	
+	/****************************************************************************
+	*																			
 	*	Method:			GetPhase													
 	*																			
 	*	Purpose:		Return a phase with the time input.
@@ -85,7 +98,7 @@ public class Task {
 	*																			
 	****************************************************************************/
 	
-	public double Exponential(double lambda){
+	private double Exponential(double lambda){
 		
 		if (lambda == 0){
 			return Double.POSITIVE_INFINITY;
@@ -103,7 +116,7 @@ public class Task {
 	*																			
 	****************************************************************************/
 	
-	public double Lognormal(double mean, double stddev){
+	private double Lognormal(double mean, double stddev){
 		
 		Random rng = new Random();
 		double normal = rng.nextGaussian();
@@ -119,7 +132,7 @@ public class Task {
 	*																			
 	****************************************************************************/
 	
-	public double Uniform(double min, double max){
+	private double Uniform(double min, double max){
 		
 		return min + (max-min)*Math.random();
 		
@@ -133,7 +146,7 @@ public class Task {
 	*																			
 	****************************************************************************/
 	
-	public double GenTime (char type, double start, double end){
+	private double GenTime (char type, double start, double end){
 		switch (type){
 		case 'E' : return Exponential(start);
 		case 'L' : return Lognormal(start, end);
@@ -151,7 +164,7 @@ public class Task {
 	*																			
 	****************************************************************************/
 	
-	public double genArrTime(double PrevTime){
+	private double genArrTime(double PrevTime){
 		
 		double TimeTaken = Exponential(parameters.arrPms[Type][Phase]);
 		
@@ -200,7 +213,7 @@ public class Task {
 	*																			
 	****************************************************************************/
 	
-	public double genSerTime(){
+	private double genSerTime(){
 		
 		char type = parameters.arrDists[Type];
 		double start = parameters.arrPms[Type][0];
@@ -217,7 +230,7 @@ public class Task {
 	*																			
 	****************************************************************************/
 	
-	public double genExpTime(){
+	private double genExpTime(){
 		
 		double param;
 		double expiration = 0;
