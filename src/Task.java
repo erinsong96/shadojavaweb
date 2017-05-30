@@ -5,7 +5,9 @@ import Input.loadparam;
  * 
  * 	FILE: 			Task.java
  * 
- * 	AUTHOR:			ROCKY LI
+ * 	AUTHOR:			BRANCH VINCENT
+ * 
+ * 	TRANSLATOR		ROCKY LI
  * 	
  * 	LATEST EDIT:	2017/5/24
  * 
@@ -49,7 +51,7 @@ public class Task {
 		Priority = Param.taskPrty[Type][Phase];
 		arrTime = genArrTime(PrevTime);
 		serTime = genSerTime();
-		expTime = genExpTime(Phase);
+		expTime = genExpTime();
 		beginTime = 0;
 		opNums = Param.opNums[Type];
 	}
@@ -65,12 +67,12 @@ public class Task {
 	public int getPhase(double time, double hours){
 		
 		if (time<30){
-			return 1;
+			return 0;
 		} 
 		else if (time>=30 && time<hours*60-30){
-			return 2;
+			return 1;
 		}
-		else return 3;
+		else return 2;
 		
 	}
 	
@@ -131,6 +133,24 @@ public class Task {
 	*																			
 	****************************************************************************/
 	
+	public double GenTime (char type, double start, double end){
+		switch (type){
+		case 'E' : return Exponential(start);
+		case 'L' : return Lognormal(start, end);
+		case 'U' : return Uniform(start, end);
+		default: 
+			throw new IllegalArgumentException("Wrong Letter");
+		}
+	}
+	
+	/****************************************************************************
+	*																			
+	*	Method:			genArrTime												
+	*																			
+	*	Purpose:		Generate a new exponentially distributed arrival time by phase.
+	*																			
+	****************************************************************************/
+	
 	public double genArrTime(double PrevTime){
 		
 		double TimeTaken = Exponential(parameters.arrPms[Type][Phase]);
@@ -181,10 +201,35 @@ public class Task {
 	****************************************************************************/
 	
 	public double genSerTime(){
-		return 0;
+		
+		char type = parameters.arrDists[Type];
+		double start = parameters.arrPms[Type][0];
+		double end = parameters.arrPms[Type][1];
+		return GenTime(type, start, end);
+		
 	}
 	
-	public double genExpTime(int Phase){
-		return 0;
+	/****************************************************************************
+	*																			
+	*	Method:			genExpTime												
+	*																			
+	*	Purpose:		Generate a new Expiration time.
+	*																			
+	****************************************************************************/
+	
+	public double genExpTime(){
+		
+		double param;
+		double expiration = 0;
+		int hour = (int) arrTime/60;
+		if (hour >= parameters.traffic.length){
+			return arrTime;
+		} else if (parameters.traffic[hour] == 2){
+			param = parameters.expPmsHi[Type][Phase];
+		} else {
+			param = parameters.expPmsLo[Type][Phase];
+		}
+		expiration = GenTime(parameters.expDists[Type], param, 0);
+		return 2*serTime + expiration;
 	}
 }
