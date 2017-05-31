@@ -52,7 +52,7 @@ import Input.loadparam;
 		arrTime = genArrTime(PrevTime);
 		serTime = genSerTime();
 		expTime = genExpTime();
-		beginTime = 0;
+		beginTime = arrTime;
 		opNums = Param.opNums[Type];
 	}
 	

@@ -20,6 +20,7 @@ public class Operator {
 	public int opId;
 	public String name;
 	public int[] tasklist;
+	public Queue myQueue;
 	private loadparam parameters;
 		
 	// THIS IS A CONSTRUCTOR
@@ -28,6 +29,7 @@ public class Operator {
 		parameters = param;
 		opId = opid;
 		name = parameters.opNames[opid];
+		myQueue = new Queue(opId);
 		
 	}
 		

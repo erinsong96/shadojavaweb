@@ -17,11 +17,80 @@ import Input.loadparam;
 
 public class Queue {
 	
-	public PriorityQueue taskqueue;
-	public double time;
+	public PriorityQueue<Task> taskqueue;
+	public int opId;
+	private double time;
 	
-	// inspectors
+	// Service time to complete all tasks in queue
 	
-	public 
-
+	private int finTime;
+	private Task[] tasklist;
+	
+	// inspectors:
+	
+	public int getfinTime(){
+		return finTime;
+	}
+	
+	public Task[] getTasklist(){
+		return tasklist;
+	}
+	
+	// Mutator:
+	
+	public void SetTime(double Time){
+		time = Time;
+	}
+	
+	/****************************************************************************
+	*																			
+	*	Main Object:	Queue													
+	*																			
+	*	Purpose:		Create an empty queue at the start
+	*																			
+	****************************************************************************/
+	
+	public Queue(int opid){
+		opId = opid;
+		taskqueue = new PriorityQueue<Task>();
+		time = 0;
+	}
+	
+	/****************************************************************************
+	*																			
+	*	Method:			Add													
+	*																			
+	*	Purpose:		add a task to queue.
+	*																			
+	****************************************************************************/
+	
+	public void add(Task task){
+		taskqueue.add(task);
+	}
+	
+	/****************************************************************************
+	*																			
+	*	Method:			done													
+	*																			
+	*	Purpose:		remove a finished task
+	*																			
+	****************************************************************************/
+	
+	public void done(){
+		taskqueue.poll();
+		taskqueue.peek().beginTime = time;
+	}
+	
+	/****************************************************************************
+	*																			
+	*	Method:																
+	*																			
+	*	Purpose:		remove a finished task
+	*																			
+	****************************************************************************/
+	
+	public double finTime(){
+		Task onhand = taskqueue.peek();
+		return onhand.beginTime + onhand.serTime;
+	}
 }
