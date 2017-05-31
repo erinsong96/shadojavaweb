@@ -34,6 +34,12 @@ import Input.loadparam;
 	public int[] opNums;
 	private loadparam parameters;
 	
+	// Mutators
+	
+	public void setBeginTime(double time){
+		beginTime = time;
+	}
+	
 	/****************************************************************************
 	*																			
 	*	Main Object:	Task													

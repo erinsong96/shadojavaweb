@@ -24,7 +24,7 @@ public class Queue {
 	// Service time to complete all tasks in queue
 	
 	private int finTime;
-	private Task[] tasklist;
+	private int NumTask;
 	
 	// inspectors:
 	
@@ -32,8 +32,8 @@ public class Queue {
 		return finTime;
 	}
 	
-	public Task[] getTasklist(){
-		return tasklist;
+	public int getNumTask(){
+		return NumTask;
 	}
 	
 	// Mutator:
@@ -83,14 +83,26 @@ public class Queue {
 	
 	/****************************************************************************
 	*																			
-	*	Method:																
+	*	Method:			finTime													
 	*																			
-	*	Purpose:		remove a finished task
+	*	Purpose:		calculate the finish time of the present task
 	*																			
 	****************************************************************************/
 	
 	public double finTime(){
 		Task onhand = taskqueue.peek();
 		return onhand.beginTime + onhand.serTime;
+	}
+	
+	/****************************************************************************
+	*																			
+	*	Method:			numtask													
+	*																			
+	*	Purpose:		return the number of tasks in the queue
+	*																			
+	****************************************************************************/
+	
+	private void numtask(){
+		NumTask = taskqueue.size();
 	}
 }

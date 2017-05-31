@@ -22,15 +22,25 @@ public class Operator {
 	public int[] tasklist;
 	public Queue myQueue;
 	private loadparam parameters;
+	
+	// Mutator
+	
+	
 		
-	// THIS IS A CONSTRUCTOR
+	/****************************************************************************
+	*																			
+	*	Main Object:	Operator															
+	*																			
+	*	Purpose:		This is a human object.
+	*																			
+	****************************************************************************/
 		
 	public Operator (int opid, loadparam param){
 		parameters = param;
 		opId = opid;
 		name = parameters.opNames[opid];
 		myQueue = new Queue(opId);
-		
 	}
-		
+	
+	
 }
