@@ -1,6 +1,7 @@
 import java.util.*;
 import Input.loadparam;
 
+
 /***************************************************************************
  * 
  * 	FILE: 			Queue.java
@@ -78,7 +79,7 @@ public class Queue {
 	
 	public void done(){
 		taskqueue.poll();
-		taskqueue.peek().beginTime = time;
+		taskqueue.peek().getBeginTime() = time;
 	}
 	
 	/****************************************************************************
@@ -91,7 +92,7 @@ public class Queue {
 	
 	public double finTime(){
 		Task onhand = taskqueue.peek();
-		return onhand.beginTime + onhand.serTime;
+		return onhand.getBeginTime() + onhand.getSerTime();
 	}
 	
 	/****************************************************************************
