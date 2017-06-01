@@ -76,9 +76,11 @@ public class Queue {
 	*																			
 	****************************************************************************/
 	
-	public void done(){
+	public void done(double Time){
 		taskqueue.poll();
-		taskqueue.peek().beginTime = time;
+		if (taskqueue.peek()!= null){
+			taskqueue.peek().setBeginTime(Time);
+		}
 	}
 	
 	/****************************************************************************
@@ -91,7 +93,7 @@ public class Queue {
 	
 	public double finTime(){
 		Task onhand = taskqueue.peek();
-		return onhand.beginTime + onhand.serTime;
+		return onhand.getBeginTime() + onhand.serTime;
 	}
 	
 	/****************************************************************************

@@ -19,13 +19,16 @@ public class Operator {
 
 	public int opId;
 	public String name;
+	public double time;
 	public int[] taskType;
-	public Queue myQueue;
+	private Queue myQueue;
 	private loadparam parameters;
 	
 	// Mutator
 	
-	
+	public void update(double Time){
+		
+	}
 		
 	/****************************************************************************
 	*																			
