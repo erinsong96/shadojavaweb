@@ -28,7 +28,6 @@ public class Task implements Comparable<Task> {
 	private double arrTime;
 	private double serTime;
 	private double expTime;
-	//how is this supposed to be assigned?
 	private double depTime;
 	private double beginTime;
 	//why did you need an endTime?
