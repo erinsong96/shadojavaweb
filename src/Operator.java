@@ -19,7 +19,7 @@ public class Operator {
 
 	public int opId;
 	public String name;
-	public int[] tasklist;
+	public int[] taskType;
 	public Queue myQueue;
 	private loadparam parameters;
 	
@@ -38,6 +38,7 @@ public class Operator {
 	public Operator (int opid, loadparam param){
 		parameters = param;
 		opId = opid;
+		taskType = parameters.opTasks[opid];
 		name = parameters.opNames[opid];
 		myQueue = new Queue(opId);
 	}
