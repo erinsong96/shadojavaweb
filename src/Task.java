@@ -28,7 +28,6 @@ public class Task implements Comparable<Task> {
 	private double arrTime;
 	private double serTime;
 	private double expTime;
-	//how is this supposed to be assigned?
 	private double depTime;
 	private double beginTime;
 	//why did you need an endTime?
@@ -78,54 +77,35 @@ public class Task implements Comparable<Task> {
 		return this.Priority - other.Priority;
 	}
 
-	/****************************************************************************
-	 *
-	 *	Method:			GetExpTime
-	 *
-	 *	Purpose:		Return the Expiration Time.
-	 *
-	 ****************************************************************************/
+	public int getType() {return this.Type;}
+
+	public int getPriority(){return this.Priority;}
+
+	public double getPrevTime(){return this.prevTime;}
+
+	public double getArrTime(){return this.arrTime;}
+
+	public double getSerTime(){return this.serTime;}
+
+	public double getEndTime(){return this.endTime;}
 
 	public double getExpTime() {
 		return this.expTime;
 	}
 
-	/****************************************************************************
-	 *
-	 *	Method:			GetdepTime
-	 *
-	 *	Purpose:		Return the Departure Time.
-	 *
-	 ****************************************************************************/
-
 	public double getDepTime() {
 		return this.depTime;
 	}
-
-
-	/****************************************************************************
-	 *
-	 *	Method:			GetbeginTime
-	 *
-	 *	Purpose:		Return the begin Time.
-	 *
-	 ****************************************************************************/
 
 	public double getBeginTime() {
 		return this.beginTime;
 	}
 
-	/****************************************************************************
-	 *
-	 *	Method:			GetopNums
-	 *
-	 *	Purpose:		Return the opposite Numbers.
-	 *
-	 ****************************************************************************/
-
 	public int[] getOpNums() {
 		return this.opNums;
 	}
+
+
 
 	/****************************************************************************
 	 *
