@@ -17,38 +17,41 @@ import Input.loadparam;
  * 
  **************************************************************************/
 
-	public class Task implements Comparable<Task> {
-	
-	//Task specific variables.
-	
-	public int Type;
-	public int Phase;
-	public int Priority;
-	public double prevTime;
-	public double arrTime;
-	public double serTime;
-	public double expTime;
-	public double depTime;
-	public double beginTime;
-	public double endTime;
-	public int[] opNums;
+public class Task implements Comparable<Task> {
+
+//Task specific variables.
+
+	private int Type;
+	private int Phase;
+	private int Priority;
+	private double prevTime;
+	private double arrTime;
+	private double serTime;
+	private double expTime;
+	//how is this supposed to be assigned?
+	private double depTime;
+	private double beginTime;
+	//why did you need an endTime?
+	private double endTime;
+	//opNums?
+	private int[] opNums;
 	private loadparam parameters;
-	
-	// Mutators
-	
+
+// Mutators
+
 	public void setBeginTime(double time){
 		beginTime = time;
 	}
-	
+
 	/****************************************************************************
-	*																			
-	*	Main Object:	Task													
-	*																			
-	*	Purpose:		Generate a new task on completion of old task. And return
-	*					it's parameters.
-	*																			
-	****************************************************************************/
-		
+	 *
+	 *	Main Object:	Task
+	 *
+	 *	Purpose:		Generate a new task on completion of old task. And return
+	 *					it's parameters.
+	 *
+	 ****************************************************************************/
+
 	public Task (int type, double PrevTime, loadparam Param){
 		Type = type;
 		prevTime = PrevTime;
@@ -61,28 +64,78 @@ import Input.loadparam;
 		beginTime = arrTime;
 		opNums = Param.opNums[Type];
 	}
-	
+
 	/****************************************************************************
-	*																			
-	*	Method:			compareTo													
-	*																			
-	*	Purpose:		Compare two task based on their priority
-	*																			
-	****************************************************************************/
-	
+	 *
+	 *	Method:			compareTo
+	 *
+	 *	Purpose:		Compare two task based on their priority
+	 *
+	 ****************************************************************************/
+
 	@Override
 	public int compareTo(Task other){
 		return this.Priority - other.Priority;
 	}
-	
+
 	/****************************************************************************
-	*																			
-	*	Method:			GetPhase													
-	*																			
-	*	Purpose:		Return a phase with the time input.
-	*																			
-	****************************************************************************/
-	
+	 *
+	 *	Method:			GetExpTime
+	 *
+	 *	Purpose:		Return the Expiration Time.
+	 *
+	 ****************************************************************************/
+
+	public double getExpTime() {
+		return this.expTime;
+	}
+
+	/****************************************************************************
+	 *
+	 *	Method:			GetdepTime
+	 *
+	 *	Purpose:		Return the Departure Time.
+	 *
+	 ****************************************************************************/
+
+	public double getDepTime() {
+		return this.depTime;
+	}
+
+
+	/****************************************************************************
+	 *
+	 *	Method:			GetbeginTime
+	 *
+	 *	Purpose:		Return the begin Time.
+	 *
+	 ****************************************************************************/
+
+	public double getBeginTime() {
+		return this.beginTime;
+	}
+
+	/****************************************************************************
+	 *
+	 *	Method:			GetopNums
+	 *
+	 *	Purpose:		Return the opposite Numbers.
+	 *
+	 ****************************************************************************/
+
+	public int[] getOpNums() {
+		return this.opNums;
+	}
+
+	/****************************************************************************
+	 *
+	 *	Method:			GetPhase
+	 *
+	 *	Purpose:		Return the Phase
+	 *
+	 ****************************************************************************/
+
+
 	public int getPhase(double time, double hours){
 		
 		if (time<30){
