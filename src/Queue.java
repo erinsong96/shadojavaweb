@@ -16,11 +16,12 @@ import Input.loadparam;
  * 
  **************************************************************************/
 
-public class Queue {
+public class Queue implements Comparable<Queue>{
 	
 	public PriorityQueue<Task> taskqueue;
 	public int opId;
-	private double time;
+	public double time;
+	public boolean isBusy;
 	
 	// Service time to complete all tasks in queue
 	
@@ -40,7 +41,17 @@ public class Queue {
 	// Mutator:
 	
 	public void SetTime(double Time){
-		time = Time;
+		this.time = Time;
+	}
+	
+	public void Update(){
+		SetTime(finTime);
+		done();
+	}
+	
+	@Override
+	public int compareTo(Queue other){
+		return this.NumTask - other.NumTask;
 	}
 	
 	/****************************************************************************
@@ -66,7 +77,13 @@ public class Queue {
 	****************************************************************************/
 	
 	public void add(Task task){
+		SetTime(task.getArrTime());
 		taskqueue.add(task);
+		if (taskqueue.peek().equals(task)){
+			taskqueue.peek().setBeginTime(time);
+		}
+		finTime();
+		numtask();
 	}
 	
 	/****************************************************************************
@@ -77,11 +94,13 @@ public class Queue {
 	*																			
 	****************************************************************************/
 	
-	public void done(double Time){
+	public void done(){
 		taskqueue.poll();
 		if (taskqueue.peek()!= null){
-			taskqueue.peek().setBeginTime(Time);
+			taskqueue.peek().setBeginTime(time);
+			finTime();
 		}
+		numtask();
 	}
 	
 	/****************************************************************************
@@ -107,5 +126,7 @@ public class Queue {
 	
 	private void numtask(){
 		NumTask = taskqueue.size();
+		if (NumTask == 0) { isBusy = false; }
+		else { isBusy = true; }
 	}
 }

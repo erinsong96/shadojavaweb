@@ -77,6 +77,8 @@ public class Task implements Comparable<Task> {
 		return this.Priority - other.Priority;
 	}
 
+	// The following are inspector functions.
+
 	public int getType() {return this.Type;}
 
 	public int getPriority(){return this.Priority;}
@@ -89,22 +91,13 @@ public class Task implements Comparable<Task> {
 
 	public double getEndTime(){return this.endTime;}
 
-	public double getExpTime() {
-		return this.expTime;
-	}
+	public double getExpTime() {return this.expTime;}
 
-	public double getDepTime() {
-		return this.depTime;
-	}
+	public double getDepTime() {return this.depTime;}
 
-	public double getBeginTime() {
-		return this.beginTime;
-	}
+	public double getBeginTime() {return this.beginTime;}
 
-	public int[] getOpNums() {
-		return this.opNums;
-	}
-
+	public int[] getOpNums() {return this.opNums;}
 
 
 	/****************************************************************************
