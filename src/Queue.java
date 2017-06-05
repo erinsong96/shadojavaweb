@@ -1,7 +1,6 @@
 import java.util.*;
 import Input.loadparam;
 
-
 /***************************************************************************
  * 
  * 	FILE: 			Queue.java
@@ -112,6 +111,9 @@ public class Queue implements Comparable<Queue>{
 	****************************************************************************/
 	
 	public double finTime(){
+		if (taskqueue.peek() == null){
+			return Double.POSITIVE_INFINITY;
+		}
 		Task onhand = taskqueue.peek();
 		return onhand.getBeginTime() + onhand.getSerTime();
 	}

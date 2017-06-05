@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.stream.*;
 import Input.loadparam;
 
 /***************************************************************************
@@ -46,7 +47,7 @@ public class Simulation {
 		
 	}
 	
-	public void BuildQueue(){
+	public void operatorgen(){
 		
 		// Create Operators
 		
@@ -61,6 +62,32 @@ public class Simulation {
 			Queue his = operators[i].getQueue();
 		}
 		
+	}
+	
+	public void puttask(Task task){
+		
+		ArrayList<Queue> proc = new ArrayList<Queue>();
+		for (int i = 0; i< operators.length; i++){
+			if (IntStream.of(operators[i].taskType).anyMatch(x -> x == task.getType())){
+				proc.add(operators[i].getQueue());
+			}
+		}
+		Collections.sort(proc);
+
+		while (proc.get(0).finTime()<task.getArrTime()){
+			proc.get(0).done();
+		}
+		proc.get(0).add(task);
+		
+	}
+	
+	public void run(){
+		
+		taskgen();
+		operatorgen();
+		for (Task task: tasktime){
+			puttask(task);
+		}
 	}
 	
 }
