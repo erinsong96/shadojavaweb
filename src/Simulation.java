@@ -93,7 +93,7 @@ public class Simulation {
 	public void puttask(Task task){
 		
 		ArrayList<Queue> proc = new ArrayList<Queue>();
-		for (int i = 0; i< operators.length; i++){
+		for (int i = 0; i < operators.length; i++){
 			if (IntStream.of(operators[i].taskType).anyMatch(x -> x == task.getType())){
 				proc.add(operators[i].getQueue());
 			}
