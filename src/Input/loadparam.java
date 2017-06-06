@@ -96,7 +96,7 @@ public class loadparam {
 	    expPmsHi = new double[numTaskTypes][];
 		affByTraff = new int[numTaskTypes][];
 		opNums = new int[numTaskTypes][];
-		
+		ops = new int[numOps];
 		
 		//Read in person type and tasks they can do
 		
@@ -113,12 +113,12 @@ public class loadparam {
 			taskNames[i] = readString(in);
 			taskPrty[i] = readIntArr(in);
 			arrDists[i] = readChar(in);
-			arrPms[i] = invertArr(readDoubleArr(in));
+			arrPms[i] = readDoubleArr(in);
 			serDists[i] = readChar(in);
-			serPms[i] = invertArr(readDoubleArr(in));
+			serPms[i] = readDoubleArr(in);
 			expDists[i] = readChar(in);
-			expPmsLo[i] = invertArr(readDoubleArr(in));
-			expPmsHi[i] = invertArr(readDoubleArr(in));
+			expPmsLo[i] = readDoubleArr(in);
+			expPmsHi[i] = readDoubleArr(in);
 			affByTraff[i] = readIntArr(in);
 			
 		}

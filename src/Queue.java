@@ -91,8 +91,8 @@ public class Queue implements Comparable<Queue>{
 		taskqueue.add(task);
 		if (taskqueue.peek().equals(task)){
 			taskqueue.peek().setBeginTime(time);
+			finTime();
 		}
-		finTime();
 		numtask();
 	}
 	
@@ -106,12 +106,13 @@ public class Queue implements Comparable<Queue>{
 	
 	public void done(){
 		
+		taskqueue.peek().setEndTime(finTime);
 		recordtasks.add(taskqueue.poll());
 		SetTime(finTime);
 		if (taskqueue.peek()!= null){
 			taskqueue.peek().setBeginTime(time);
-			finTime();
 		}
+		finTime();
 		numtask();
 		
 	}
