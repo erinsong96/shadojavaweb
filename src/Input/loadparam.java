@@ -93,7 +93,7 @@ public class loadparam {
 		serPms = new double[numTaskTypes][];
 		expDists = new char[numTaskTypes];
 	   	expPmsLo = new double[numTaskTypes][];
-	    expPmsHi = new double[numTaskTypes][];
+	    	expPmsHi = new double[numTaskTypes][];
 		affByTraff = new int[numTaskTypes][];
 		opNums = new int[numTaskTypes][];
 		ops = new int[numOps];
@@ -174,7 +174,7 @@ public class loadparam {
 		//Read string object
 		
 		Scanner input = ridparametername(in);
-		String ret = input.nextLine();
+		String ret = input.next();
 		input.close();
 		return ret;
 		

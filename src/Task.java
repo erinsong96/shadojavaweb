@@ -30,7 +30,6 @@ public class Task implements Comparable<Task> {
 	private double expTime;
 	private double depTime;
 	private double beginTime;
-	//why did you need an endTime?
 	private double endTime;
 	private int[] opNums;
 	private loadparam parameters;
