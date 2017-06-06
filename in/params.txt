@@ -2,7 +2,7 @@ output_path		/home/aperocky/workspace/shadojava/out
 num_hours		2
 traff_levels   	m m
 num_reps		10
-num_ops			1
+num_ops			4
 num_task_types	9
 
 op_name			Engineer

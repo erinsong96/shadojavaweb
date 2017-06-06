@@ -7,7 +7,7 @@ public class Main {
 		
 		loadparam data;
 		if (args.length == 0){
-			data =  new loadparam("/home/aperocky/workspace/shadojava/in/params.txt");
+			data =  new loadparam("/Users/erinsong/Documents/shadojava/in/params.txt");
 		} else {
 			data = new loadparam(args[0]);
 		}
