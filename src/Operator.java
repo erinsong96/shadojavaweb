@@ -21,12 +21,16 @@ public class Operator {
 	public String name;
 	public double time;
 	public int[] taskType;
-	public boolean isBusy;
 	
+	private boolean isBusy;
 	private Queue myQueue;
 	private loadparam parameters;
 	
 	// Inspector
+	
+	public boolean isBusy(){
+		return this.myQueue.isBusy;
+	}
 	
 	public Queue getQueue(){
 		return this.myQueue;
@@ -54,16 +58,4 @@ public class Operator {
 		myQueue = new Queue(opId);
 		time = 0;
 	}
-
-	/****************************************************************************
-	*																			
-	*	Method:			isBusy															
-	*																			
-	*	Purpose:		Whether the operator is busy - update method
-	*																			
-	****************************************************************************/
-	
-	
-	
-	
 }

@@ -1,4 +1,4 @@
-output_path		/Users/Branch/Documents/Research/DES/DES-App/out
+output_path		/home/aperocky/workspace/shadojava/out
 num_hours		2
 traff_levels   	m m
 num_reps		10

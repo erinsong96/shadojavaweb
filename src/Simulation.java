@@ -8,7 +8,7 @@ import Input.loadparam;
  * 
  * 	AUTHOR: 		ROCKY LI
  * 	
- * 	LATEST EDIT:	2017/6/2
+ * 	DATA:			2017/6/2
  * 
  * 	VER: 			1.0
  * 
@@ -23,10 +23,26 @@ public class Simulation {
 	public Operator[] operators;
 	public ArrayList<Task> tasktime;
 	
+	/****************************************************************************
+	*																			
+	*	Main Object:	Simulation 													
+	*																			
+	*	Purpose:		Create a simulation based on the parameters file.
+	*																			
+	****************************************************************************/
+	
 	public Simulation (loadparam param){
 		parameters = param;
 		taskgen();
 	}
+	
+	/****************************************************************************
+	*																			
+	*	Method:			taskgen 													
+	*																			
+	*	Purpose:		Generate a list of task based on time order.
+	*																			
+	****************************************************************************/
 	
 	public void taskgen(){
 		
@@ -47,6 +63,14 @@ public class Simulation {
 		
 	}
 	
+	/****************************************************************************
+	*																			
+	*	Method:			operatorgen 													
+	*																			
+	*	Purpose:		Generate an array of operators. 
+	*																			
+	****************************************************************************/
+	
 	public void operatorgen(){
 		
 		// Create Operators
@@ -56,13 +80,15 @@ public class Simulation {
 			operators[i] = new Operator(i, parameters);
 		}
 		
-		// Put tasklist into queue.
-		
-		for (int i = 0; i< operators.length ; i++){
-			Queue his = operators[i].getQueue();
-		}
-		
 	}
+	
+	/****************************************************************************
+	*																			
+	*	Method:			puttask 													
+	*																			
+	*	Purpose:		putting tasks into the operator with the least queue.
+	*																			
+	****************************************************************************/
 	
 	public void puttask(Task task){
 		
@@ -74,12 +100,20 @@ public class Simulation {
 		}
 		Collections.sort(proc);
 
-		while (proc.get(0).finTime()<task.getArrTime()){
+		while (proc.get(0).getfinTime()<task.getArrTime()){
 			proc.get(0).done();
 		}
 		proc.get(0).add(task);
 		
 	}
+	
+	/****************************************************************************
+	*																			
+	*	Main Method:	run													
+	*																			
+	*	Purpose:		run the simulation based on time order.
+	*																			
+	****************************************************************************/
 	
 	public void run(){
 		
@@ -88,6 +122,14 @@ public class Simulation {
 		for (Task task: tasktime){
 			puttask(task);
 		}
+		
+		double totaltime = parameters.numHours * 60;
+		for (Operator each: operators){
+			while (each.getQueue().getfinTime()<totaltime){
+				each.getQueue().done();
+			}
+		}
+		
 	}
 	
 }

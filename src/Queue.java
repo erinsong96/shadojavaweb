@@ -1,5 +1,4 @@
 import java.util.*;
-import Input.loadparam;
 
 /***************************************************************************
  * 
@@ -19,17 +18,34 @@ public class Queue implements Comparable<Queue>{
 	
 	public PriorityQueue<Task> taskqueue;
 	public int opId;
-	public double time;
+	
+	// Set the time to move forward with general time.
+	
+	private double time;
+	
+	// See if the Queue is populated or not
+	
 	public boolean isBusy;
 	
-	// Service time to complete all tasks in queue
+	// Service time to complete the current task in queue
 	
-	private int finTime;
+	private double finTime;
+	
+	// Number of tasks in the queue
+	
 	private int NumTask;
+	
+	// Record all done tasks for data analysis
+	
+	private ArrayList<Task> recordtasks;
 	
 	// inspectors:
 	
-	public int getfinTime(){
+	public ArrayList<Task> records(){
+		return recordtasks;
+	}
+	
+	public double getfinTime(){
 		return finTime;
 	}
 	
@@ -41,11 +57,6 @@ public class Queue implements Comparable<Queue>{
 	
 	public void SetTime(double Time){
 		this.time = Time;
-	}
-	
-	public void Update(){
-		SetTime(finTime);
-		done();
 	}
 	
 	@Override
@@ -80,8 +91,8 @@ public class Queue implements Comparable<Queue>{
 		taskqueue.add(task);
 		if (taskqueue.peek().equals(task)){
 			taskqueue.peek().setBeginTime(time);
+			finTime();
 		}
-		finTime();
 		numtask();
 	}
 	
@@ -94,12 +105,16 @@ public class Queue implements Comparable<Queue>{
 	****************************************************************************/
 	
 	public void done(){
-		taskqueue.poll();
+		
+		taskqueue.peek().setEndTime(finTime);
+		recordtasks.add(taskqueue.poll());
+		SetTime(finTime);
 		if (taskqueue.peek()!= null){
 			taskqueue.peek().setBeginTime(time);
-			finTime();
 		}
+		finTime();
 		numtask();
+		
 	}
 	
 	/****************************************************************************
@@ -110,12 +125,12 @@ public class Queue implements Comparable<Queue>{
 	*																			
 	****************************************************************************/
 	
-	public double finTime(){
+	public void finTime(){
 		if (taskqueue.peek() == null){
-			return Double.POSITIVE_INFINITY;
+			finTime = Double.POSITIVE_INFINITY;
 		}
 		Task onhand = taskqueue.peek();
-		return onhand.getBeginTime() + onhand.getSerTime();
+		finTime = onhand.getBeginTime() + onhand.getSerTime();
 	}
 	
 	/****************************************************************************
