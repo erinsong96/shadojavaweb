@@ -120,7 +120,8 @@ public class Queue implements Comparable<Queue>{
 	}
 	
 	/****************************************************************************
-	*																			
+	*
+	 *
 	*	Method:			finTime													
 	*																			
 	*	Purpose:		calculate the finish time of the present task
