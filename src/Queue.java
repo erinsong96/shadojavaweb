@@ -76,6 +76,7 @@ public class Queue implements Comparable<Queue>{
 		opId = opid;
 		taskqueue = new PriorityQueue<Task>();
 		time = 0;
+        finTime = Double.POSITIVE_INFINITY;
 	}
 	
 	/****************************************************************************
