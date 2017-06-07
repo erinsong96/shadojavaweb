@@ -105,11 +105,9 @@ public class Queue implements Comparable<Queue>{
 	****************************************************************************/
 	
 	public void done(){
-
-		if (taskqueue.peek()!= null) {
-			taskqueue.peek().setEndTime(finTime);
-			recordtasks.add(taskqueue.poll());
-		}
+		
+		taskqueue.peek().setEndTime(finTime);
+		recordtasks.add(taskqueue.poll());
 		SetTime(finTime);
 		if (taskqueue.peek()!= null){
 			taskqueue.peek().setBeginTime(time);
@@ -120,8 +118,7 @@ public class Queue implements Comparable<Queue>{
 	}
 	
 	/****************************************************************************
-	*
-	 *
+	*																			
 	*	Method:			finTime													
 	*																			
 	*	Purpose:		calculate the finish time of the present task
@@ -132,10 +129,8 @@ public class Queue implements Comparable<Queue>{
 		if (taskqueue.peek() == null){
 			finTime = Double.POSITIVE_INFINITY;
 		}
-		else {
-			Task onhand = taskqueue.peek();
-			finTime = onhand.getBeginTime() + onhand.getSerTime();
-		}
+		Task onhand = taskqueue.peek();
+		finTime = onhand.getBeginTime() + onhand.getSerTime();
 	}
 	
 	/****************************************************************************

@@ -174,7 +174,8 @@ public class loadparam {
 		//Read string object
 		
 		Scanner input = ridparametername(in);
-		String ret = input.next();
+		String ret = input.nextLine();
+		ret = ret.trim();
 		input.close();
 		return ret;
 		
