@@ -25,8 +25,11 @@ public class ProcData {
 	public double load(){
 		
 		double worktime = 0;
-		for (Task each: Dataset){
-			worktime += each.getEndTime() - each.getBeginTime();
+
+		if (Dataset != null) {
+			for (Task each : Dataset) {
+				worktime += each.getEndTime() - each.getBeginTime();
+			}
 		}
 		return worktime;
 		
