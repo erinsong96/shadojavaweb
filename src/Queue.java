@@ -37,7 +37,7 @@ public class Queue implements Comparable<Queue>{
 	
 	// Record all done tasks for data analysis
 	
-	private ArrayList<Task> recordtasks;
+	private ArrayList<Task> recordtasks = new ArrayList<>();
 	
 	// inspectors:
 	
@@ -76,7 +76,7 @@ public class Queue implements Comparable<Queue>{
 		opId = opid;
 		taskqueue = new PriorityQueue<Task>();
 		time = 0;
-		finTime = Double.POSITIVE_INFINITY;
+        finTime = Double.POSITIVE_INFINITY;
 	}
 	
 	/****************************************************************************
@@ -107,12 +107,13 @@ public class Queue implements Comparable<Queue>{
 	
 	public void done(){
 
-		if (taskqueue.peek() != null){	
+
+		if (taskqueue.peek() != null){
 			taskqueue.peek().setEndTime(finTime);
 			recordtasks.add(taskqueue.poll());
 			SetTime(finTime);
 		}
-		
+
 		if (taskqueue.peek()!= null){
 			taskqueue.peek().setBeginTime(time);
 		}
@@ -133,8 +134,10 @@ public class Queue implements Comparable<Queue>{
 		if (taskqueue.peek() == null){
 			finTime = Double.POSITIVE_INFINITY;
 		}
-		Task onhand = taskqueue.peek();
-		finTime = onhand.getBeginTime() + onhand.getSerTime();
+		else {
+			Task onhand = taskqueue.peek();
+			finTime = onhand.getBeginTime() + onhand.getSerTime();
+		}
 	}
 	
 	/****************************************************************************
