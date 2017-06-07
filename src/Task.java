@@ -278,6 +278,7 @@ public class Task implements Comparable<Task> {
 		}
 		expiration = GenTime(parameters.expDists[Type], param, 0);
 		return 2*serTime + expiration;
+		
 	}
 }
 

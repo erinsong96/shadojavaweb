@@ -11,7 +11,10 @@ import Input.loadparam;
  * 
  * 	VER: 			1.0
  * 
- * 	Purpose: 		generate task objects.
+ * 	Purpose: 		generate operator that wraps Queue objects. This class is 
+ * 					mainly meant for understanding purposes - Queue objects represent
+ * 					operators quite well - we might be able to get rid of this class
+ * 					in the future.
  * 
  **************************************************************************/
 
@@ -19,17 +22,15 @@ public class Operator {
 
 	public int opId;
 	public String name;
-	public double time;
 	public int[] taskType;
 	
-	private boolean isBusy;
 	private Queue myQueue;
 	private loadparam parameters;
 	
 	// Inspector
 	
 	public boolean isBusy(){
-		return this.myQueue.isBusy;
+		return this.myQueue.getStatus();
 	}
 	
 	public Queue getQueue(){
@@ -37,25 +38,24 @@ public class Operator {
 	}
 	
 	// Mutator
-	
-	public void SetTime(double Time){
-		this.time = Time;
-	}
 		
 	/****************************************************************************
 	*																			
 	*	Main Object:	Operator															
 	*																			
-	*	Purpose:		This is a human object.
+	*	Purpose:		Generate an operator object from the parameter file imported
 	*																			
 	****************************************************************************/
 		
 	public Operator (int opid, loadparam param){
+		
 		parameters = param;
 		opId = opid;
 		taskType = parameters.opTasks[opid];
 		name = parameters.opNames[opid];
+		
+		// Next line generates an empty queue.
 		myQueue = new Queue(opId);
-		time = 0;
+		
 	}
 }

@@ -22,6 +22,24 @@ public class ProcData {
 		Dataset = thisone;
 	}
 	
+	public void run(double time){
+		trim(time);
+		System.out.println(load());
+		debug();
+	}
+	
+	public void trim(double time){
+		
+		ArrayList<Task> newset = new ArrayList<Task>();
+		for (Task each: Dataset){
+			if (each.getEndTime()<time){
+				newset.add(each);
+			}
+		}
+		Dataset = newset;
+		
+	}
+	
 	public double load(){
 		
 		double worktime = 0;
@@ -35,6 +53,14 @@ public class ProcData {
 		
 	}
 	
+	public void debug(){
+		
+		for (Task each : Dataset){
+			System.out.println(each.getBeginTime() + " " + each.getSerTime() + " " + each.getEndTime() + " " + 
+		each.getType());
+		}
+			
+	}
 	
 	
 }

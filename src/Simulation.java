@@ -19,9 +19,21 @@ import Input.loadparam;
 
 public class Simulation {
 	
+	// The parameters loaded from file
+	
 	public loadparam parameters;
+	
 	public Operator[] operators;
+	
+	// This is an arraylist of ALL tasks in the order that they're arriving.
+	
 	public ArrayList<Task> tasktime;
+	
+	// Inspectors
+	
+	public double getTotalTime(){
+		return parameters.numHours * 60;
+	}
 	
 	/****************************************************************************
 	*																			
@@ -48,16 +60,32 @@ public class Simulation {
 		
 		tasktime = new ArrayList<Task>();
 		
+		// For each type of tasks:
+		
 		for (int i = 0; i < parameters.numTaskTypes; i++){
+			
+			// Create a new empty list of Tasks
+			
 			ArrayList<Task> indlist = new ArrayList<Task>();
+			
+			// Start a new task with PrevTime = 0
+			
 			Task origin = new Task(i, 0, parameters);
 			indlist.add(origin);
+			
+			// While the next task is within the time frame, generate.
+			
 			while (origin.getArrTime() < parameters.numHours*60){
 				origin = new Task(i, origin.getArrTime(), parameters);
 				indlist.add(origin);
 			}
+			
+			// Put all task into the master tasklist.
+			
 			tasktime.addAll(indlist);
 		}
+		
+		// Sort task by time.
 		
 		Collections.sort(tasktime, (o1, o2) -> Double.compare(o1.getArrTime(), o2.getArrTime()));
 		
@@ -86,23 +114,38 @@ public class Simulation {
 	*																			
 	*	Method:			puttask 													
 	*																			
-	*	Purpose:		putting tasks into the operator with the least queue.
+	*	Purpose:		putting tasks into the operator that can operate the task
+	* 					with the least queue.
 	*																			
 	****************************************************************************/
 	
 	public void puttask(Task task){
 		
+		// Create a new arraylist of queue:
+		
 		ArrayList<Queue> proc = new ArrayList<Queue>();
+		
+		// If the task can be operated by this operator, get his queue.
+		
 		for (int i = 0; i < operators.length; i++){
 			if (IntStream.of(operators[i].taskType).anyMatch(x -> x == task.getType())){
 				proc.add(operators[i].getQueue());
 			}
 		}
+		
+		// Sort queue by tasks queued.
+		
 		Collections.sort(proc);
-
+		
+		// Before inserting new tasks, make sure all the tasks that can be finished
+		// before the arrival of the new tasks is finished.
+		
 		while (proc.get(0).getfinTime()<task.getArrTime()){
 			proc.get(0).done();
 		}
+		
+		// add task to queue.
+		
 		proc.get(0).add(task);
 		
 	}
@@ -117,11 +160,17 @@ public class Simulation {
 	
 	public void run(){
 		
+		// Generate stuff
 		taskgen();
 		operatorgen();
+		
+		// Put tasks into queue at appropriate order.
+		
 		for (Task task: tasktime){
 			puttask(task);
 		}
+		
+		// Finish tasks if no new tasks comes in.
 		
 		double totaltime = parameters.numHours * 60;
 		for (Operator each: operators){

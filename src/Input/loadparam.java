@@ -115,7 +115,7 @@ public class loadparam {
 			arrDists[i] = readChar(in);
 			arrPms[i] = readDoubleArr(in);
 			serDists[i] = readChar(in);
-			serPms[i] = readDoubleArr(in);
+			serPms[i] = invertArr(readDoubleArr(in));
 			expDists[i] = readChar(in);
 			expPmsLo[i] = readDoubleArr(in);
 			expPmsHi[i] = readDoubleArr(in);
@@ -142,7 +142,8 @@ public class loadparam {
 	*				returns the line as a scanner while moving the main scanner to
 	*				the next line. Also ignore lines if it's empty.
 	*
-	*	NOTE:		ALL OF THE FOLLOWING METHODS include this method to skip
+	*	NOTE:		ALL OF THE FOLLOWING METHODS include this method to skip the 
+	*				name in the file read.
 	*																			
 	****************************************************************************/
 	

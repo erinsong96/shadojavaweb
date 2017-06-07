@@ -16,18 +16,23 @@ import java.util.*;
 
 public class Queue implements Comparable<Queue>{
 	
+	// The Queue is represented by a priority queue of task objects:
+	
 	public PriorityQueue<Task> taskqueue;
+	
+	// Operator ID.
+	
 	public int opId;
 	
-	// Set the time to move forward with general time.
+	// Set the time to move forward with general time. (Tracer variable)
 	
 	private double time;
 	
 	// See if the Queue is populated or not
 	
-	public boolean isBusy;
+	private boolean isBusy;
 	
-	// Service time to complete the current task in queue
+	// Expected time to complete the current task in queue
 	
 	private double finTime;
 	
@@ -51,6 +56,10 @@ public class Queue implements Comparable<Queue>{
 	
 	public int getNumTask(){
 		return NumTask;
+	}
+	
+	public boolean getStatus(){
+		return isBusy;
 	}
 	
 	// Mutator:
@@ -88,12 +97,22 @@ public class Queue implements Comparable<Queue>{
 	****************************************************************************/
 	
 	public void add(Task task){
+		
+		// Set the time of the queue to the arrival time of the task.
+		
 		SetTime(task.getArrTime());
 		taskqueue.add(task);
+		
+		// If the task is processed as first priority, i.e. began immediately, then:
+		
 		if (taskqueue.peek().equals(task)){
 			taskqueue.peek().setBeginTime(time);
 			finTime();
 		}
+		
+		// Else since the task is put behind in the queue, no other queue attribute need to change
+		// except numTask.
+		
 		numtask();
 	}
 	
@@ -101,23 +120,45 @@ public class Queue implements Comparable<Queue>{
 	*																			
 	*	Method:			done													
 	*																			
-	*	Purpose:		remove a finished task
+	*	Purpose:		remove a finished task from the queue when its finished
+	*					 and update queue attributes
 	*																			
 	****************************************************************************/
 	
 	public void done(){
-
+		
+		// This if statement avoids error when calling done on an empty queue.
 
 		if (taskqueue.peek() != null){
+			
+			// Set the end time of the task being finished.
+			
 			taskqueue.peek().setEndTime(finTime);
+			
+			// Remove the finished task from the queue and put it into recordtask list.
+			
 			recordtasks.add(taskqueue.poll());
+			
+			// Renew the queue time.
+			
 			SetTime(finTime);
 		}
+		
+		// If there are ANOTHER task in the queue following the completion of this one:
 
 		if (taskqueue.peek()!= null){
+			
+			// Set the beginTime of the Task in question to now, i.e. begin working on this task.
+			
 			taskqueue.peek().setBeginTime(time);
 		}
+		
+		// Generate a new finTime for the Queue.
+		
 		finTime();
+		
+		// Generate a new numTask for the Queue.
+		
 		numtask();
 		
 	}
@@ -126,14 +167,21 @@ public class Queue implements Comparable<Queue>{
 	*																			
 	*	Method:			finTime													
 	*																			
-	*	Purpose:		calculate the finish time of the present task
+	*	Purpose:		calculate the finish time of the present task and return it 
+	*					as an attribute of the queue at current time.
 	*																			
 	****************************************************************************/
 	
 	public void finTime(){
+		
+		// If there is no current task, the finTime will be infinite.
+		
 		if (taskqueue.peek() == null){
 			finTime = Double.POSITIVE_INFINITY;
 		}
+		
+		// Otherwise grab the current task and return a finish time.
+		
 		else {
 			Task onhand = taskqueue.peek();
 			finTime = onhand.getBeginTime() + onhand.getSerTime();
@@ -144,7 +192,8 @@ public class Queue implements Comparable<Queue>{
 	*																			
 	*	Method:			numtask													
 	*																			
-	*	Purpose:		return the number of tasks in the queue
+	*	Purpose:		return the number of tasks in the queue and if there are no
+	*					task return state of the current queue as NOT BUSY.
 	*																			
 	****************************************************************************/
 	

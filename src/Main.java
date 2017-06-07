@@ -7,7 +7,7 @@ public class Main {
 		
 		loadparam data;
 		if (args.length == 0){
-			data =  new loadparam("/Users/erinsong/Documents/shadojava/in/params.txt");
+			data =  new loadparam("/home/aperocky/workspace/shadojava/in/params.txt");
 		} else {
 			data = new loadparam(args[0]);
 		}
@@ -16,7 +16,7 @@ public class Main {
 		runs.run();
 		for (Operator each: runs.operators){
 			ProcData proc = new ProcData(each.getQueue().records());
-			System.out.println(proc.load());
+			proc.run(data.numHours*60);
 		}
 		
 	}
