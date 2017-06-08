@@ -115,7 +115,7 @@ public class loadparam {
 			arrDists[i] = readChar(in);
 			arrPms[i] = readDoubleArr(in);
 			serDists[i] = readChar(in);
-			serPms[i] = invertArr(readDoubleArr(in));
+			serPms[i] = readDoubleArr(in);
 			expDists[i] = readChar(in);
 			expPmsLo[i] = readDoubleArr(in);
 			expPmsHi[i] = readDoubleArr(in);

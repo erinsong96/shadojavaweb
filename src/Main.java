@@ -12,7 +12,7 @@ public class Main {
 			data = new loadparam(args[0]);
 		}
 		
-		Simulation runs = new Simulation(data);
+		TrainSim runs = new TrainSim(data);
 		runs.run();
 		for (Operator each: runs.operators){
 			ProcData proc = new ProcData(each.getQueue().records());
