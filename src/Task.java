@@ -250,8 +250,8 @@ public class Task implements Comparable<Task> {
 	private double genSerTime(){
 		
 		char type = parameters.arrDists[Type];
-		double start = parameters.arrPms[Type][0];
-		double end = parameters.arrPms[Type][1];
+		double start = parameters.serPms[Type][0];
+		double end = parameters.serPms[Type][1];
 		return GenTime(type, start, end);
 		
 	}

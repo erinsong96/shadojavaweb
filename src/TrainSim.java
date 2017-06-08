@@ -17,7 +17,7 @@ import Input.loadparam;
  **************************************************************************/
 
 
-public class Simulation {
+public class TrainSim {
 	
 	// The parameters loaded from file
 	
@@ -43,7 +43,7 @@ public class Simulation {
 	*																			
 	****************************************************************************/
 	
-	public Simulation (loadparam param){
+	public TrainSim (loadparam param){
 		parameters = param;
 		taskgen();
 	}
