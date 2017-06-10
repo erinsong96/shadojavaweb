@@ -4,7 +4,7 @@ import Input.loadparam;
 
 /***************************************************************************
  * 
- * 	FILE: 			Simulation.java
+ * 	FILE: 			TrainSim.java
  * 
  * 	AUTHOR: 		ROCKY LI
  * 	
@@ -37,9 +37,9 @@ public class TrainSim {
 	
 	/****************************************************************************
 	*																			
-	*	Main Object:	Simulation 													
+	*	Main Object:	TrainSim													
 	*																			
-	*	Purpose:		Create a simulation based on the parameters file.
+	*	Purpose:		Create a simulation for a single train.
 	*																			
 	****************************************************************************/
 	

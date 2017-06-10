@@ -6,7 +6,7 @@ import java.util.*;
  * 
  * 	AUTHOR: 		ROCKY LI
  * 	
- * 	LATEST EDIT:	2017/5/24
+ * 	DATE:			2017/6/5
  * 
  * 	VER: 			1.0
  * 
@@ -98,6 +98,8 @@ public class Queue implements Comparable<Queue>{
 	
 	public void add(Task task){
 		
+		// Stash tasks that are in the present 
+		
 		// Set the time of the queue to the arrival time of the task.
 		
 		SetTime(task.getArrTime());
@@ -134,6 +136,8 @@ public class Queue implements Comparable<Queue>{
 			// Set the end time of the task being finished.
 			
 			taskqueue.peek().setEndTime(finTime);
+			
+			taskqueue.peek().setQueue(NumTask);
 			
 			// Remove the finished task from the queue and put it into recordtask list.
 			

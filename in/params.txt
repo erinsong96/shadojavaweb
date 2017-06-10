@@ -1,6 +1,6 @@
 output_path		/Users/erinsong/Documents/shadojava/out
-num_hours		2
-traff_levels   	m m
+num_hours		8
+traff_levels   	m h h h l l l m
 num_reps		10
 num_ops			4
 num_task_types	9
@@ -27,6 +27,7 @@ exp_dist     	E
 exp_pms_lo   	0 0.107167 0
 exp_pms_hi   	0 0.0863333 0
 aff_by_traff  	0 1 0
+islinked		1
 
 name      		Exception Handling
 prty         	5 4 5
@@ -38,6 +39,7 @@ exp_dist     	E
 exp_pms_lo   	0 0.0446667 0.0446667
 exp_pms_hi   	0 0.0551667 0.0551667
 aff_by_traff  	0 1 0
+islinked		0
 
 name       		Paperwork
 prty         	3 0 2
@@ -49,6 +51,7 @@ exp_dist     	E
 exp_pms_lo   	0 0 0
 exp_pms_hi   	0 0 0
 aff_by_traff   	0 1 1
+islinked		0
 
 name       		Maintenance of Way Interactions
 prty         	0 5 0
@@ -60,6 +63,7 @@ exp_dist     	E
 exp_pms_lo   	0 0.184 0
 exp_pms_hi   	0 0.184 0
 aff_by_traff   	0 1 0
+islinked		0
 
 name       		Temporary Speed Restrictions
 prty         	0 5 0
@@ -71,6 +75,7 @@ exp_dist     	E
 exp_pms_lo   	0 0.184 0
 exp_pms_hi   	0 0.184 0
 aff_by_traff 	0 1 0
+islinked		0
 
 name       		Signal Response Management
 prty         	0 5 0
@@ -82,6 +87,7 @@ exp_dist     	E
 exp_pms_lo   	0 0.184 0.184
 exp_pms_hi   	0 0.184 0.184
 aff_by_traff 	0 1 0
+islinked		0
 
 name			Monitoring Inside
 prty         	2 2 1
@@ -93,6 +99,7 @@ exp_dist     	E
 exp_pms_lo   	0 0 0
 exp_pms_hi   	0 0 0
 aff_by_traff   	0 0 0
+islinked		0
 
 name      		Monitoring Outside
 prty         	1 1 3
@@ -104,6 +111,7 @@ exp_dist     	E
 exp_pms_lo   	0 0 0
 exp_pms_hi   	0 0 0
 aff_by_traff   	0 1 0
+islinked		0
 
 name 			Planning Ahead
 prty         	0 5 0
@@ -115,3 +123,4 @@ exp_dist     	E
 exp_pms_lo   	0 0.166 0
 exp_pms_hi   	0 0.1795 0
 aff_by_traff  	0 1 0
+islinked		0
