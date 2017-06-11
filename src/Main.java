@@ -17,7 +17,7 @@ public class Main {
 		for (Operator each: runs.operators){
 			ProcData proc = new ProcData(each.getQueue().records());
 			proc.run(data.numHours*60);
-		}
+	 	}
 		
 	}
 }
