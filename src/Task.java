@@ -5,13 +5,11 @@ import Input.loadparam;
  * 
  * 	FILE: 			Task.java
  * 
- * 	AUTHOR:			BRANCH VINCENT
- * 
- * 	TRANSLATOR		ROCKY LI
+ * 	AUTHOR:			ROCKY LI
  * 	
  * 	LATEST EDIT:	2017/5/24
  * 
- * 	VER: 			1.0
+ * 	VER: 			1.1
  * 
  * 	Purpose: 		generate task objects.
  * 
@@ -33,8 +31,21 @@ public class Task implements Comparable<Task> {
 	private double endTime;
 	private int[] opNums;
 	private loadparam parameters;
+	private String name;
+	
+	// This adds functionalities of the Dispatcher
+	
+	private boolean isLinked;
+	
+	// This adds the ability for task to track queue retroactively
+	
+	private int queued;
 
 // Mutators
+	
+	public void setQueue(int q){
+		queued = q-1;
+	}
 	
 	public void setEndTime(double time){
 		endTime = time;
@@ -63,7 +74,9 @@ public class Task implements Comparable<Task> {
 		serTime = genSerTime();
 		expTime = genExpTime();
 		beginTime = arrTime;
-		opNums = Param.opNums[Type];
+		opNums = parameters.opNums[Type];
+		name = parameters.taskNames[Type];
+		isLinked = parameters.linked[Type] == 1;
 	}
 
 	/****************************************************************************
@@ -76,13 +89,27 @@ public class Task implements Comparable<Task> {
 
 	@Override
 	public int compareTo(Task other){
-		return this.Priority - other.Priority;
+		if (this.Priority != other.Priority){
+			return other.Priority - this.Priority;
+		} else {
+			if (this.arrTime - other.arrTime > 0){
+				return 1;
+			} else {
+				return -1;
+			}
+		}
 	}
 
 	// The following are inspector functions.
+	
+	public String getName() {return this.name;}
+	
+	public int getQueued() {return this.queued;}
+	
+	public boolean linked() {return this.isLinked;}
 
 	public int getType() {return this.Type;}
-
+	
 	public int getPriority(){return this.Priority;}
 
 	public double getPrevTime(){return this.prevTime;}
@@ -174,9 +201,9 @@ public class Task implements Comparable<Task> {
 	
 	/****************************************************************************
 	*																			
-	*	Method:			genArrTime												
+	*	Method:			genTime												
 	*																			
-	*	Purpose:		Generate a new exponentially distributed arrival time by phase.
+	*	Purpose:		Generate a new time with the specified type and parameters.
 	*																			
 	****************************************************************************/
 	
@@ -277,7 +304,7 @@ public class Task implements Comparable<Task> {
 			param = parameters.expPmsLo[Type][Phase];
 		}
 		expiration = GenTime(parameters.expDists[Type], param, 0);
-		return 2*serTime + expiration;
+		return arrTime + 2*serTime + expiration;
 		
 	}
 }

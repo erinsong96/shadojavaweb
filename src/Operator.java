@@ -11,10 +11,8 @@ import Input.loadparam;
  * 
  * 	VER: 			1.0
  * 
- * 	Purpose: 		generate operator that wraps Queue objects. This class is 
- * 					mainly meant for understanding purposes - Queue objects represent
- * 					operators quite well - we might be able to get rid of this class
- * 					in the future.
+ * 	Purpose: 		generate operator that wraps Queue objects. This is where
+ * 					the distinction between an operator and a dispatcher is made.
  * 
  **************************************************************************/
 
@@ -26,6 +24,7 @@ public class Operator {
 	
 	private Queue myQueue;
 	private loadparam parameters;
+	private boolean isDispatcher;
 	
 	// Inspector
 	
@@ -53,6 +52,9 @@ public class Operator {
 		opId = opid;
 		taskType = parameters.opTasks[opid];
 		name = parameters.opNames[opid];
+		if (name.equals("Dispatcher")){
+			isDispatcher = true;
+		} else { isDispatcher = false;}
 		
 		// Next line generates an empty queue.
 		myQueue = new Queue(opId);

@@ -49,6 +49,10 @@ public class loadparam {
 	public int[][] affByTraff;
 	public int[][] opNums;
 	
+	// Adding isLinked
+	
+	public int[] linked;
+	
 	// Toggle Global Variables
 	
 	public static boolean TRAFFIC_ON = true;
@@ -93,10 +97,11 @@ public class loadparam {
 		serPms = new double[numTaskTypes][];
 		expDists = new char[numTaskTypes];
 	   	expPmsLo = new double[numTaskTypes][];
-	    	expPmsHi = new double[numTaskTypes][];
+	    expPmsHi = new double[numTaskTypes][];
 		affByTraff = new int[numTaskTypes][];
 		opNums = new int[numTaskTypes][];
 		ops = new int[numOps];
+		linked = new int[numTaskTypes];
 		
 		//Read in person type and tasks they can do
 		
@@ -120,6 +125,7 @@ public class loadparam {
 			expPmsLo[i] = readDoubleArr(in);
 			expPmsHi[i] = readDoubleArr(in);
 			affByTraff[i] = readIntArr(in);
+			linked[i] = readInt(in);
 			
 		}
 		

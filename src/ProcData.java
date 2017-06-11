@@ -56,8 +56,8 @@ public class ProcData {
 	public void debug(){
 		
 		for (Task each : Dataset){
-			System.out.println(each.getBeginTime() + " " + each.getSerTime() + " " + each.getEndTime() + " " + 
-		each.getType());
+			System.out.println(each.getBeginTime() + " " + each.getSerTime() + " " + each.getEndTime()
+			+ " " + each.getName() + " and " + each.getQueued() + " are in the queue.");
 		}
 			
 	}
