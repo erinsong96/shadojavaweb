@@ -1,4 +1,6 @@
+import java.io.IOException;
 import java.util.*;
+import java.lang.String;
 
 /***************************************************************************
  * 
@@ -23,9 +25,20 @@ public class ProcData {
 	}
 	
 	public void run(double time){
+		List<String> tasklist = new ArrayList<String>();
 		trim(time);
 		System.out.println(load());
-		debug();
+		for (Task each: Dataset){
+			tasklist.add(each.getName());
+		}
+		String[] simpleArray = new String [tasklist.size()];
+		tasklist.toArray(simpleArray);
+		try {
+			gencsv.main(simpleArray);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		//debug();
 	}
 	
 	public void trim(double time){
