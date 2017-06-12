@@ -32,7 +32,7 @@ public class Task implements Comparable<Task> {
 	private int[] opNums;
 	private loadparam parameters;
 	private String name;
-	private int taskID;
+	private int trainID;
 	
 	// This adds functionalities of the Dispatcher
 	
@@ -49,7 +49,7 @@ public class Task implements Comparable<Task> {
 	}
 	
 	public void setID(int id){
-		taskID = id;
+		trainID = id;
 	}
 	
 	public void setQueue(int q){
@@ -111,6 +111,8 @@ public class Task implements Comparable<Task> {
 	}
 
 	// The following are inspector functions.
+	
+	public int getTrain() {return this.trainID;}
 	
 	public String getName() {return this.name;}
 	
@@ -191,7 +193,9 @@ public class Task implements Comparable<Task> {
 		
 		Random rng = new Random();
 		double normal = rng.nextGaussian();
-		return mean + stddev*normal;
+		double l = mean + stddev*normal;
+		
+		return l;
 		
 	}
 	

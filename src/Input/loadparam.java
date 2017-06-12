@@ -27,6 +27,7 @@ public class loadparam {
     public double[] traffic;
     public int numReps;
     public int[] ops;
+    public int numTrains;
         
     // Operator settings
         
@@ -82,6 +83,7 @@ public class loadparam {
 		numHours = readDouble(in);
 		traffic = readTraff(in);
 		numReps = readInt(in);
+		numTrains = readInt(in);
 		numOps = readInt(in);
 		numTaskTypes = readInt(in);
 		

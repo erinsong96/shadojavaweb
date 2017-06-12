@@ -57,7 +57,7 @@ public class ProcData {
 		
 		for (Task each : Dataset){
 			System.out.println(each.getBeginTime() + " " + each.getELSTime() + " " + each.getEndTime()
-			+ " " + each.getName() + " and " + each.getQueued() + " are in the queue.");
+			+ " " + each.getName() + " and " + each.getQueued() + " are in the queue. " + each.getExpTime());
 		}
 			
 	}

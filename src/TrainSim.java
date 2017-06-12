@@ -12,7 +12,7 @@ import Input.loadparam;
  * 
  * 	VER: 			1.0
  * 
- * 	Purpose: 		Create and manage the entire simulation and the objects inside.
+ * 	Purpose: 		Create and manage the simulation of a single train.
  * 
  **************************************************************************/
 
@@ -25,6 +25,8 @@ public class TrainSim {
 	
 	public Operator[] operators;
 	
+	public int trainID;
+	
 	// This is an arraylist of ALL tasks in the order that they're arriving.
 	
 	public ArrayList<Task> tasktime;
@@ -35,6 +37,12 @@ public class TrainSim {
 		return parameters.numHours * 60;
 	}
 	
+	// Mutator
+	
+	public void linktask(Task task){
+		tasktime.add(task);
+	}
+	
 	/****************************************************************************
 	*																			
 	*	Main Object:	TrainSim													
@@ -43,8 +51,9 @@ public class TrainSim {
 	*																			
 	****************************************************************************/
 	
-	public TrainSim (loadparam param){
+	public TrainSim (loadparam param, int trainid){
 		parameters = param;
+		trainID = trainid;
 		taskgen();
 	}
 	
@@ -71,12 +80,19 @@ public class TrainSim {
 			// Start a new task with PrevTime = 0
 			
 			Task origin = new Task(i, 0, parameters);
+			
+			if (origin.linked()){
+				continue;
+			}
+			
+			origin.setID(trainID);
 			indlist.add(origin);
 			
 			// While the next task is within the time frame, generate.
 			
 			while (origin.getArrTime() < parameters.numHours*60){
 				origin = new Task(i, origin.getArrTime(), parameters);
+				origin.setID(trainID);
 				indlist.add(origin);
 			}
 			
@@ -85,10 +101,13 @@ public class TrainSim {
 			tasktime.addAll(indlist);
 		}
 		
+	}
+	
+	public void sortTask(){
+
 		// Sort task by time.
 		
 		Collections.sort(tasktime, (o1, o2) -> Double.compare(o1.getArrTime(), o2.getArrTime()));
-		
 	}
 	
 	/****************************************************************************
@@ -152,6 +171,23 @@ public class TrainSim {
 	
 	/****************************************************************************
 	*																			
+	*	Method:			genbasis													
+	*																			
+	*	Purpose:		Generate the base set of data in TrainSim object.
+	*																			
+	****************************************************************************/
+	
+	public void genbasis(){
+
+		// Generate stuff
+		taskgen();
+		operatorgen();
+		
+	}
+	
+	
+	/****************************************************************************
+	*																			
 	*	Main Method:	run													
 	*																			
 	*	Purpose:		run the simulation based on time order.
@@ -160,9 +196,7 @@ public class TrainSim {
 	
 	public void run(){
 		
-		// Generate stuff
-		taskgen();
-		operatorgen();
+		sortTask();
 		
 		// Put tasks into queue at appropriate order.
 		
