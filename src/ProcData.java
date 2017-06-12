@@ -46,7 +46,7 @@ public class ProcData {
 
 		if (Dataset != null) {
 			for (Task each : Dataset) {
-				worktime += each.getEndTime() - each.getBeginTime();
+				worktime += each.getELSTime();
 			}
 		}
 		return worktime;
@@ -56,7 +56,7 @@ public class ProcData {
 	public void debug(){
 		
 		for (Task each : Dataset){
-			System.out.println(each.getBeginTime() + " " + each.getSerTime() + " " + each.getEndTime()
+			System.out.println(each.getBeginTime() + " " + each.getELSTime() + " " + each.getEndTime()
 			+ " " + each.getName() + " and " + each.getQueued() + " are in the queue.");
 		}
 			

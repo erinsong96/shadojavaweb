@@ -26,12 +26,13 @@ public class Task implements Comparable<Task> {
 	private double arrTime;
 	private double serTime;
 	private double expTime;
-	private double depTime;
+	private double elapsedTime;
 	private double beginTime;
 	private double endTime;
 	private int[] opNums;
 	private loadparam parameters;
 	private String name;
+	private int taskID;
 	
 	// This adds functionalities of the Dispatcher
 	
@@ -42,6 +43,14 @@ public class Task implements Comparable<Task> {
 	private int queued;
 
 // Mutators
+	
+	public void setELStime (double time){
+		elapsedTime = time;
+	}
+	
+	public void setID(int id){
+		taskID = id;
+	}
 	
 	public void setQueue(int q){
 		queued = q-1;
@@ -77,6 +86,7 @@ public class Task implements Comparable<Task> {
 		opNums = parameters.opNums[Type];
 		name = parameters.taskNames[Type];
 		isLinked = parameters.linked[Type] == 1;
+		elapsedTime = 0;
 	}
 
 	/****************************************************************************
@@ -122,7 +132,7 @@ public class Task implements Comparable<Task> {
 
 	public double getExpTime() {return this.expTime;}
 
-	public double getDepTime() {return this.depTime;}
+	public double getELSTime() {return this.elapsedTime;}
 
 	public double getBeginTime() {return this.beginTime;}
 
@@ -276,7 +286,7 @@ public class Task implements Comparable<Task> {
 	
 	private double genSerTime(){
 		
-		char type = parameters.arrDists[Type];
+		char type = parameters.serDists[Type];
 		double start = parameters.serPms[Type][0];
 		double end = parameters.serPms[Type][1];
 		return GenTime(type, start, end);
