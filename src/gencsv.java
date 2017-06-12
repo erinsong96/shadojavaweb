@@ -13,6 +13,7 @@ public class gencsv {
 
     CSVWriter writer = new CSVWriter(new FileWriter("outputfile.csv"), ',');
     // feed in your array (or convert your data to an array)
+
      writer.writeNext(args);
 	 writer.close();
 

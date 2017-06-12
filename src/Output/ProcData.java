@@ -33,6 +33,7 @@ public class ProcData {
 		}
 		String[] simpleArray = new String [tasklist.size()];
 		tasklist.toArray(simpleArray);
+		System.out.println(simpleArray.length);
 		try {
 			gencsv.main(simpleArray);
 		} catch (IOException e) {
