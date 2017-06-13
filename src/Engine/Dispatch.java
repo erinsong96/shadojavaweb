@@ -97,5 +97,11 @@ public class Dispatch {
 		}
 		
 	}
-
+	
+	public void runDispatch(){
+		
+		TrainSim DispatchSim = new TrainSim(parameters, dispatchers, linkedtasks);
+		DispatchSim.run();
+		
+	}
 }

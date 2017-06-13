@@ -46,6 +46,20 @@ public class TrainSim {
 	
 	/****************************************************************************
 	*																			
+	*	Side Object:	TrainSim													
+	*																			
+	*	Purpose:		Create a simulation for Dispatcher using the same logic
+	*																			
+	****************************************************************************/
+	
+	public TrainSim(loadparam param, Operator[] dis, ArrayList<Task> list){
+		tasktime = list;
+		operators = dis;
+		parameters = param;
+	}
+	
+	/****************************************************************************
+	*																			
 	*	Main Object:	TrainSim													
 	*																			
 	*	Purpose:		Create a simulation for a single train.
@@ -55,7 +69,6 @@ public class TrainSim {
 	public TrainSim (loadparam param, int trainid){
 		parameters = param;
 		trainID = trainid;
-		taskgen();
 	}
 	
 	/****************************************************************************
