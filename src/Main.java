@@ -5,6 +5,8 @@ public class Main {
 	
 	public static void main(String[] args) throws FileNotFoundException{
 		
+		// LOAD the parameter file.
+		
 		loadparam data;
 		if (args.length == 0){
 			data =  new loadparam("/Users/erinsong/Documents/shadojava/in/params.txt");
@@ -12,7 +14,10 @@ public class Main {
 			data = new loadparam(args[0]);
 		}
 		
-		TrainSim runs = new TrainSim(data);
+		// Runs simulation.
+		
+		TrainSim runs = new TrainSim(data, 0);
+		runs.genbasis();
 		runs.run();
 		for (Operator each: runs.operators){
 			ProcData proc = new ProcData(each.getQueue().records());

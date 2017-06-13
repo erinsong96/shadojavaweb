@@ -26,12 +26,13 @@ public class Task implements Comparable<Task> {
 	private double arrTime;
 	private double serTime;
 	private double expTime;
-	private double depTime;
+	private double elapsedTime;
 	private double beginTime;
 	private double endTime;
 	private int[] opNums;
 	private loadparam parameters;
 	private String name;
+	private int trainID;
 	
 	// This adds functionalities of the Dispatcher
 	
@@ -42,6 +43,14 @@ public class Task implements Comparable<Task> {
 	private int queued;
 
 // Mutators
+	
+	public void setELStime (double time){
+		elapsedTime = time;
+	}
+	
+	public void setID(int id){
+		trainID = id;
+	}
 	
 	public void setQueue(int q){
 		queued = q-1;
@@ -77,6 +86,7 @@ public class Task implements Comparable<Task> {
 		opNums = parameters.opNums[Type];
 		name = parameters.taskNames[Type];
 		isLinked = parameters.linked[Type] == 1;
+		elapsedTime = 0;
 	}
 
 	/****************************************************************************
@@ -102,6 +112,8 @@ public class Task implements Comparable<Task> {
 
 	// The following are inspector functions.
 	
+	public int getTrain() {return this.trainID;}
+	
 	public String getName() {return this.name;}
 	
 	public int getQueued() {return this.queued;}
@@ -122,7 +134,7 @@ public class Task implements Comparable<Task> {
 
 	public double getExpTime() {return this.expTime;}
 
-	public double getDepTime() {return this.depTime;}
+	public double getELSTime() {return this.elapsedTime;}
 
 	public double getBeginTime() {return this.beginTime;}
 
@@ -181,7 +193,9 @@ public class Task implements Comparable<Task> {
 		
 		Random rng = new Random();
 		double normal = rng.nextGaussian();
-		return mean + stddev*normal;
+		double l = mean + stddev*normal;
+		
+		return l;
 		
 	}
 	
@@ -276,7 +290,7 @@ public class Task implements Comparable<Task> {
 	
 	private double genSerTime(){
 		
-		char type = parameters.arrDists[Type];
+		char type = parameters.serDists[Type];
 		double start = parameters.serPms[Type][0];
 		double end = parameters.serPms[Type][1];
 		return GenTime(type, start, end);

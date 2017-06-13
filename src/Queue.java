@@ -103,6 +103,11 @@ public class Queue implements Comparable<Queue>{
 		// Set the time of the queue to the arrival time of the task.
 		
 		SetTime(task.getArrTime());
+		if (!taskqueue.isEmpty()){
+			if (task.getPriority() > taskqueue.peek().getPriority()){
+				taskqueue.peek().setELStime(task.getArrTime()-taskqueue.peek().getBeginTime());
+			}
+		}
 		taskqueue.add(task);
 		
 		// If the task is processed as first priority, i.e. began immediately, then:
@@ -139,6 +144,8 @@ public class Queue implements Comparable<Queue>{
 			
 			taskqueue.peek().setQueue(NumTask);
 			
+			taskqueue.peek().setELStime(taskqueue.peek().getSerTime());
+			
 			// Remove the finished task from the queue and put it into recordtask list.
 			
 			recordtasks.add(taskqueue.poll());
@@ -149,6 +156,12 @@ public class Queue implements Comparable<Queue>{
 		}
 		
 		// If there are ANOTHER task in the queue following the completion of this one:
+		while (taskqueue.peek()!= null){
+			if (taskqueue.peek().getExpTime() > time){
+				break;
+			}
+			taskqueue.poll();
+		}
 
 		if (taskqueue.peek()!= null){
 			
@@ -188,7 +201,7 @@ public class Queue implements Comparable<Queue>{
 		
 		else {
 			Task onhand = taskqueue.peek();
-			finTime = onhand.getBeginTime() + onhand.getSerTime();
+			finTime = onhand.getBeginTime() + onhand.getSerTime() - onhand.getELSTime();
 		}
 	}
 	
