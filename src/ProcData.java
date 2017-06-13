@@ -28,8 +28,19 @@ public class ProcData {
 		List<String> tasklist = new ArrayList<String>();
 		trim(time);
 		System.out.println(load());
+        for (Task each : Dataset) {
+            tasklist.add(each.getName());
+        }
+        String[] simpleArray = new String[tasklist.size()];
+        tasklist.toArray(simpleArray);
+        System.out.println(simpleArray.length);
+        try {
+            gencsv.main(simpleArray);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-		//debug();
+        //debug();
 	}
 	
 	public void trim(double time){
