@@ -28,6 +28,7 @@ public class loadparam {
     public int numReps;
     public int[] ops;
     public int numTrains;
+    public int numDispatch;
         
     // Operator settings
         
@@ -85,6 +86,7 @@ public class loadparam {
 		numReps = readInt(in);
 		numTrains = readInt(in);
 		numOps = readInt(in);
+		numDispatch = readInt(in);
 		numTaskTypes = readInt(in);
 		
 		//Initiate array sizes

@@ -1,3 +1,4 @@
+package Engine;
 import java.util.*;
 import Input.loadparam;
 
@@ -23,17 +24,27 @@ public class Dispatch {
 	
 	private ArrayList<Task> linkedtasks;
 	
+	private ArrayList<Task> dispatchrecords;
+	
+	private Operator[] dispatchers;
+	
+	private int[] linked;
+	
 	public Dispatch(loadparam Param){
 		parameters = Param;
 	}
 	
 	public void linkedgen(){
 		
+		// Creates a new task arraylist of the tasks that are linked
+		
+		ArrayList<Integer> linkedt = new ArrayList<Integer>();
+
+		linkedtasks = new ArrayList<Task>();
+		
+		// For each train:
+		
 		for (int j = 0; j < parameters.numTrains ; j++){
-			
-			linkedtasks = new ArrayList<Task>();
-			
-			linkedtasks = new ArrayList<Task>();
 			
 			// For each type of tasks:
 			
@@ -47,9 +58,13 @@ public class Dispatch {
 				
 				Task origin = new Task(i, 0, parameters);
 				
-				if (origin.linked()){
+				if (!origin.linked()){
 					continue;
 				}
+				
+				linkedt.add(i);
+				
+				// Set train ID.
 				
 				origin.setID(j);
 				indlist.add(origin);
@@ -67,6 +82,20 @@ public class Dispatch {
 				linkedtasks.addAll(indlist);
 			}
 		}
+		
+		linked = linkedt.stream().mapToInt(Integer::intValue).toArray();
+	}
+	
+	public void genDispatch(){
+		
+		dispatchers = new Operator[parameters.numDispatch];
+		
+		for (int i = 0; i < parameters.numDispatch; i++){
+			
+			dispatchers[i] = new Operator(i, linked);
+			
+		}
+		
 	}
 
 }

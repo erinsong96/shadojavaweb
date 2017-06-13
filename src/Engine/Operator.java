@@ -1,3 +1,4 @@
+package Engine;
 import java.util.*;
 import Input.loadparam;
 
@@ -52,12 +53,24 @@ public class Operator {
 		opId = opid;
 		taskType = parameters.opTasks[opid];
 		name = parameters.opNames[opid];
-		if (name.equals("Dispatcher")){
-			isDispatcher = true;
-		} else { isDispatcher = false;}
 		
 		// Next line generates an empty queue.
-		myQueue = new Queue(opId);
+		myQueue = new Queue();
+	}
+	
+	/****************************************************************************
+	*																			
+	*	Main Object:	Dispatcher															
+	*																			
+	*	Purpose:		Generate a Dispatcher from the parameter file imported
+	*																			
+	****************************************************************************/
+	
+	public Operator (int dpid, int[] tasks){
+		
+		taskType = tasks;
+		name = "Dispatcher " + Integer.toString(dpid);
+		myQueue = new Queue();
 		
 	}
 }

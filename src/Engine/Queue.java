@@ -1,3 +1,4 @@
+package Engine;
 import java.util.*;
 
 /***************************************************************************
@@ -81,8 +82,7 @@ public class Queue implements Comparable<Queue>{
 	*																			
 	****************************************************************************/
 	
-	public Queue(int opid){
-		opId = opid;
+	public Queue(){
 		taskqueue = new PriorityQueue<Task>();
 		time = 0;
         finTime = Double.POSITIVE_INFINITY;
