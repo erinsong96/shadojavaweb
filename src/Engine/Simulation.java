@@ -29,6 +29,11 @@ public class Simulation {
 		totaltime = parameters.numHours*60;
 	}
 	
+	public void getrec(){
+		
+		
+	}
+	
 	public void run(){
 		
 		// Initialize control center.
