@@ -1,5 +1,7 @@
 package Engine;
 import Input.loadparam;
+import Output.DataWrapper;
+
 import java.io.*;
 
 public class Main {
@@ -19,13 +21,15 @@ public class Main {
 		}
 		
 		// Runs simulation.
-		
-		Simulation once = new Simulation(data);
-		once.run();
-		
-		DataWrapper analyze = new DataWrapper(once);
-		analyze.read();
-		analyze.generate();
-		
+		for (int i = 0; i<data.numReps ; i++){
+			
+			Simulation once = new Simulation(data);
+			once.run();
+			
+			DataWrapper analyze = new DataWrapper(once);
+			analyze.read();
+			analyze.generate();
+			
+		}
 	}
 }

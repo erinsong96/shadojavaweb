@@ -1,5 +1,10 @@
-package Engine;
+package Output;
 import java.util.ArrayList;
+
+import Engine.Dispatch;
+import Engine.Operator;
+import Engine.Simulation;
+import Engine.TrainSim;
 
 /***************************************************************************
  * 
@@ -50,6 +55,10 @@ public class DataWrapper {
 				new ProcData(him.getQueue().records()).run(once.getTime());
 			}
 		}
+		
+	}
+	
+	public void generatecsv(){
 		
 	}
 
