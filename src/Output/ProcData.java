@@ -1,6 +1,5 @@
-import java.io.IOException;
+package Engine;
 import java.util.*;
-import java.lang.String;
 
 /***************************************************************************
  * 
@@ -25,22 +24,10 @@ public class ProcData {
 	}
 	
 	public void run(double time){
-		List<String> tasklist = new ArrayList<String>();
 		trim(time);
 		System.out.println(load());
-        for (Task each : Dataset) {
-            tasklist.add(each.getName());
-        }
-        String[] simpleArray = new String[tasklist.size()];
-        tasklist.toArray(simpleArray);
-        System.out.println(simpleArray.length);
-        try {
-            gencsv.main(simpleArray);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        //debug();
+		//debug();
+		System.out.println(initial()[8]);
 	}
 	
 	public void trim(double time){
@@ -61,7 +48,7 @@ public class ProcData {
 
 		if (Dataset != null) {
 			for (Task each : Dataset) {
-				worktime += each.getEndTime() - each.getBeginTime();
+				worktime += each.getELSTime();
 			}
 		}
 		return worktime;
@@ -71,10 +58,23 @@ public class ProcData {
 	public void debug(){
 		
 		for (Task each : Dataset){
-			System.out.println(each.getBeginTime() + " " + each.getSerTime() + " " + each.getEndTime()
-			+ " " + each.getName() + " and " + each.getQueued() + " are in the queue.");
+			System.out.println(each.getBeginTime() + " " + each.getELSTime() + " " + each.getEndTime()
+			+ " " + each.getName() + " and " + each.getQueued() + " are in the queue. " + each.getExpTime());
 		}
 			
+	}
+
+	public double[] initial() {
+
+		double[] utilization = new double[9];
+		for (Task each : Dataset) {
+			if (each.getBeginTime() <= 10) {
+				utilization[each.getType()] = each.getELSTime();
+
+			}
+		}
+
+		return utilization;
 	}
 	
 	

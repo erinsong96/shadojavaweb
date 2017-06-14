@@ -4,255 +4,216 @@ import java.util.stream.*;
 import Input.loadparam;
 
 /***************************************************************************
- * 
+ *
  * 	FILE: 			TrainSim.java
- * 
+ *
  * 	AUTHOR: 		ROCKY LI
- * 	
+ *
  * 	DATA:			2017/6/2
- * 
+ *
  * 	VER: 			1.0
- * 
+ *
  * 	Purpose: 		Create and manage the simulation of a single train.
- * 
+ *
  **************************************************************************/
 
 
 public class TrainSim {
 
-    // The parameters loaded from file
+	// The parameters loaded from file
 
-    public loadparam parameters;
+	public loadparam parameters;
 
-    public Operator[] operators;
+	public Operator[] operators;
 
-    public int trainID;
+	public int trainID;
 
-    // This is an arraylist of ALL tasks in the order that they're arriving.
+	// This is an arraylist of ALL tasks in the order that they're arriving.
 
-    public ArrayList<Task> tasktime;
+	public ArrayList<Task> tasktime;
 
-    public int getTrainID() {
-        return trainID;
-    }
+	// Inspectors
 
-    // Inspectors
+	public double getTotalTime(){
+		return parameters.numHours * 60;
+	}
 
-    public double getTotalTime() {
-        return parameters.numHours * 60;
-    }
+	// Mutator
 
-    // Mutator
+	public void linktask(Task task){
+		tasktime.add(task);
+	}
 
-    public void linktask(Task task) {
-        tasktime.add(task);
-    }
+	/****************************************************************************
+	 *
+	 *	Main Object:	TrainSim
+	 *
+	 *	Purpose:		Create a simulation for a single train.
+	 *
+	 ****************************************************************************/
 
-    /****************************************************************************
-     *
-     *	Side Object:	TrainSim
-     *
-     *	Purpose:		Create a simulation for Dispatcher using the same logic
-     *
-     ****************************************************************************/
+	public TrainSim (loadparam param, int trainid){
+		parameters = param;
+		trainID = trainid;
+		taskgen();
+	}
 
-    public TrainSim(loadparam param, Operator[] dis, ArrayList<Task> list) {
-        tasktime = list;
-        operators = dis;
-        parameters = param;
-    }
+	/****************************************************************************
+	 *
+	 *	Method:			taskgen
+	 *
+	 *	Purpose:		Generate a list of task based on time order.
+	 *
+	 ****************************************************************************/
 
-    /****************************************************************************
-     *
-     *	Main Object:	TrainSim
-     *
-     *	Purpose:		Create a simulation for a single train.
-     *
-     ****************************************************************************/
+	public void taskgen(){
 
-    public TrainSim(loadparam param, int trainid) {
-        parameters = param;
-        trainID = trainid;
-    }
+		tasktime = new ArrayList<Task>();
 
-    /****************************************************************************
-     *
-     *	Method:			taskgen
-     *
-     *	Purpose:		Generate a list of task based on time order.
-     *
-     ****************************************************************************/
+		// For each type of tasks:
 
-    public void taskgen() {
+		for (int i = 0; i < parameters.numTaskTypes; i++){
 
-        tasktime = new ArrayList<Task>();
+			// Create a new empty list of Tasks
 
-        // For each type of tasks:
+			ArrayList<Task> indlist = new ArrayList<Task>();
 
-        for (int i = 0; i < parameters.numTaskTypes; i++) {
+			// Start a new task with PrevTime = 0
 
-            // Create a new empty list of Tasks
+			Task origin = new Task(i, 0, parameters);
 
-            ArrayList<Task> indlist = new ArrayList<Task>();
+			if (origin.linked()){
+				continue;
+			}
 
-            // Start a new task with PrevTime = 0
+			origin.setID(trainID);
+			indlist.add(origin);
 
-            Task origin = new Task(i, 0, parameters, true);
+			// While the next task is within the time frame, generate.
 
-            if (origin.linked()) {
-                continue;
-            }
+			while (origin.getArrTime() < parameters.numHours*60){
+				origin = new Task(i, origin.getArrTime(), parameters);
+				origin.setID(trainID);
+				indlist.add(origin);
+			}
 
-            origin.setID(trainID);
-            indlist.add(origin);
+			// Put all task into the master tasklist.
 
-            // While the next task is within the time frame, generate.
+			tasktime.addAll(indlist);
+		}
 
-            while (origin.getArrTime() < parameters.numHours * 60) {
-                origin = new Task(i, origin.getArrTime(), parameters, true);
-                origin.setID(trainID);
-                indlist.add(origin);
-            }
+	}
 
-            // Put all task into the master tasklist.
+	public void sortTask(){
 
-            tasktime.addAll(indlist);
-        }
+		// Sort task by time.
 
-    }
+		Collections.sort(tasktime, (o1, o2) -> Double.compare(o1.getArrTime(), o2.getArrTime()));
+	}
 
-    public void sortTask() {
+	/****************************************************************************
+	 *
+	 *	Method:			operatorgen
+	 *
+	 *	Purpose:		Generate an array of operators.
+	 *
+	 ****************************************************************************/
 
-        // Sort task by time.
+	public void operatorgen(){
 
-        Collections.sort(tasktime, (o1, o2) -> Double.compare(o1.getArrTime(), o2.getArrTime()));
-    }
+		// Create Operators
 
-    public void addTriggered() {
+		operators = new Operator[parameters.ops.length];
+		for (int i = 0; i < parameters.ops.length; i++){
+			operators[i] = new Operator(i, parameters);
+		}
 
-        for (Task each : tasktime) {
-            int i = each.getType();
+	}
 
-            if (parameters.trigger[i][0] != -1) {
-                for (Integer that : parameters.trigger[i]) {
-                    tasktime.add(new Task(that, each.getArrTime(), parameters, false));
-                }
-            }
-        }
-    }
+	/****************************************************************************
+	 *
+	 *	Method:			puttask
+	 *
+	 *	Purpose:		putting tasks into the operator that can operate the task
+	 * 					with the least queue.
+	 *
+	 ****************************************************************************/
 
-    /****************************************************************************
-     *
-     *	Method:			operatorgen
-     *
-     *	Purpose:		Generate an array of operators.
-     *
-     ****************************************************************************/
+	public void puttask(Task task){
 
-    public void operatorgen() {
+		// Create a new arraylist of queue:
 
-        // Create Operators
+		ArrayList<Queue> proc = new ArrayList<Queue>();
 
-        operators = new Operator[parameters.ops.length];
-        for (int i = 0; i < parameters.ops.length; i++) {
-            operators[i] = new Operator(i, parameters);
-        }
+		// If the task can be operated by this operator, get his queue.
 
-    }
+		for (int i = 0; i < operators.length; i++){
+			if (IntStream.of(operators[i].taskType).anyMatch(x -> x == task.getType())){
+				proc.add(operators[i].getQueue());
+			}
+		}
 
-    /****************************************************************************
-     *
-     *	Method:			puttask
-     *
-     *	Purpose:		putting tasks into the operator that can operate the task
-     * 					with the least queue.
-     *
-     ****************************************************************************/
+		// Sort queue by tasks queued.
 
-    public void puttask(Task task) {
+		Collections.sort(proc);
 
-        // Create a new arraylist of queue:
+		// Before inserting new tasks, make sure all the tasks that can be finished
+		// before the arrival of the new tasks is finished.
 
-        ArrayList<Queue> proc = new ArrayList<Queue>();
+		while (proc.get(0).getfinTime()<task.getArrTime()){
+			proc.get(0).done();
+		}
 
-        ArrayList<Operator> working = new ArrayList<>(proc.size());
+		// add task to queue.
 
-        // If the task can be operated by this operator, get his queue.
+		proc.get(0).add(task);
 
-        for (int i = 0; i < operators.length; i++) {
-            if (IntStream.of(operators[i].taskType).anyMatch(x -> x == task.getType())) {
-                proc.add(operators[i].getQueue());
-                working.add(operators[i]);
+	}
 
-            }
-        }
+	/****************************************************************************
+	 *
+	 *	Method:			genbasis
+	 *
+	 *	Purpose:		Generate the base set of data in TrainSim object.
+	 *
+	 ****************************************************************************/
 
-        // Sort queue by tasks queued.
+	public void genbasis(){
 
-        Collections.sort(proc);
+		// Generate stuff
+		taskgen();
+		operatorgen();
 
-        // Before inserting new tasks, make sure all the tasks that can be finished
-        // before the arrival of the new tasks is finished.
+	}
 
-        while (proc.get(0).getfinTime() < task.getArrTime()) {
-            proc.get(0).done();
-        }
 
-        // add task to queue.
+	/****************************************************************************
+	 *
+	 *	Main Method:	run
+	 *
+	 *	Purpose:		run the simulation based on time order.
+	 *
+	 ****************************************************************************/
 
+	public void run(){
 
-        // **** I'm setting the operator so that we can access the data arrays of each operator ****
-        proc.get(0).operator = working.get(0);
-        proc.get(0).add(task);
+		sortTask();
 
-    }
+		// Put tasks into queue at appropriate order.
 
-    /****************************************************************************
-     *
-     *	Method:			genbasis
-     *
-     *	Purpose:		Generate the base set of data in TrainSim object.
-     *
-     ****************************************************************************/
+		for (Task task: tasktime){
+			puttask(task);
+		}
 
-    public void genbasis() {
+		// Finish tasks if no new tasks comes in.
 
-        // Generate stuff
-        taskgen();
-        operatorgen();
+		double totaltime = parameters.numHours * 60;
+		for (Operator each: operators){
+			while (each.getQueue().getfinTime()<totaltime){
+				each.getQueue().done();
+			}
+		}
 
-    }
-
-
-    /****************************************************************************
-     *
-     *	Main Method:	run
-     *
-     *	Purpose:		run the simulation based on time order.
-     *
-     ****************************************************************************/
-
-    public void run() {
-
-        addTriggered();
-
-        sortTask();
-
-        // Put tasks into queue at appropriate order.
-
-        for (Task task : tasktime) {
-            puttask(task);
-        }
-
-        // Finish tasks if no new tasks comes in.
-
-        double totaltime = parameters.numHours * 60;
-        for (Operator each : operators) {
-            while (each.getQueue().getfinTime() < totaltime) {
-                each.getQueue().done();
-            }
-        }
-
-    }
+	}
 
 }

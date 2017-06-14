@@ -28,12 +28,11 @@ public class loadparam {
     public int numReps;
     public int[] ops;
     public int numTrains;
-    public int numDispatch;
-    public int[] DispatchTasks;
+	public int numDispatch;
 
-    // Operator settings
+	// Operator settings
 
-    public int numOps;
+	public int numOps;
 	public String[] opNames;
 	public int[][] opTasks;
 		
@@ -51,8 +50,7 @@ public class loadparam {
     public double[][] expPmsHi;
 	public int[][] affByTraff;
 	public int[][] opNums;
-	public int[][] trigger;
-
+	
 	// Adding isLinked
 	
 	public int[] linked;
@@ -89,7 +87,6 @@ public class loadparam {
 		numTrains = readInt(in);
 		numOps = readInt(in);
 		numDispatch = readInt(in);
-		DispatchTasks = readIntArr(in);
 		numTaskTypes = readInt(in);
 		
 		//Initiate array sizes
@@ -109,8 +106,7 @@ public class loadparam {
 		opNums = new int[numTaskTypes][];
 		ops = new int[numOps];
 		linked = new int[numTaskTypes];
-		trigger = new int[numTaskTypes][];
-
+		
 		//Read in person type and tasks they can do
 		
 		for (int i = 0; i< numOps; i++){
@@ -134,8 +130,7 @@ public class loadparam {
 			expPmsHi[i] = readDoubleArr(in);
 			affByTraff[i] = readIntArr(in);
 			linked[i] = readInt(in);
-			trigger[i] = readIntArr(in);
-
+			
 		}
 		
 		for (int i = 0; i < numTaskTypes; i++){

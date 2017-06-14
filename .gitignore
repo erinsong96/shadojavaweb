@@ -3,4 +3,3 @@ bin/
 .idea/
 .settings/
 src/Engine/Main.java
-out/

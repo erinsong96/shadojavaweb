@@ -1,13 +1,10 @@
 package Engine;
-
 import Input.loadparam;
-import Output.DataWrapper;
 import java.io.*;
 
 public class Main {
 
-	public static void main(String[] args) throws IOException {
-
+	public static void main(String[] args) throws FileNotFoundException{
 
 		// LOAD the parameter file.
 
@@ -20,13 +17,16 @@ public class Main {
 
 		// Runs simulation.
 
-		Simulation once = new Simulation(data);
-		once.run();
+		TrainSim runs = new TrainSim(data, 0);
+		runs.genbasis();
+		runs.run();
+		for (Operator each: runs.operators){
+			ProcData proc = new ProcData(each.getQueue().records());
+			System.out.println(each.name);
+			proc.run(data.numHours*60);
+			// writing a csv file for each operator
 
-        DataWrapper analyze = new DataWrapper(once, data);
-        analyze.generate();
-		analyze.output();
+		}
 
 	}
-
 }

@@ -34,7 +34,6 @@ public class Task implements Comparable<Task> {
 	private loadparam parameters;
 	private String name;
 	private int trainID;
-	private boolean expired;
 
 	// This adds functionalities of the Dispatcher
 
@@ -45,13 +44,6 @@ public class Task implements Comparable<Task> {
 	private int queued;
 
 // Mutators
-public boolean checkexpired() {
-	return expired;
-}
-
-	public void setexpired() {
-		expired = true;
-	}
 
 	public void setELStime (double time){
 		elapsedTime = time;
@@ -82,13 +74,13 @@ public boolean checkexpired() {
 	 *
 	 ****************************************************************************/
 
-	public Task(int type, double PrevTime, loadparam Param, boolean fromPrev) {
+	public Task (int type, double PrevTime, loadparam Param, boolean fromPrev){
 		Type = type;
 		parameters = Param;
 		prevTime = PrevTime;
 		Phase = getPhase(PrevTime, parameters.numHours);
 		Priority = Param.taskPrty[Type][Phase];
-		if (fromPrev == true) {
+		if (fromPrev == true){
 			arrTime = genArrTime(PrevTime);
 		} else {
 			arrTime = PrevTime;
@@ -100,7 +92,6 @@ public boolean checkexpired() {
 		name = parameters.taskNames[Type];
 		isLinked = parameters.linked[Type] == 1;
 		elapsedTime = 0;
-		expired = false;
 	}
 
 	/****************************************************************************
