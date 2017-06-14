@@ -46,6 +46,15 @@ public class Dispatch {
 		return dispatchers;
 	}
 	
+	/****************************************************************************
+	 *
+	 *	Method:			linkedgen
+	 *
+	 *	Purpose:		Generate all the linked tasks that requires both dispatcher and
+	 *					operator input.
+	 *
+	 ****************************************************************************/
+	
 	public void linkedgen(){
 		
 		// Creates a new task arraylist of the tasks that are linked
@@ -98,6 +107,14 @@ public class Dispatch {
 		linked = linkedt.stream().mapToInt(Integer::intValue).toArray();
 	}
 	
+	/****************************************************************************
+	 *
+	 *	Method:			genDispatch
+	 *
+	 *	Purpose:		Generate dispatchers 
+	 *
+	 ****************************************************************************/
+	
 	public void genDispatch(){
 		
 		dispatchers = new Operator[parameters.numDispatch];
@@ -110,6 +127,14 @@ public class Dispatch {
 		
 	}
 	
+	/****************************************************************************
+	 *
+	 *	Method:			runDispatch
+	 *
+	 *	Purpose:		generate the final state of the dispatcher and their tasks.
+	 *
+	 ****************************************************************************/
+	
 	public void runDispatch(){
 		
 		TrainSim DispatchSim = new TrainSim(parameters, dispatchers, linkedtasks);
@@ -120,6 +145,14 @@ public class Dispatch {
 		}
 		
 	}
+	
+	/****************************************************************************
+	 *
+	 *	Main Method:	run
+	 *
+	 *	Purpose:		Wraps the entire objects functionality.
+	 *
+	 ****************************************************************************/
 	
 	public void run(){
 		
