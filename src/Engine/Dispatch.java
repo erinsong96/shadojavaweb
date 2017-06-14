@@ -30,8 +30,20 @@ public class Dispatch {
 	
 	private int[] linked;
 	
+	private ArrayList<Task> proctasks;
+	
 	public Dispatch(loadparam Param){
 		parameters = Param;
+	}
+	
+	// Inspectors:
+	
+	public ArrayList<Task> gettasks(){
+		return proctasks;
+	}
+	
+	public Operator[] getDispatch(){
+		return dispatchers;
 	}
 	
 	public void linkedgen(){
@@ -102,6 +114,18 @@ public class Dispatch {
 		
 		TrainSim DispatchSim = new TrainSim(parameters, dispatchers, linkedtasks);
 		DispatchSim.run();
+		proctasks = new ArrayList<Task>();
+		for (Operator dispatcher: DispatchSim.operators){
+			proctasks.addAll(dispatcher.getQueue().records());
+		}
+		
+	}
+	
+	public void run(){
+		
+		linkedgen();
+		genDispatch();
+		runDispatch();
 		
 	}
 }

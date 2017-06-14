@@ -11,12 +11,12 @@ import java.util.*;
  * 
  * 	VER: 			1.0
  * 
- * 	Purpose: 		Analyze the data being outputted.
+ * 	Purpose: 		Analyze the data being outputted, one operator at a time.
  * 
  **************************************************************************/
 
 public class ProcData {
-
+	
 	private ArrayList<Task> Dataset;
 	
 	public ProcData (ArrayList<Task> thisone){
@@ -25,7 +25,7 @@ public class ProcData {
 	
 	public void run(double time){
 		trim(time);
-		System.out.println(load());
+		System.out.println("\n" + load());
 		debug();
 	}
 	
