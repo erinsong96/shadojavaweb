@@ -26,8 +26,7 @@ public class ProcData {
 	public void run(double time){
 		trim(time);
 		System.out.println(load());
-		//debug();
-		System.out.println(initial()[8]);
+		debug();
 	}
 	
 	public void trim(double time){
@@ -62,19 +61,6 @@ public class ProcData {
 			+ " " + each.getName() + " and " + each.getQueued() + " are in the queue. " + each.getExpTime());
 		}
 			
-	}
-
-	public double[] initial() {
-
-		double[] utilization = new double[9];
-		for (Task each : Dataset) {
-			if (each.getBeginTime() <= 10) {
-				utilization[each.getType()] = each.getELSTime();
-
-			}
-		}
-
-		return utilization;
 	}
 	
 	
