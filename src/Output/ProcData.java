@@ -1,4 +1,6 @@
 package Engine;
+
+import javax.xml.crypto.Data;
 import java.util.*;
 
 /***************************************************************************
@@ -29,12 +31,12 @@ public class ProcData {
 		//debug();
 		System.out.println(initial()[8]);
 	}
-	
-	public void trim(double time){
-		
+
+	public void trim(double time) {
+
 		ArrayList<Task> newset = new ArrayList<Task>();
-		for (Task each: Dataset){
-			if (each.getEndTime()<time){
+		for (Task each : Dataset) {
+			if (each.getEndTime() < time) {
 				newset.add(each);
 			}
 		}
@@ -53,6 +55,22 @@ public class ProcData {
 		}
 		return worktime;
 		
+	}
+
+	public double[] timeframe() {
+		double[] tasktime = new double[9];
+		for (int i = 1; i < 49; i++) {
+			for (Task each : Dataset) {
+				if (each.getBeginTime() <= 10 * i) {
+					if (each.getEndTime() <= 10 * i) {
+
+						
+					}
+
+				}
+			}
+		}
+
 	}
 	
 	public void debug(){

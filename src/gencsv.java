@@ -11,6 +11,7 @@ public class gencsv {
 
     public static void main(String[] args) throws IOException {
 
+        String FileName = "";
     CSVWriter writer = new CSVWriter(new FileWriter("outputfile.csv"), ',');
     // feed in your array (or convert your data to an array)
 

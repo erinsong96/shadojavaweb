@@ -1,73 +1,78 @@
 package Engine;
+
 import Input.loadparam;
 
 import java.util.ArrayList;
 
 public class Simulation {
 
-	private loadparam parameters;
+    private loadparam parameters;
 
-    private int[] expiredtaskcount;
-    private int[] completedtaskcount;
-    private Data[] operatoroutput;
-    private Data[] dispatchoutput;
-    private int repnumber;
-    private int repID;
+    private ArrayList<ArrayList<Task>> results;
 
-    private Replication[] completesimulation;
+    private ArrayList<Task> linked;
 
-    public Replication[] getCompletesimulation() {
-        return completesimulation;
+    private TrainSim[] trains;
+
+    private Dispatch control;
+
+    private double totaltime;
+
+    // Inspectors:
+
+    public TrainSim[] getTrains() {
+        return trains;
+    }
+
+    public Dispatch getDispatch() {
+        return control;
+    }
+
+    public double getTime() {
+        return totaltime;
     }
 
     public Simulation(loadparam param) {
         parameters = param;
-        repnumber = param.numReps;
-        completesimulation = new Replication[repnumber];
-        operatoroutput = new Data[param.numOps];
-        for (int i = 0; i < param.numOps; i++) {
-            operatoroutput[i] = new Data(param.numTaskTypes, (int) param.numHours * 6, param.numReps);
-        }
-
-        dispatchoutput = new Data[param.numDispatch];
-        for (int i = 0; i < param.numDispatch; i++) {
-            dispatchoutput[i] = new Data(param.numTaskTypes, (int) param.numHours * 6, param.numReps);
-        }
-        expiredtaskcount = new int[param.numTaskTypes];
-        completedtaskcount = new int[param.numTaskTypes];
-    }
-
-    public int[] getExpiredtask() {
-        return expiredtaskcount;
-    }
-
-    public int[] getCompletedtaskcount() {
-        return completedtaskcount;
-    }
-
-    public int getCompletedtaskinc(int i, int j) {
-        return completedtaskcount[i] += j;
-    }
-
-    public int getExpiredtaskinc(int i, int j) {
-        return expiredtaskcount[i] += j;
-    }
-
-    public Data getOperatoroutput(int i) {
-        return operatoroutput[i];
-    }
-
-    public Data getDispatchoutput(int i) {
-        return dispatchoutput[i];
+        totaltime = parameters.numHours * 60;
     }
 
     public void run() {
-        for (int i = 0; i < repnumber; i++) {
-            repID = i;
-            completesimulation[i] = new Replication(parameters);
-            completesimulation[i].run();
+
+        // Initialize control center.
+
+        control = new Dispatch(parameters);
+        control.run();
+        linked = control.gettasks();
+
+        // Initialize trains.
+
+        trains = new TrainSim[parameters.numTrains];
+
+        for (int i = 0; i < parameters.numTrains; i++) {
+
+            trains[i] = new TrainSim(parameters, i);
+            trains[i].genbasis();
+
         }
+
+        // Add linked tasks to trains.
+
+        for (Task each : linked) {
+
+            int trainid = each.getTrain();
+            trains[trainid].linktask(each);
+
+        }
+
+        // Run each train
+
+        for (TrainSim each : trains) {
+
+            each.run();
+
+        }
+
     }
 
-	
 }
