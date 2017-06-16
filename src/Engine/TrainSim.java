@@ -93,7 +93,7 @@ public class TrainSim {
 			
 			// Start a new task with PrevTime = 0
 			
-			Task origin = new Task(i, 0, parameters);
+			Task origin = new Task(i, 0, parameters, true);
 			
 			if (origin.linked()){
 				continue;
@@ -105,7 +105,7 @@ public class TrainSim {
 			// While the next task is within the time frame, generate.
 			
 			while (origin.getArrTime() < parameters.numHours*60){
-				origin = new Task(i, origin.getArrTime(), parameters);
+				origin = new Task(i, origin.getArrTime(), parameters, true);
 				origin.setID(trainID);
 				indlist.add(origin);
 			}
@@ -122,6 +122,19 @@ public class TrainSim {
 		// Sort task by time.
 		
 		Collections.sort(tasktime, (o1, o2) -> Double.compare(o1.getArrTime(), o2.getArrTime()));
+	}
+	
+	public void addTriggered(){
+		
+		for (Task each: tasktime){
+			int i = each.getType();
+			
+			if (parameters.trigger[i][0] != -1){
+				for (Integer that: parameters.trigger[i]){
+					tasktime.add(new Task(that, each.getArrTime(), parameters, false));
+				}
+			}
+		}
 	}
 	
 	/****************************************************************************
@@ -209,6 +222,8 @@ public class TrainSim {
 	****************************************************************************/
 	
 	public void run(){
+		
+		addTriggered();
 		
 		sortTask();
 		

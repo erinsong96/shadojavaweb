@@ -32,14 +32,20 @@ public class Dispatch {
 	
 	private ArrayList<Task> proctasks;
 	
+	private ArrayList<Task> totrain;
+	
 	public Dispatch(loadparam Param){
 		parameters = Param;
 	}
 	
 	// Inspectors:
 	
-	public ArrayList<Task> gettasks(){
+	public ArrayList<Task> getalltasks(){
 		return proctasks;
+	}
+	
+	public ArrayList<Task> gettasks(){
+		return totrain;
 	}
 	
 	public Operator[] getDispatch(){
@@ -63,6 +69,41 @@ public class Dispatch {
 
 		linkedtasks = new ArrayList<Task>();
 		
+		// Discreet Tasks owned by the Dispatcher:
+		
+		for (int la: parameters.DispatchTasks){
+				
+			// Create a new empty list of Tasks
+			
+			ArrayList<Task> indlist = new ArrayList<Task>();
+			
+			// Start a new task with PrevTime = 0
+			
+			Task origin = new Task(la, 0, parameters, true);
+			
+			if (origin.linked()){
+				continue;
+			}
+			
+			// Set train ID.
+			
+			origin.setID(-1);
+			indlist.add(origin);
+			
+			// While the next task is within the time frame, generate.
+			
+			while (origin.getArrTime() < parameters.numHours*60){
+				origin = new Task(la, origin.getArrTime(), parameters, true);
+				origin.setID(-1);
+				indlist.add(origin);
+			}
+			
+			// Put all task into the master tasklist.
+			
+			linkedtasks.addAll(indlist);
+		
+		}
+		
 		// For each train:
 		
 		for (int j = 0; j < parameters.numTrains ; j++){
@@ -77,7 +118,7 @@ public class Dispatch {
 				
 				// Start a new task with PrevTime = 0
 				
-				Task origin = new Task(i, 0, parameters);
+				Task origin = new Task(i, 0, parameters, true);
 				
 				if (!origin.linked()){
 					continue;
@@ -93,7 +134,7 @@ public class Dispatch {
 				// While the next task is within the time frame, generate.
 				
 				while (origin.getArrTime() < parameters.numHours*60){
-					origin = new Task(i, origin.getArrTime(), parameters);
+					origin = new Task(i, origin.getArrTime(), parameters, true);
 					origin.setID(j);
 					indlist.add(origin);
 				}
@@ -121,7 +162,7 @@ public class Dispatch {
 		
 		for (int i = 0; i < parameters.numDispatch; i++){
 			
-			dispatchers[i] = new Operator(i, linked);
+			dispatchers[i] = new Operator(i, parameters.DispatchTasks);
 			
 		}
 		
@@ -140,8 +181,14 @@ public class Dispatch {
 		TrainSim DispatchSim = new TrainSim(parameters, dispatchers, linkedtasks);
 		DispatchSim.run();
 		proctasks = new ArrayList<Task>();
+		totrain = new ArrayList<Task>();
 		for (Operator dispatcher: DispatchSim.operators){
 			proctasks.addAll(dispatcher.getQueue().records());
+		}
+		for (Task each: proctasks){
+			if (each.linked()){
+				totrain.add(each);
+			}
 		}
 		
 	}
