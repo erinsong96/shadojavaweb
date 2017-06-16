@@ -6,6 +6,7 @@ public class Main {
 
 	public static void main(String[] args) throws FileNotFoundException{
 
+
 		// LOAD the parameter file.
 
 		loadparam data;
@@ -17,16 +18,13 @@ public class Main {
 
 		// Runs simulation.
 
-		TrainSim runs = new TrainSim(data, 0);
-		runs.genbasis();
-		runs.run();
-		for (Operator each: runs.operators){
-			ProcData proc = new ProcData(each.getQueue().records());
-			System.out.println(each.name);
-			proc.run(data.numHours*60);
-			// writing a csv file for each operator
+		Simulation once = new Simulation(data);
+		once.run();
 
-		}
+		DataWrapper analyze = new DataWrapper(once);
+		analyze.read();
+		analyze.generate();
 
 	}
+
 }
