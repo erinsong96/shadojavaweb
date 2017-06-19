@@ -43,25 +43,29 @@ public class DataWrapper {
 
     public void generate() throws FileNotFoundException {
 
-
+        int i = 0;
+        int j = 0;
         System.out.println("here are the Dispatchers");
         Operator[] dispatchers = here.getDispatch();
         for (Operator each : dispatchers) {
-            file_name = "/Users/erinsong/Documents/shadojava/out/" + each.name + ".csv";
+            file_name = "/Users/erinsong/Documents/shadojava/out/" + each.name + j + ".csv";
             System.setOut(new PrintStream(new BufferedOutputStream(new FileOutputStream(file_name)), true));
             new ProcData(each.getQueue().records()).run(once.getTime());
+            j += 1;
         }
 
         for (TrainSim each : there) {
 
             Operator[] operators = each.operators;
+
             for (Operator him : operators) {
                 System.out.println("for train " + each.trainID);
-                file_name = "/Users/erinsong/Documents/shadojava/out/" + him.name + ".csv";
+                file_name = "/Users/erinsong/Documents/shadojava/out/" + him.name + i + ".csv";
                 System.setOut(new PrintStream(new BufferedOutputStream(new FileOutputStream(file_name)), true));
                 new ProcData(him.getQueue().records()).run(once.getTime());
 
             }
+            i += 1;
         }
 
     }

@@ -1,6 +1,5 @@
 package Engine;
 
-import javax.xml.crypto.Data;
 import java.util.*;
 
 /***************************************************************************
@@ -28,6 +27,7 @@ public class ProcData {
 	public void run(double time){
 		trim(time);
 		System.out.println(load());
+		timeframe();
 		debug();
 	}
 
@@ -56,20 +56,39 @@ public class ProcData {
 		
 	}
 
-	public double[] timeframe() {
-		double[] tasktime = new double[9];
+	public void timeframe() {
+		double[][] tasktime = new double[48][9];
 		for (int i = 1; i < 49; i++) {
 			for (Task each : Dataset) {
 				if (each.getBeginTime() <= 10 * i) {
 					if (each.getEndTime() <= 10 * i) {
+						tasktime[i - 1][each.getType()] += each.getELSTime();
 
-						
+					} else {
+						tasktime[i - 1][each.getType()] += (10 * i) - each.getBeginTime();
+
+					}
+				} else {
+					if (each.getEndTime() <= 10 * i) {
+						tasktime[i - 1][each.getType()] = each.getEndTime() - (10 * i);
+
+					} else {
+						tasktime[i - 1][each.getType()] = 10;
+
+
 					}
 
 				}
+
 			}
 		}
 
+		for (double[] x : tasktime) {
+			for (double y : x) {
+				System.out.print(y + " ");
+			}
+			System.out.println();
+		}
 	}
 	
 	public void debug(){
