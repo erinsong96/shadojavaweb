@@ -1,12 +1,15 @@
-output_path		/Users/Branch/Documents/Research/DES/DES-App/out
-num_hours		2 				# Numbers of hours
-traff_levels   	m m				# Traffic levels for each of those hours
-num_reps		10				# Simulation numbers (Iterations)
-num_ops			1				# Number set of operator
-num_task_types	9				
+output_path		/Users/erinsong/Documents/shadojava/out		# This is the output file of the simulation
+num_hours		8						# This is the number of hours being simulated
+traff_levels   		m h h h l l l m					# This is the traffic level of each of the hour simulated
+num_reps		10						# This is the number of repetition ran
+num_train		10						# This is the number of trains in the simulation
+num_ops			4						# This is the number of operator on each train
+num_dispatch		1						# This is the number of dispatcher for the simulation
+dispatch_task		0 2 4						# This is the tasklist that dispatcher are able to do
+num_task_types		9						# This is the number of types of tasks.
 
-op_name			Engineer
-tasks			0 1 2 3 4 5 6 7 8
+op_name			Engineer					# This is the name of the operator
+tasks			0 1 2 3 4 5 6 7 8				# This is the list of tasks that this operator is able to do.
 
 op_name			Conductor
 tasks			5 6 8
@@ -17,38 +20,44 @@ tasks			1 5 6
 op_name			Cruise Control
 tasks			8
 
-name       		Communicating					# TASK_NAME
-prty         	4 3 4							# Priority value for each of the 3 phases.
-arr_dist     	E								# The distribution type. (Exponential Distribution)
-arr_pms      	0.952381 0.1 0.75188			# distribution parameter for above types in each of the 3 phases.
-ser_dist     	E								# Time it takes for operator to complete said task.
-ser_pms      	7.5188 0						# Parameter for calculating time to complete task.
-exp_dist     	E								# How long the tasks can exist in the system before it expires.
-exp_pms_lo   	0 0.107167 0					# Expiration rates on low traffic			
-exp_pms_hi   	0 0.0863333 0					# Expiration rates on medium traffic.
-aff_by_traff  	0 1 0							# Are the task numbers is being affected by traff_levels
+name       		Communicating				# This is the name of the task
+prty         	4 3 4						# This is the priority of the task in three different phases.
+arr_dist     	E						# This is the distribution type of the arrival time. E stand for Exponential, L stands for log normal and U stands for uniform
+arr_pms      	0.952381 0.1 0.75188				# This is the parameter of that distribution.
+ser_dist     	E						# This is the distribution type of the service time.
+ser_pms      	7.5188 0					# This is the parameter of that distribution.
+exp_dist     	E						# This is the distribution type of the expiration time.
+exp_pms_lo   	0 0.107167 0					# This is the parameter of the above distribution in three different phases when the traffic are low.
+exp_pms_hi   	0 0.0863333 0					# When traffic are high.
+aff_by_traff  	0 1 0						# In which phase are the task affected by traffic
+islinked		1					# Whether the tasks goes to both dispatcher and the operator on trains.
+trigger			-1					# A list of tasks that are triggered by the current task, -1 means no tasks are triggered.
 
-name      		Exception Handling				
+name      		Exception Handling
 prty         	5 4 5
 arr_dist     	E
 arr_pms      	0 0.000333333 0.000333333
-ser_dist     	L								# Log-normal Distribution
+ser_dist     	L
 ser_pms      	0.98 1.39
 exp_dist     	E
 exp_pms_lo   	0 0.0446667 0.0446667
 exp_pms_hi   	0 0.0551667 0.0551667
 aff_by_traff  	0 1 0
+islinked		0
+trigger			-1
 
 name       		Paperwork
 prty         	3 0 2
 arr_dist     	E
 arr_pms      	0.149925 0.05 0.3003
-ser_dist     	U								# Uniform Distribution
+ser_dist     	U
 ser_pms      	0.05 1.5
 exp_dist     	E
 exp_pms_lo   	0 0 0
 exp_pms_hi   	0 0 0
 aff_by_traff   	0 1 1
+islinked		0
+trigger			-1
 
 name       		Maintenance of Way Interactions
 prty         	0 5 0
@@ -60,6 +69,8 @@ exp_dist     	E
 exp_pms_lo   	0 0.184 0
 exp_pms_hi   	0 0.184 0
 aff_by_traff   	0 1 0
+islinked		0
+trigger			-1
 
 name       		Temporary Speed Restrictions
 prty         	0 5 0
@@ -71,6 +82,8 @@ exp_dist     	E
 exp_pms_lo   	0 0.184 0
 exp_pms_hi   	0 0.184 0
 aff_by_traff 	0 1 0
+islinked		0
+trigger			-1
 
 name       		Signal Response Management
 prty         	0 5 0
@@ -82,6 +95,8 @@ exp_dist     	E
 exp_pms_lo   	0 0.184 0.184
 exp_pms_hi   	0 0.184 0.184
 aff_by_traff 	0 1 0
+islinked		0
+trigger			-1
 
 name			Monitoring Inside
 prty         	2 2 1
@@ -93,6 +108,8 @@ exp_dist     	E
 exp_pms_lo   	0 0 0
 exp_pms_hi   	0 0 0
 aff_by_traff   	0 0 0
+islinked		0
+trigger			-1
 
 name      		Monitoring Outside
 prty         	1 1 3
@@ -104,6 +121,8 @@ exp_dist     	E
 exp_pms_lo   	0 0 0
 exp_pms_hi   	0 0 0
 aff_by_traff   	0 1 0
+islinked		0
+trigger			-1
 
 name 			Planning Ahead
 prty         	0 5 0
@@ -115,3 +134,5 @@ exp_dist     	E
 exp_pms_lo   	0 0.166 0
 exp_pms_hi   	0 0.1795 0
 aff_by_traff  	0 1 0
+islinked		0
+trigger			-1
