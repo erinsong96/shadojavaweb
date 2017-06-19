@@ -74,13 +74,13 @@ public class Task implements Comparable<Task> {
 	 *
 	 ****************************************************************************/
 
-	public Task (int type, double PrevTime, loadparam Param, boolean fromPrev){
+	public Task(int type, double PrevTime, loadparam Param, boolean fromPrev) {
 		Type = type;
 		parameters = Param;
 		prevTime = PrevTime;
 		Phase = getPhase(PrevTime, parameters.numHours);
 		Priority = Param.taskPrty[Type][Phase];
-		if (fromPrev == true){
+		if (fromPrev == true) {
 			arrTime = genArrTime(PrevTime);
 		} else {
 			arrTime = PrevTime;

@@ -1,10 +1,16 @@
-package Engine;
+package Output;
+
+import java.util.ArrayList;
+
+import Engine.Dispatch;
+import Engine.Operator;
+import Engine.Simulation;
+import Engine.TrainSim;
 
 import java.io.BufferedOutputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
-import java.util.ArrayList;
 
 /***************************************************************************
  *
@@ -48,10 +54,9 @@ public class DataWrapper {
         System.out.println("here are the Dispatchers");
         Operator[] dispatchers = here.getDispatch();
         for (Operator each : dispatchers) {
-            file_name = "/Users/erinsong/Documents/shadojava/out/" + each.name + j + ".csv";
+            file_name = "/Users/erinsong/Documents/shadojava/out/" + each.name + ".csv";
             System.setOut(new PrintStream(new BufferedOutputStream(new FileOutputStream(file_name)), true));
             new ProcData(each.getQueue().records()).run(once.getTime());
-            j += 1;
         }
 
         for (TrainSim each : there) {
@@ -59,7 +64,7 @@ public class DataWrapper {
             Operator[] operators = each.operators;
 
             for (Operator him : operators) {
-                System.out.println("for train " + each.trainID);
+                //System.out.println("for train " + each.trainID);
                 file_name = "/Users/erinsong/Documents/shadojava/out/" + him.name + i + ".csv";
                 System.setOut(new PrintStream(new BufferedOutputStream(new FileOutputStream(file_name)), true));
                 new ProcData(him.getQueue().records()).run(once.getTime());
