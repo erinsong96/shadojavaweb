@@ -60,23 +60,21 @@ public class ProcData {
 		double[][] tasktime = new double[48][9];
 		for (int i = 1; i < 49; i++) {
 			for (Task each : Dataset) {
-				if (each.getBeginTime() <= 10 * i) {
-					if (each.getEndTime() <= 10 * i) {
-						tasktime[i - 1][each.getType()] += each.getELSTime();
+                //System.out.println(each.getType());
+                if (each.getBeginTime() <= 10 * i) {
+                    if (10 * (i - 1) <= each.getEndTime() && each.getEndTime() <= 10 * i) {
+                        if (each.getBeginTime() <= 10 * (i - 1)) {
+                            tasktime[i - 1][each.getType()] += each.getEndTime() - 10 * (i - 1);
+                        }
+                        tasktime[i - 1][each.getType()] += each.getELSTime();
+                        //System.out.println(tasktime[i-1][each.getType()]);
 
 					} else {
 						tasktime[i - 1][each.getType()] += (10 * i) - each.getBeginTime();
 
 					}
 				} else {
-					if (each.getEndTime() <= 10 * i) {
-						tasktime[i - 1][each.getType()] = each.getEndTime() - (10 * i);
-
-					} else {
-						tasktime[i - 1][each.getType()] = 10;
-
-
-					}
+                    i += 1;
 
 				}
 
