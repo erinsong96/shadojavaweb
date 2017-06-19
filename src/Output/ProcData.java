@@ -1,6 +1,7 @@
-package Engine;
-
+package Output;
 import java.util.*;
+
+import Engine.Task;
 
 /***************************************************************************
  * 
@@ -64,8 +65,8 @@ public class ProcData {
                 if (each.getBeginTime() <= 10 * i) {
                     if (10 * (i - 1) <= each.getEndTime() && each.getEndTime() <= 10 * i) {
                         if (each.getBeginTime() <= 10 * (i - 1)) {
-                            tasktime[i - 1][each.getType()] += each.getEndTime() - 10 * (i - 1);
-                        }
+							tasktime[i - 1][each.getType()] += each.getEndTime() - (10 * (i - 1));
+						}
                         tasktime[i - 1][each.getType()] += each.getELSTime();
                         //System.out.println(tasktime[i-1][each.getType()]);
 

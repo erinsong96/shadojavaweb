@@ -3,162 +3,209 @@ import java.util.*;
 import Input.loadparam;
 
 /***************************************************************************
- *
+ * 
  * 	FILE: 			Task.java
- *
+ * 
  * 	AUTHOR:			ROCKY LI
- *
+ * 	
  * 	DATE:			2017/6/12
- *
+ * 
  * 	VER: 			1.0
- *
+ * 
  * 	Purpose: 		Create simulation for multiple train and dispatch
- *
+ * 
  **************************************************************************/
 
 public class Dispatch {
 
-    public loadparam parameters;
+	public loadparam parameters;
 
-    public TrainSim[] trains;
+	public TrainSim[] trains;
 
-    private ArrayList<Task> linkedtasks;
+	private ArrayList<Task> linkedtasks;
 
-    private ArrayList<Task> dispatchrecords;
+	private ArrayList<Task> dispatchrecords;
 
-    private Operator[] dispatchers;
+	private Operator[] dispatchers;
 
-    private int[] linked;
+	private int[] linked;
 
-    private ArrayList<Task> proctasks;
+	private ArrayList<Task> proctasks;
 
-    public Dispatch(loadparam Param) {
-        parameters = Param;
-    }
+	private ArrayList<Task> totrain;
 
-    // Inspectors:
+	public Dispatch(loadparam Param) {
+		parameters = Param;
+	}
 
-    public ArrayList<Task> gettasks() {
-        return proctasks;
-    }
+	// Inspectors:
 
-    public Operator[] getDispatch() {
-        return dispatchers;
-    }
+	public ArrayList<Task> getalltasks() {
+		return proctasks;
+	}
 
-    /****************************************************************************
-     *
-     *	Method:			linkedgen
-     *
-     *	Purpose:		Generate all the linked tasks that requires both dispatcher and
-     *					operator input.
-     *
-     ****************************************************************************/
+	public ArrayList<Task> gettasks() {
+		return totrain;
+	}
 
-    public void linkedgen() {
+	public Operator[] getDispatch() {
+		return dispatchers;
+	}
 
-        // Creates a new task arraylist of the tasks that are linked
+	/****************************************************************************
+	 *
+	 *	Method:			linkedgen
+	 *
+	 *	Purpose:		Generate all the linked tasks that requires both dispatcher and
+	 *					operator input.
+	 *
+	 ****************************************************************************/
 
-        ArrayList<Integer> linkedt = new ArrayList<Integer>();
+	public void linkedgen() {
 
-        linkedtasks = new ArrayList<Task>();
+		// Creates a new task arraylist of the tasks that are linked
 
-        // For each train:
+		ArrayList<Integer> linkedt = new ArrayList<Integer>();
 
-        for (int j = 0; j < parameters.numTrains; j++) {
+		linkedtasks = new ArrayList<Task>();
 
-            // For each type of tasks:
+		// Discreet Tasks owned by the Dispatcher:
 
-            for (int i = 0; i < parameters.numTaskTypes; i++) {
+		for (int la : parameters.DispatchTasks) {
 
-                // Create a new empty list of Tasks
+			// Create a new empty list of Tasks
 
-                ArrayList<Task> indlist = new ArrayList<Task>();
+			ArrayList<Task> indlist = new ArrayList<Task>();
 
-                // Start a new task with PrevTime = 0
+			// Start a new task with PrevTime = 0
 
-                Task origin = new Task(i, 0, parameters);
+			Task origin = new Task(la, 0, parameters, true);
 
-                if (!origin.linked()) {
-                    continue;
-                }
+			if (origin.linked()) {
+				continue;
+			}
 
-                linkedt.add(i);
+			// Set train ID.
 
-                // Set train ID.
+			origin.setID(-1);
+			indlist.add(origin);
 
-                origin.setID(j);
-                indlist.add(origin);
+			// While the next task is within the time frame, generate.
 
-                // While the next task is within the time frame, generate.
+			while (origin.getArrTime() < parameters.numHours * 60) {
+				origin = new Task(la, origin.getArrTime(), parameters, true);
+				origin.setID(-1);
+				indlist.add(origin);
+			}
 
-                while (origin.getArrTime() < parameters.numHours * 60) {
-                    origin = new Task(i, origin.getArrTime(), parameters);
-                    origin.setID(j);
-                    indlist.add(origin);
-                }
+			// Put all task into the master tasklist.
 
-                // Put all task into the master tasklist.
+			linkedtasks.addAll(indlist);
 
-                linkedtasks.addAll(indlist);
-            }
-        }
+		}
 
-        linked = linkedt.stream().mapToInt(Integer::intValue).toArray();
-    }
+		// For each train:
 
-    /****************************************************************************
-     *
-     *	Method:			genDispatch
-     *
-     *	Purpose:		Generate dispatchers
-     *
-     ****************************************************************************/
+		for (int j = 0; j < parameters.numTrains; j++) {
 
-    public void genDispatch() {
+			// For each type of tasks:
 
-        dispatchers = new Operator[parameters.numDispatch];
+			for (int i = 0; i < parameters.numTaskTypes; i++) {
 
-        for (int i = 0; i < parameters.numDispatch; i++) {
+				// Create a new empty list of Tasks
 
-            dispatchers[i] = new Operator(i, linked);
+				ArrayList<Task> indlist = new ArrayList<Task>();
 
-        }
+				// Start a new task with PrevTime = 0
 
-    }
+				Task origin = new Task(i, 0, parameters, true);
 
-    /****************************************************************************
-     *
-     *	Method:			runDispatch
-     *
-     *	Purpose:		generate the final state of the dispatcher and their tasks.
-     *
-     ****************************************************************************/
+				if (!origin.linked()) {
+					continue;
+				}
 
-    public void runDispatch() {
+				linkedt.add(i);
 
-        TrainSim DispatchSim = new TrainSim(parameters, dispatchers, linkedtasks);
-        DispatchSim.run();
-        proctasks = new ArrayList<Task>();
-        for (Operator dispatcher : DispatchSim.operators) {
-            proctasks.addAll(dispatcher.getQueue().records());
-        }
+				// Set train ID.
 
-    }
+				origin.setID(j);
+				indlist.add(origin);
 
-    /****************************************************************************
-     *
-     *	Main Method:	run
-     *
-     *	Purpose:		Wraps the entire objects functionality.
-     *
-     ****************************************************************************/
+				// While the next task is within the time frame, generate.
 
-    public void run() {
+				while (origin.getArrTime() < parameters.numHours * 60) {
+					origin = new Task(i, origin.getArrTime(), parameters, true);
+					origin.setID(j);
+					indlist.add(origin);
+				}
 
-        linkedgen();
-        genDispatch();
-        runDispatch();
+				// Put all task into the master tasklist.
 
-    }
+				linkedtasks.addAll(indlist);
+			}
+		}
+
+		linked = linkedt.stream().mapToInt(Integer::intValue).toArray();
+	}
+
+	/****************************************************************************
+	 *
+	 *	Method:			genDispatch
+	 *
+	 *	Purpose:		Generate dispatchers 
+	 *
+	 ****************************************************************************/
+
+	public void genDispatch() {
+
+		dispatchers = new Operator[parameters.numDispatch];
+
+		for (int i = 0; i < parameters.numDispatch; i++) {
+
+			dispatchers[i] = new Operator(i, parameters.DispatchTasks);
+
+		}
+
+	}
+
+	/****************************************************************************
+	 *
+	 *	Method:			runDispatch
+	 *
+	 *	Purpose:		generate the final state of the dispatcher and their tasks.
+	 *
+	 ****************************************************************************/
+
+	public void runDispatch() {
+
+		TrainSim DispatchSim = new TrainSim(parameters, dispatchers, linkedtasks);
+		DispatchSim.run();
+		proctasks = new ArrayList<Task>();
+		totrain = new ArrayList<Task>();
+		for (Operator dispatcher : DispatchSim.operators) {
+			proctasks.addAll(dispatcher.getQueue().records());
+		}
+		for (Task each : proctasks) {
+			if (each.linked()) {
+				totrain.add(each);
+			}
+		}
+
+	}
+
+	/****************************************************************************
+	 *
+	 *	Main Method:	run
+	 *
+	 *	Purpose:		Wraps the entire objects functionality.
+	 *
+	 ****************************************************************************/
+
+	public void run() {
+
+		linkedgen();
+		genDispatch();
+		runDispatch();
+
+	}
 }

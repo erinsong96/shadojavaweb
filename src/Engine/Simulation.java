@@ -1,24 +1,22 @@
 package Engine;
-
 import Input.loadparam;
-
 import java.util.ArrayList;
 
 public class Simulation {
 
-    private loadparam parameters;
+	private loadparam parameters;
 
-    private ArrayList<ArrayList<Task>> results;
+	private ArrayList<ArrayList<Task>> results;
 
-    private ArrayList<Task> linked;
+	private ArrayList<Task> linked;
 
-    private TrainSim[] trains;
+	private TrainSim[] trains;
 
-    private Dispatch control;
+	private Dispatch control;
 
-    private double totaltime;
+	private double totaltime;
 
-    // Inspectors:
+	// Inspectors:
 
     public TrainSim[] getTrains() {
         return trains;
@@ -37,13 +35,18 @@ public class Simulation {
         totaltime = parameters.numHours * 60;
     }
 
+    public void getrec() {
+
+
+	}
+
     public void run() {
 
-        // Initialize control center.
+		// Initialize control center.
 
         control = new Dispatch(parameters);
-        control.run();
-        linked = control.gettasks();
+		control.run();
+		linked = control.gettasks();
 
         // Initialize trains.
 
@@ -51,8 +54,8 @@ public class Simulation {
 
         for (int i = 0; i < parameters.numTrains; i++) {
 
-            trains[i] = new TrainSim(parameters, i);
-            trains[i].genbasis();
+			trains[i] = new TrainSim(parameters, i);
+			trains[i].genbasis();
 
         }
 
@@ -60,8 +63,8 @@ public class Simulation {
 
         for (Task each : linked) {
 
-            int trainid = each.getTrain();
-            trains[trainid].linktask(each);
+			int trainid = each.getTrain();
+			trains[trainid].linktask(each);
 
         }
 
@@ -69,10 +72,10 @@ public class Simulation {
 
         for (TrainSim each : trains) {
 
-            each.run();
+			each.run();
 
         }
 
     }
-
+	
 }
