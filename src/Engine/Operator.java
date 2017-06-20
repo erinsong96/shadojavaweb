@@ -23,6 +23,8 @@ public class Operator {
 	public String name;
 	public int[] taskType;
 
+
+	private double[][] taskarray;
 	private Queue myQueue;
 	private loadparam parameters;
 	private boolean isDispatcher;
@@ -35,6 +37,10 @@ public class Operator {
 
 	public Queue getQueue(){
 		return this.myQueue;
+	}
+
+	public double[][] getTaskarray() {
+		return this.taskarray;
 	}
 
 	// Mutator
@@ -56,6 +62,9 @@ public class Operator {
 
 		// Next line generates an empty queue.
 		myQueue = new Queue();
+		int i = (int) parameters.numHours * 6;
+
+		taskarray = new double[i][parameters.numTaskTypes];
 	}
 
 	/****************************************************************************
@@ -66,11 +75,14 @@ public class Operator {
 	 *
 	 ****************************************************************************/
 
-	public Operator(int dpid, int[] tasks) {
+	public Operator(int dpid, int[] tasks, double hours, int tasktype) {
 
 		taskType = tasks;
 		name = "Dispatcher " + Integer.toString(dpid);
 		myQueue = new Queue();
 
+		int i = (int) hours * 6;
+
+		taskarray = new Double[i][tasktype];
 	}
 }

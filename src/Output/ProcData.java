@@ -1,6 +1,7 @@
 package Output;
 import java.util.*;
 
+import Engine.Operator;
 import Engine.Task;
 
 /***************************************************************************
@@ -19,16 +20,18 @@ import Engine.Task;
 
 public class ProcData {
 
+
 	private ArrayList<Task> Dataset;
+
 	
 	public ProcData (ArrayList<Task> thisone){
 		Dataset = thisone;
 	}
-	
-	public void run(double time){
+
+	public void run(double time, Operator you) {
 		trim(time);
 		//System.out.println(load());
-		timeframe();
+		timeframe(you);
 		//debug();
 	}
 
@@ -57,23 +60,21 @@ public class ProcData {
 		
 	}
 
-	public void timeframe() {
+	public void timeframe(Operator who) {
 
-		double[][] tasktime = new double[48][9];
-
-		for (int i = 1; i < 49; i++) {
+		for (int i = 1; i < who.getTaskarray().length + 1; i++) {
 			for (Task each : Dataset) {
                 //System.out.println(each.getType());
                 if (each.getBeginTime() <= 10 * i) {
                     if (10 * (i - 1) <= each.getEndTime() && each.getEndTime() <= 10 * i) {
                         if (each.getBeginTime() <= 10 * (i - 1)) {
-							tasktime[i - 1][each.getType()] += each.getEndTime() - (10 * (i - 1));
+							who.getTaskarray()[i - 1][each.getType()] += each.getEndTime() - (10 * (i - 1));
 						}
-                        tasktime[i - 1][each.getType()] += each.getELSTime();
-                        //System.out.println(tasktime[i-1][each.getType()]);
+						who.getTaskarray()[i - 1][each.getType()] += each.getELSTime();
+						//System.out.println(tasktime[i-1][each.getType()]);
 
 					} else {
-						tasktime[i - 1][each.getType()] += (10 * i) - each.getBeginTime();
+						who.getTaskarray()[i - 1][each.getType()] += (10 * i) - each.getBeginTime();
 
 					}
 				} else {
@@ -86,8 +87,8 @@ public class ProcData {
 		}
 
 
-		for (double[] x : tasktime) {
-			for (double y : x) {
+		for (Double[] x : who.getTaskarray()) {
+			for (Double y : x) {
 				System.out.print(y + ",");
 			}
 			System.out.println();
