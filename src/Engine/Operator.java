@@ -83,6 +83,6 @@ public class Operator {
 
 		int i = (int) hours * 6;
 
-		taskarray = new Double[i][tasktype];
+		taskarray = new double[i][tasktype];
 	}
 }

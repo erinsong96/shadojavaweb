@@ -32,7 +32,7 @@ public class ProcData {
 		trim(time);
 		//System.out.println(load());
 		timeframe(you);
-		//debug();
+		debug();
 	}
 
 	public void trim(double time) {
@@ -68,13 +68,16 @@ public class ProcData {
                 if (each.getBeginTime() <= 10 * i) {
                     if (10 * (i - 1) <= each.getEndTime() && each.getEndTime() <= 10 * i) {
                         if (each.getBeginTime() <= 10 * (i - 1)) {
-							who.getTaskarray()[i - 1][each.getType()] += each.getEndTime() - (10 * (i - 1));
+							who.getTaskarray()[i - 1][each.getType()] += (each.getEndTime() - (10 * (i - 1)));
 						}
+
 						who.getTaskarray()[i - 1][each.getType()] += each.getELSTime();
-						//System.out.println(tasktime[i-1][each.getType()]);
+
 
 					} else {
-						who.getTaskarray()[i - 1][each.getType()] += (10 * i) - each.getBeginTime();
+
+
+						who.getTaskarray()[i - 1][each.getType()] += ((10 * i) - each.getBeginTime());
 
 					}
 				} else {
@@ -87,22 +90,22 @@ public class ProcData {
 		}
 
 
-		for (Double[] x : who.getTaskarray()) {
-			for (Double y : x) {
+		for (double[] x : who.getTaskarray()) {
+			for (double y : x) {
 				System.out.print(y + ",");
 			}
 			System.out.println();
 		}
 	}
-	
-	/*public void debug(){
+
+	public void debug() {
 		
 		for (Task each : Dataset){
 			System.out.println(each.getBeginTime() + " " + each.getELSTime() + " " + each.getEndTime()
 			+ " " + each.getName() + " and " + each.getQueued() + " are in the queue. " + each.getExpTime());
 		}
-			
-	}*/
+
+	}
 	
 	
 }

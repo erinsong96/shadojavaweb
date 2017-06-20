@@ -63,7 +63,7 @@ public class DataWrapper {
 
                 file_name = "/Users/erinsong/Documents/shadojava/out/" + him.name + ".csv";
 
-                System.setOut(new PrintStream(new BufferedOutputStream(new FileOutputStream(file_name)), true));
+                System.setOut(new PrintStream(new BufferedOutputStream(new FileOutputStream(file_name, true)), true));
                 System.out.println("for train " + each.trainID);
                 new ProcData(him.getQueue().records()).run(once.getTime(), him);
 
