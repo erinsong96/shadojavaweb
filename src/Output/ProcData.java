@@ -58,7 +58,9 @@ public class ProcData {
 	}
 
 	public void timeframe() {
+
 		double[][] tasktime = new double[48][9];
+
 		for (int i = 1; i < 49; i++) {
 			for (Task each : Dataset) {
                 //System.out.println(each.getType());
@@ -79,26 +81,27 @@ public class ProcData {
 
 				}
 
+
 			}
 		}
 
 
 		for (double[] x : tasktime) {
 			for (double y : x) {
-				System.out.print(y + " ");
+				System.out.print(y + ",");
 			}
 			System.out.println();
 		}
 	}
 	
-	public void debug(){
+	/*public void debug(){
 		
 		for (Task each : Dataset){
 			System.out.println(each.getBeginTime() + " " + each.getELSTime() + " " + each.getEndTime()
 			+ " " + each.getName() + " and " + each.getQueued() + " are in the queue. " + each.getExpTime());
 		}
 			
-	}
+	}*/
 	
 	
 }

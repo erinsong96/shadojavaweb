@@ -45,16 +45,16 @@ public class DataWrapper {
 
     public void generate() throws IOException {
 
+        Operator[] dispatchers = here.getDispatch();
+        for (Operator such : dispatchers) {
+            file_name = "/Users/erinsong/Documents/shadojava/out/" + such.name + ".csv";
+            System.setOut(new PrintStream(new BufferedOutputStream(new FileOutputStream(file_name)), true));
+            new ProcData(such.getQueue().records()).run(once.getTime());
+        }
 
 
         for (TrainSim each : there) {
 
-            Operator[] dispatchers = here.getDispatch();
-            for (Operator such : dispatchers) {
-                file_name = "/Users/erinsong/Documents/shadojava/out/" + such.name + ".csv";
-                System.setOut(new PrintStream(new BufferedOutputStream(new FileOutputStream(file_name, true)), true));
-                new ProcData(such.getQueue().records()).run(once.getTime());
-            }
 
             Operator[] operators = each.operators;
 
