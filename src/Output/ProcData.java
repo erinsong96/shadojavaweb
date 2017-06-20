@@ -27,9 +27,9 @@ public class ProcData {
 	
 	public void run(double time){
 		trim(time);
-		System.out.println(load());
+		//System.out.println(load());
 		timeframe();
-		debug();
+		//debug();
 	}
 
 	public void trim(double time) {
@@ -81,6 +81,7 @@ public class ProcData {
 
 			}
 		}
+
 
 		for (double[] x : tasktime) {
 			for (double y : x) {

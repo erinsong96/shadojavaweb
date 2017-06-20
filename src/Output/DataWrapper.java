@@ -1,16 +1,12 @@
 package Output;
 
+import java.io.*;
 import java.util.ArrayList;
 
 import Engine.Dispatch;
 import Engine.Operator;
 import Engine.Simulation;
 import Engine.TrainSim;
-
-import java.io.BufferedOutputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
 
 /***************************************************************************
  *
@@ -47,30 +43,32 @@ public class DataWrapper {
 
     }
 
-    public void generate() throws FileNotFoundException {
+    public void generate() throws IOException {
 
-        int i = 0;
-        int j = 0;
-        System.out.println("here are the Dispatchers");
-        Operator[] dispatchers = here.getDispatch();
-        for (Operator each : dispatchers) {
-            file_name = "/Users/erinsong/Documents/shadojava/out/" + each.name + ".csv";
-            System.setOut(new PrintStream(new BufferedOutputStream(new FileOutputStream(file_name)), true));
-            new ProcData(each.getQueue().records()).run(once.getTime());
-        }
+
 
         for (TrainSim each : there) {
 
+            Operator[] dispatchers = here.getDispatch();
+            for (Operator such : dispatchers) {
+                file_name = "/Users/erinsong/Documents/shadojava/out/" + such.name + ".csv";
+                System.setOut(new PrintStream(new BufferedOutputStream(new FileOutputStream(file_name, true)), true));
+                new ProcData(such.getQueue().records()).run(once.getTime());
+            }
+
             Operator[] operators = each.operators;
 
+
             for (Operator him : operators) {
-                //System.out.println("for train " + each.trainID);
-                file_name = "/Users/erinsong/Documents/shadojava/out/" + him.name + i + ".csv";
-                System.setOut(new PrintStream(new BufferedOutputStream(new FileOutputStream(file_name)), true));
+
+                file_name = "/Users/erinsong/Documents/shadojava/out/" + him.name + ".csv";
+
+                System.setOut(new PrintStream(new BufferedOutputStream(new FileOutputStream(file_name, true)), true));
+                System.out.println("for train " + each.trainID);
                 new ProcData(him.getQueue().records()).run(once.getTime());
 
+
             }
-            i += 1;
         }
 
     }

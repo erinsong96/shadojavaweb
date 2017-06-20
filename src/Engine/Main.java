@@ -6,7 +6,7 @@ import java.io.*;
 
 public class Main {
 
-	public static void main(String[] args) throws FileNotFoundException{
+	public static void main(String[] args) throws IOException {
 
 
 		// LOAD the parameter file.
