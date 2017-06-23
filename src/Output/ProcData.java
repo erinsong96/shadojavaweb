@@ -65,7 +65,7 @@ public class ProcData {
 		for (int i = 1; i < who.getTaskarray().length + 1; i++) {
 			for (Task each : Dataset) {
                 //System.out.println(each.getType());
-				if ((10 * (i - 1)) <= each.getBeginTime() && each.getBeginTime() <= 10 * i) {
+				if ((10 * (i - 2)) <= each.getBeginTime() && each.getBeginTime() <= 10 * i) {
 					if (10 * (i - 1) <= each.getEndTime() && each.getEndTime() <= 10 * i) {
                         if (each.getBeginTime() <= 10 * (i - 1)) {
 							who.getTaskarray()[i - 1][each.getType()] += (each.getEndTime() - (10 * (i - 1)));

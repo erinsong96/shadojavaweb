@@ -109,6 +109,7 @@ public class Queue implements Comparable<Queue>{
             }
         }
         taskqueue.add(task);
+        // work added update of tasks in!!
 
         // If the task is processed as first priority, i.e. began immediately, then:
 
@@ -160,11 +161,14 @@ public class Queue implements Comparable<Queue>{
             if (taskqueue.peek().getExpTime() > time) {
                 break;
             }
-            taskqueue.poll();
+            taskqueue.poll(); // <- expired task removal ** increment the number of expired tasks here
+
         }
 
         if (taskqueue.peek() != null) {
 
+            // before beginning a new task using the current time I will want to update utilization
+            // increment the work done
             // Set the beginTime of the Task in question to now, i.e. begin working on this task.
 
             taskqueue.peek().setBeginTime(time);

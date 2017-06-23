@@ -62,10 +62,11 @@ public class Operator {
 
 		// Next line generates an empty queue.
 		myQueue = new Queue();
+
 		int i = (int) parameters.numHours * 6;
 
-		taskarray = new double[i][parameters.numTaskTypes];
-	}
+        taskarray = new double[parameters.numTaskTypes][i];
+    }
 
 	/****************************************************************************
 	 *
@@ -83,6 +84,6 @@ public class Operator {
 
 		int i = (int) hours * 6;
 
-		taskarray = new double[i][tasktype];
-	}
+        taskarray = new double[tasktype][i];
+    }
 }
