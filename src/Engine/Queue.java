@@ -27,6 +27,7 @@ public class Queue implements Comparable<Queue>{
 
     public int opId;
 
+
     // Set the time to move forward with general time. (Tracer variable)
 
     private double time;
@@ -66,7 +67,7 @@ public class Queue implements Comparable<Queue>{
     }
 
     private int timeint() {
-        return (int) time / 60;
+        return (int) time / 10;
     }
 
     // Mutator:
@@ -102,7 +103,7 @@ public class Queue implements Comparable<Queue>{
      *
      ****************************************************************************/
 
-    public void add(Task task) {
+    public void add(Task task, int trainId) {
 
         // Stash tasks that are in the present
 
@@ -116,9 +117,12 @@ public class Queue implements Comparable<Queue>{
         }
         taskqueue.add(task);
 
-        operator.getTaskin().datainc(task.getType(), timeint(), );
-
         // work added update of tasks in!!
+        if (timeint() > 48) {
+            System.out.println("WTH");
+        }
+        operator.getTaskin().datainc(task.getType(), timeint(), trainId, 1);
+
 
         // If the task is processed as first priority, i.e. began immediately, then:
 
@@ -142,7 +146,7 @@ public class Queue implements Comparable<Queue>{
      *
      ****************************************************************************/
 
-    public void done() {
+    public void done(int trainId) {
 
         // This if statement avoids error when calling done on an empty queue.
 
@@ -156,7 +160,7 @@ public class Queue implements Comparable<Queue>{
 
             taskqueue.peek().setELStime(taskqueue.peek().getSerTime());
 
-            // Remove the finished task from the queue and put it into recordtask list.
+            // Remove the finished task from the queue and put it into record task list.
 
             recordtasks.add(taskqueue.poll());
 
@@ -177,7 +181,11 @@ public class Queue implements Comparable<Queue>{
         if (taskqueue.peek() != null) {
 
             // before beginning a new task using the current time I will want to update utilization
+            updateUtil(taskqueue.peek().getBeginTime(), taskqueue.peek().getType(),
+                    trainId, time);
             // increment the work done
+            operator.getTaskout().datainc(taskqueue.peek().getType(), timeint(), trainId, 1);
+
             // Set the beginTime of the Task in question to now, i.e. begin working on this task.
 
             taskqueue.peek().setBeginTime(time);
@@ -235,4 +243,43 @@ public class Queue implements Comparable<Queue>{
             isBusy = true;
         }
     }
+
+    /****************************************************************************
+     *
+     *	Method:			updateUtil
+     *
+     *	Purpose:		updating the Utilization data 3D array as the task is done
+     *
+     ****************************************************************************/
+
+    private void updateUtil(double begTime, int taskID, int trainID, double currentTime) {
+
+        int timeInt = (int) begTime / 10;
+
+        double beginInt = timeInt * 10;
+
+        double endInt = beginInt + 10;
+
+        double timeBusy = 0;
+
+        double percBusy = 0;
+
+        while (currentTime > endInt) {
+            timeBusy = endInt - Math.max(begTime, beginInt);
+            percBusy = timeBusy / 10;
+            operator.getUtilization().datainc(taskID, timeInt, trainID, percBusy);
+
+
+            beginInt = endInt;
+            endInt += 10;
+        }
+
+        timeBusy = currentTime - Math.max(begTime, beginInt);
+        percBusy = timeBusy / 10;
+        operator.getUtilization().datainc(taskID, timeInt, trainID, percBusy);
+
+
+    }
+
+
 }

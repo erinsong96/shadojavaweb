@@ -175,11 +175,15 @@ public class TrainSim {
 
         ArrayList<Queue> proc = new ArrayList<Queue>();
 
+        ArrayList<Operator> working = new ArrayList<>(proc.size());
+
         // If the task can be operated by this operator, get his queue.
 
         for (int i = 0; i < operators.length; i++) {
             if (IntStream.of(operators[i].taskType).anyMatch(x -> x == task.getType())) {
                 proc.add(operators[i].getQueue());
+                working.add(operators[i]);
+
             }
         }
 
@@ -191,12 +195,14 @@ public class TrainSim {
         // before the arrival of the new tasks is finished.
 
         while (proc.get(0).getfinTime() < task.getArrTime()) {
-            proc.get(0).done();
+            proc.get(0).done(trainID);
         }
 
         // add task to queue.
 
-        proc.get(0).add(task);
+
+        proc.get(0).operator = working.get(0);
+        proc.get(0).add(task, trainID);
 
     }
 
@@ -242,7 +248,7 @@ public class TrainSim {
         double totaltime = parameters.numHours * 60;
         for (Operator each : operators) {
             while (each.getQueue().getfinTime() < totaltime) {
-                each.getQueue().done();
+                each.getQueue().done(trainID);
             }
         }
 
