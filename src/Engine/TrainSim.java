@@ -201,6 +201,7 @@ public class TrainSim {
         // add task to queue.
 
 
+        // **** I'm setting the operator so that we can access the data arrays of each operator **** 
         proc.get(0).operator = working.get(0);
         proc.get(0).add(task, trainID);
 

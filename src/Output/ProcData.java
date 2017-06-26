@@ -31,7 +31,7 @@ public class ProcData {
 	public void run(double time, Operator you) {
 		trim(time);
 		//System.out.println(load());
-		timeframe(you);
+		output(you);
 		debug();
 	}
 
@@ -60,10 +60,12 @@ public class ProcData {
 		
 	}
 
-	public void timeframe(Operator who) {
+	public void output(Operator who) {
 
 
+		// calling so that the utilization data is being averaged across trains
 		who.getUtilization().avgdata();
+		// was in the process of debugging
 		for (double[][] x : who.getUtilization().data) {
 			for (double[] y : x) {
 				for (double z : y) {

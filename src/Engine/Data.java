@@ -11,6 +11,13 @@ public class Data {
 
     public double[][] std;
 
+    /****************************************************************************
+     *
+     *	Main Object:	Data
+     *
+     *	Purpose:		Generate an Data object that has a particular size of i,j,k
+     ****************************************************************************/
+
 
     public Data(int i, int j, int k) {
 
@@ -23,10 +30,6 @@ public class Data {
         return data[i][j][k];
     }
 
-    public void datainc(int i, int j, int k, double inc) {
-
-        data[i][j][k] += inc;
-    }
 
     public double avgget(int i, int j) {
 
@@ -36,6 +39,29 @@ public class Data {
     public double stdget(int i, int j) {
         return std[i][j];
     }
+
+    /****************************************************************************
+     *
+     *	Method:			datainc()
+     *
+     *	Purpose:		updating the data array by the inc value
+     *
+     ****************************************************************************/
+
+
+    public void datainc(int i, int j, int k, double inc) {
+
+        data[i][j][k] += inc;
+    }
+
+    /****************************************************************************
+     *
+     *	Method:			avgdata()
+     *
+     *	Purpose:		updating the average 2D array, which is the average across simulations
+     *
+     ****************************************************************************/
+
 
     public void avgdata() {
 

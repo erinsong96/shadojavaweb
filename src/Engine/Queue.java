@@ -249,7 +249,8 @@ public class Queue implements Comparable<Queue>{
      *
      *	Method:			updateUtil
      *
-     *	Purpose:		updating the Utilization data 3D array as the task is done
+     *	Purpose:		updating the Utilization data 3D array as the task is done (same as the Vincent logic)
+     *
      *
      ****************************************************************************/
 
