@@ -63,13 +63,17 @@ public class ProcData {
 	public void timeframe(Operator who) {
 
 
-		//System.out.println(who.getTaskarray());
-		for (double[] x : who.getUtilization().avg) {
-			for (double y : x) {
-				System.out.print(y + ",");
+		who.getUtilization().avgdata();
+		for (double[][] x : who.getUtilization().data) {
+			for (double[] y : x) {
+				for (double z : y) {
+
+					System.out.print(z + ",");
+				}
 			}
 			System.out.println();
 		}
+		System.out.println();
 	}
 
 	public void debug() {

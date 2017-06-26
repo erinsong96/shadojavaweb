@@ -15,7 +15,8 @@ public class Data {
     public Data(int i, int j, int k) {
 
         data = new double[i][j][k];
-        avgdata(i, j);
+        avg = new double[i][j];
+        std = new double[i][j];
     }
 
     public double dataget(int i, int j, int k) {
@@ -36,14 +37,12 @@ public class Data {
         return std[i][j];
     }
 
-    private void avgdata(int i, int j) {
+    public void avgdata() {
 
         int N = 0;
         double mean = 0;
         double devSum = 0;
         double delta;
-        avg = new double[i][j];
-        std = new double[i][j];
 
         //calculate mean and std dev across all replications
 

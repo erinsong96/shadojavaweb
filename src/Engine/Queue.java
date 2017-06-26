@@ -118,10 +118,9 @@ public class Queue implements Comparable<Queue>{
         taskqueue.add(task);
 
         // work added update of tasks in!!
-        if (timeint() > 48) {
-            System.out.println("WTH");
-        }
-        operator.getTaskin().datainc(task.getType(), timeint(), trainId, 1);
+
+
+        //operator.getTaskin().datainc(task.getType(), timeint(), trainId, 1);
 
 
         // If the task is processed as first priority, i.e. began immediately, then:
@@ -181,10 +180,12 @@ public class Queue implements Comparable<Queue>{
         if (taskqueue.peek() != null) {
 
             // before beginning a new task using the current time I will want to update utilization
+
             updateUtil(taskqueue.peek().getBeginTime(), taskqueue.peek().getType(),
                     trainId, time);
+
             // increment the work done
-            operator.getTaskout().datainc(taskqueue.peek().getType(), timeint(), trainId, 1);
+            //operator.getTaskout().datainc(taskqueue.peek().getType(), timeint(), trainId, 1);
 
             // Set the beginTime of the Task in question to now, i.e. begin working on this task.
 
