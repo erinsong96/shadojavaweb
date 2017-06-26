@@ -32,6 +32,10 @@ public class TrainSim {
 
     public ArrayList<Task> tasktime;
 
+    public int getTrainID() {
+        return trainID;
+    }
+
     // Inspectors
 
     public double getTotalTime() {

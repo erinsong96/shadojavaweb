@@ -24,7 +24,11 @@ public class Operator {
 	public int[] taskType;
 
 
-	private double[][] taskarray;
+	private Data utilization;
+	private Data expiredtask;
+	private Data taskin;
+	private Data taskout;
+
 	private Queue myQueue;
 	private loadparam parameters;
 	private boolean isDispatcher;
@@ -39,8 +43,20 @@ public class Operator {
 		return this.myQueue;
 	}
 
-	public double[][] getTaskarray() {
-		return this.taskarray;
+	public Data getUtilization() {
+		return this.utilization;
+	}
+
+	public Data getExpiredtask() {
+		return this.expiredtask;
+	}
+
+	public Data getTaskin() {
+		return this.taskin;
+	}
+
+	public Data getTaskout() {
+		return this.taskout;
 	}
 
 	// Mutator
@@ -65,8 +81,11 @@ public class Operator {
 
 		int i = (int) parameters.numHours * 6;
 
-        taskarray = new double[parameters.numTaskTypes][i];
-    }
+		utilization = new Data(parameters.numTaskTypes, i, param.numTrains);
+		expiredtask = new Data(parameters.numTaskTypes, i, param.numTrains);
+		taskin = new Data(parameters.numTaskTypes, i, param.numTrains);
+		taskout = new Data(parameters.numTaskTypes, i, param.numTrains);
+	}
 
 	/****************************************************************************
 	 *
@@ -76,14 +95,18 @@ public class Operator {
 	 *
 	 ****************************************************************************/
 
-	public Operator(int dpid, int[] tasks, double hours, int tasktype) {
+	public Operator(int dpid, int[] task, double numHours, int numTrains) {
 
-		taskType = tasks;
+
+		taskType = task;
 		name = "Dispatcher " + Integer.toString(dpid);
 		myQueue = new Queue();
 
-		int i = (int) hours * 6;
+		int i = (int) numHours * 6;
 
-        taskarray = new double[tasktype][i];
-    }
+		utilization = new Data(taskType.length, i, numTrains);
+		expiredtask = new Data(taskType.length, i, numTrains);
+		taskin = new Data(taskType.length, i, numTrains);
+		taskout = new Data(taskType.length, i, numTrains);
+	}
 }

@@ -23,6 +23,8 @@ public class Queue implements Comparable<Queue>{
 
     // Operator ID.
 
+    public Operator operator;
+
     public int opId;
 
     // Set the time to move forward with general time. (Tracer variable)
@@ -61,6 +63,10 @@ public class Queue implements Comparable<Queue>{
 
     public boolean getStatus() {
         return isBusy;
+    }
+
+    private int timeint() {
+        return (int) time / 60;
     }
 
     // Mutator:
@@ -109,6 +115,9 @@ public class Queue implements Comparable<Queue>{
             }
         }
         taskqueue.add(task);
+
+        operator.getTaskin().datainc(task.getType(), timeint(), );
+
         // work added update of tasks in!!
 
         // If the task is processed as first priority, i.e. began immediately, then:
