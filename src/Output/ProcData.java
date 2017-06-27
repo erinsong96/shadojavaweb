@@ -37,8 +37,8 @@ public class ProcData {
 		trim(time);
 		//System.out.println(load());
 		outpututilization(you, time, trainID);
-		debug();
-	}
+        //debug();
+    }
 
 	public void trim(double time) {
 
@@ -67,14 +67,18 @@ public class ProcData {
 
 	public void outpututilization(Operator who, double time, int trainID) {
 
+        int i = 1;
 
-		for (int i = 1; i < (int) (time / 10) + 1; i++) {
 
 			for (Task each : Dataset) {
 
+                if (i > (int) (time / 10) + 1) {
+                    break;
+                }
+
 				double beginscale = each.getBeginTime() / 10;
 				double endscale = each.getEndTime() / 10;
-
+                int endINT = (int) endscale + 1;
 
 				double percBusy = 0;
 
@@ -94,10 +98,18 @@ public class ProcData {
 					}
 
 				} else {
-					break;
-				}
-			}
-		}
+
+                    if (i > beginscale) {
+                        percBusy = i - beginscale;
+
+                        who.getUtilization().datainc(each.getType(), i - 1, trainID, percBusy);
+
+                    }
+
+                    i = endINT;
+                }
+            }
+
 
 		who.getUtilization().avgdata();
 		// was in the process of debugging
