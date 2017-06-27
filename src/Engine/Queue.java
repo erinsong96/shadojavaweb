@@ -103,7 +103,7 @@ public class Queue implements Comparable<Queue>{
      *
      ****************************************************************************/
 
-    public void add(Task task, int trainId) {
+    public void add(Task task) {
 
         // Stash tasks that are in the present
 
@@ -145,7 +145,7 @@ public class Queue implements Comparable<Queue>{
      *
      ****************************************************************************/
 
-    public void done(int trainId) {
+    public void done() {
 
         // This if statement avoids error when calling done on an empty queue.
 
@@ -181,8 +181,8 @@ public class Queue implements Comparable<Queue>{
 
             // before beginning a new task using the current time I will want to update utilization
 
-            updateUtil(taskqueue.peek().getBeginTime(), taskqueue.peek().getType(),
-                    trainId, time);
+            //updateUtil(taskqueue.peek().getBeginTime(), taskqueue.peek().getType(),
+            //trainId, time);
 
             // increment the work done
             //operator.getTaskout().datainc(taskqueue.peek().getType(), timeint(), trainId, 1);
@@ -243,44 +243,6 @@ public class Queue implements Comparable<Queue>{
         } else {
             isBusy = true;
         }
-    }
-
-    /****************************************************************************
-     *
-     *	Method:			updateUtil
-     *
-     *	Purpose:		updating the Utilization data 3D array as the task is done (same as the Vincent logic)
-     *
-     *
-     ****************************************************************************/
-
-    private void updateUtil(double begTime, int taskID, int trainID, double currentTime) {
-
-        int timeInt = (int) begTime / 10;
-
-        double beginInt = timeInt * 10;
-
-        double endInt = beginInt + 10;
-
-        double timeBusy = 0;
-
-        double percBusy = 0;
-
-        while (currentTime > endInt) {
-            timeBusy = endInt - Math.max(begTime, beginInt);
-            percBusy = timeBusy / 10;
-            operator.getUtilization().datainc(taskID, timeInt, trainID, percBusy);
-
-
-            beginInt = endInt;
-            endInt += 10;
-        }
-
-        timeBusy = currentTime - Math.max(begTime, beginInt);
-        percBusy = timeBusy / 10;
-        operator.getUtilization().datainc(taskID, timeInt, trainID, percBusy);
-
-
     }
 
 

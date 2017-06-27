@@ -1,8 +1,12 @@
 package Output;
+
+import java.lang.reflect.Parameter;
 import java.util.*;
 
+import Engine.Data;
 import Engine.Operator;
 import Engine.Task;
+import Input.loadparam;
 
 /***************************************************************************
  * 
@@ -23,15 +27,16 @@ public class ProcData {
 
 	private ArrayList<Task> Dataset;
 
+
 	
 	public ProcData (ArrayList<Task> thisone){
 		Dataset = thisone;
 	}
 
-	public void run(double time, Operator you) {
+	public void run(double time, Operator you, int trainID) {
 		trim(time);
 		//System.out.println(load());
-		output(you);
+		outpututilization(you, time, trainID);
 		debug();
 	}
 
@@ -60,23 +65,54 @@ public class ProcData {
 		
 	}
 
-	public void output(Operator who) {
+	public void outpututilization(Operator who, double time, int trainID) {
 
 
-		// calling so that the utilization data is being averaged across trains
+		for (int i = 1; i < (int) (time / 10) + 1; i++) {
+
+			for (Task each : Dataset) {
+
+				double beginscale = each.getBeginTime() / 10;
+				double endscale = each.getEndTime() / 10;
+
+
+				double percBusy = 0;
+
+
+				if (i > endscale) {
+
+					if (i - 1 < beginscale) {
+						percBusy = each.getSerTime() / 10;
+
+						who.getUtilization().datainc(each.getType(), i - 1, trainID, percBusy);
+
+					} else {
+						percBusy = endscale - i;
+
+						who.getUtilization().datainc(each.getType(), i - 1, trainID, percBusy);
+
+					}
+
+				} else {
+					break;
+				}
+			}
+		}
+
 		who.getUtilization().avgdata();
 		// was in the process of debugging
-		for (double[][] x : who.getUtilization().data) {
-			for (double[] y : x) {
-				for (double z : y) {
+		for (double[] x : who.getUtilization().avg) {
+			for (double y : x) {
 
-					System.out.print(z + ",");
-				}
+				System.out.print(y + ",");
+
 			}
 			System.out.println();
 		}
-		System.out.println();
+
 	}
+
+
 
 	public void debug() {
 		

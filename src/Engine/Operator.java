@@ -81,7 +81,7 @@ public class Operator {
 
 		int i = (int) parameters.numHours * 6;
 
-		utilization = new Data(parameters.numTaskTypes, i + 1, param.numTrains);
+		utilization = new Data(parameters.numTaskTypes, i, param.numTrains);
 		//expiredtask = new Data(parameters.numTaskTypes, i + 1, param.numTrains);
 		//taskin = new Data(parameters.numTaskTypes, i + 1, param.numTrains);
 		//taskout = new Data(parameters.numTaskTypes, i + 1, param.numTrains);
@@ -95,7 +95,7 @@ public class Operator {
 	 *
 	 ****************************************************************************/
 
-	public Operator(int dpid, int[] task, double numHours, int numTrains) {
+	public Operator(int dpid, int[] task, double numHours, int numTrains, int tasktype) {
 
 
 		taskType = task;
@@ -104,7 +104,7 @@ public class Operator {
 
 		int i = (int) numHours * 6;
 
-		utilization = new Data(taskType.length, i + 1, numTrains);
+		utilization = new Data(tasktype, i, numTrains);
 		//expiredtask = new Data(taskType.length, i + 1, numTrains);
 		//taskin = new Data(taskType.length, i + 1, numTrains);
 		//taskout = new Data(taskType.length, i + 1, numTrains);

@@ -162,8 +162,9 @@ public class Dispatch {
 
 		for (int i = 0; i < parameters.numDispatch; i++) {
 
-			dispatchers[i] = new Operator(i, parameters.DispatchTasks, parameters.numHours, parameters.numTrains);
-		}
+            dispatchers[i] = new Operator(i, parameters.DispatchTasks,
+                    parameters.numHours, parameters.numTrains, parameters.numTaskTypes);
+        }
 	}
 
 	/****************************************************************************

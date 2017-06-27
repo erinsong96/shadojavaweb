@@ -46,14 +46,16 @@ public class DataWrapper {
     public void generate() throws IOException {
 
         Operator[] dispatchers = here.getDispatch();
-        for (Operator such : dispatchers) {
-            file_name = "/Users/erinsong/Documents/shadojava/out/" + such.name + ".csv";
-            System.setOut(new PrintStream(new BufferedOutputStream(new FileOutputStream(file_name)), true));
-            new ProcData(such.getQueue().records()).run(once.getTime(), such);
-        }
 
 
         for (TrainSim each : there) {
+
+            for (Operator such : dispatchers) {
+                file_name = "/Users/erinsong/Documents/shadojava/out/" + such.name + ".csv";
+                System.setOut(new PrintStream(new BufferedOutputStream(new FileOutputStream(file_name)), true));
+                new ProcData(such.getQueue().records()).run(once.getTime(), such, each.getTrainID());
+            }
+
 
 
             Operator[] operators = each.operators;
@@ -63,9 +65,9 @@ public class DataWrapper {
 
                 file_name = "/Users/erinsong/Documents/shadojava/out/" + him.name + ".csv";
 
-                System.setOut(new PrintStream(new BufferedOutputStream(new FileOutputStream(file_name, true)), true));
-                System.out.println("for train " + each.trainID);
-                new ProcData(him.getQueue().records()).run(once.getTime(), him);
+                System.setOut(new PrintStream(new BufferedOutputStream(new FileOutputStream(file_name)), true));
+                //System.out.println("for train " + each.trainID);
+                new ProcData(him.getQueue().records()).run(once.getTime(), him, each.getTrainID());
 
 
             }

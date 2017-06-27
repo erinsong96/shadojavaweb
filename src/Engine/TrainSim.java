@@ -195,15 +195,15 @@ public class TrainSim {
         // before the arrival of the new tasks is finished.
 
         while (proc.get(0).getfinTime() < task.getArrTime()) {
-            proc.get(0).done(trainID);
+            proc.get(0).done();
         }
 
         // add task to queue.
 
 
-        // **** I'm setting the operator so that we can access the data arrays of each operator **** 
+        // **** I'm setting the operator so that we can access the data arrays of each operator ****
         proc.get(0).operator = working.get(0);
-        proc.get(0).add(task, trainID);
+        proc.get(0).add(task);
 
     }
 
@@ -249,7 +249,7 @@ public class TrainSim {
         double totaltime = parameters.numHours * 60;
         for (Operator each : operators) {
             while (each.getQueue().getfinTime() < totaltime) {
-                each.getQueue().done(trainID);
+                each.getQueue().done();
             }
         }
 
