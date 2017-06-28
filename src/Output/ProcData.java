@@ -37,8 +37,8 @@ public class ProcData {
 		trim(time);
 		//System.out.println(load());
 		outpututilization(you, time, trainID);
-        //debug();
-    }
+		debug();
+	}
 
 	public void trim(double time) {
 
@@ -85,30 +85,30 @@ public class ProcData {
 
 				if (i > endscale) {
 
-					if (i - 1 < beginscale) {
 						percBusy = each.getSerTime() / 10;
 
 						who.getUtilization().datainc(each.getType(), i - 1, trainID, percBusy);
 
-					} else {
-						percBusy = endscale - i;
-
-						who.getUtilization().datainc(each.getType(), i - 1, trainID, percBusy);
-
-					}
 
 				} else {
 
                     if (i > beginscale) {
                         percBusy = i - beginscale;
-
                         who.getUtilization().datainc(each.getType(), i - 1, trainID, percBusy);
+						percBusy = endscale - i;
+						who.getUtilization().datainc(each.getType(), i, trainID, percBusy);
 
                     }
 
                     i = endINT;
-                }
-            }
+
+					percBusy = each.getSerTime() / 10;
+
+					who.getUtilization().datainc(each.getType(), i - 1, trainID, percBusy);
+
+
+				}
+			}
 
 
 		who.getUtilization().avgdata();
