@@ -25,6 +25,7 @@ public class Operator {
 
 
 	private Data utilization;
+	private Data output;
 	//private Data expiredtask;
 	//private Data taskin;
 	//private Data taskout;
@@ -45,6 +46,10 @@ public class Operator {
 
 	public Data getUtilization() {
 		return this.utilization;
+	}
+
+	public Data getOutput() {
+		return this.output;
 	}
 
 	/*public Data getExpiredtask() {
@@ -82,6 +87,7 @@ public class Operator {
 		int i = (int) parameters.numHours * 6;
 
 		utilization = new Data(parameters.numTaskTypes, i, param.numTrains);
+		output = new Data(parameters.numTaskTypes, i, param.numReps);
 		//expiredtask = new Data(parameters.numTaskTypes, i + 1, param.numTrains);
 		//taskin = new Data(parameters.numTaskTypes, i + 1, param.numTrains);
 		//taskout = new Data(parameters.numTaskTypes, i + 1, param.numTrains);
@@ -95,7 +101,8 @@ public class Operator {
 	 *
 	 ****************************************************************************/
 
-	public Operator(int dpid, int[] task, double numHours, int numTrains, int tasktype) {
+	public Operator(int dpid, int[] task, double numHours, int numTrains,
+					int tasktype, int numReps) {
 
 
 		taskType = task;
@@ -105,6 +112,7 @@ public class Operator {
 		int i = (int) numHours * 6;
 
 		utilization = new Data(tasktype, i, numTrains);
+		output = new Data(tasktype, i, numReps);
 		//expiredtask = new Data(taskType.length, i + 1, numTrains);
 		//taskin = new Data(taskType.length, i + 1, numTrains);
 		//taskout = new Data(taskType.length, i + 1, numTrains);

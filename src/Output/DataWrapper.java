@@ -7,6 +7,7 @@ import Engine.Dispatch;
 import Engine.Operator;
 import Engine.Simulation;
 import Engine.TrainSim;
+import Input.loadparam;
 
 /***************************************************************************
  *
@@ -24,11 +25,16 @@ import Engine.TrainSim;
 
 public class DataWrapper {
 
+    public loadparam parameter;
+
     private Simulation once;
 
     private Dispatch here;
 
     private TrainSim[] there;
+
+    private Simulation[] where;
+
 
     private String file_name;
 
@@ -43,31 +49,38 @@ public class DataWrapper {
 
     }
 
-    public void generate() throws IOException {
-
-        Operator[] dispatchers = here.getDispatch();
+    public void generate(loadparam param) throws IOException {
 
 
-        for (TrainSim each : there) {
+        where = new Simulation[param.numReps];
 
-            for (Operator such : dispatchers) {
-                file_name = "/Users/erinsong/Documents/shadojava/out/" + such.name + ".csv";
-                System.setOut(new PrintStream(new BufferedOutputStream(new FileOutputStream(file_name)), true));
-                new ProcData(such.getQueue().records()).run(once.getTime(), such, each.getTrainID());
-            }
+        for (int i = 0; i < param.numReps; i++) {
 
 
+            Operator[] dispatchers = here.getDispatch();
 
-            Operator[] operators = each.operators;
+
+            for (TrainSim each : there) {
+
+                for (Operator such : dispatchers) {
+                    file_name = "/Users/erinsong/Documents/shadojava/out/" + such.name + ".csv";
+                    System.setOut(new PrintStream(new BufferedOutputStream(new FileOutputStream(file_name)), true));
+                    new ProcData(such.getQueue().records()).run(once.getTime(), such,
+                            each.getTrainID(), i);
+                }
 
 
-            for (Operator him : operators) {
+                Operator[] operators = each.operators;
 
-                file_name = "/Users/erinsong/Documents/shadojava/out/" + him.name + ".csv";
 
-                System.setOut(new PrintStream(new BufferedOutputStream(new FileOutputStream(file_name, true)), true));
-                //System.out.println("for train " + each.trainID);
-                new ProcData(him.getQueue().records()).run(once.getTime(), him, each.getTrainID());
+                for (Operator him : operators) {
+
+                    file_name = "/Users/erinsong/Documents/shadojava/out/" + him.name + ".csv";
+
+                    System.setOut(new PrintStream(new BufferedOutputStream(new FileOutputStream(file_name, true)), true));
+                    //System.out.println("for train " + each.trainID);
+                    new ProcData(him.getQueue().records()).run(once.getTime(), him,
+                            each.getTrainID(), i);
 
 
             }
@@ -75,4 +88,5 @@ public class DataWrapper {
 
     }
 
+    }
 }

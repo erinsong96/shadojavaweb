@@ -6,7 +6,8 @@ public class Simulation {
 
 	private loadparam parameters;
 
-	private ArrayList<ArrayList<Task>> results;
+
+    private ArrayList<ArrayList<Task>> results;
 
 	private ArrayList<Task> linked;
 
@@ -30,15 +31,13 @@ public class Simulation {
         return totaltime;
     }
 
+
     public Simulation(loadparam param) {
         parameters = param;
         totaltime = parameters.numHours * 60;
+
     }
 
-    public void getrec() {
-
-
-	}
 
     public void run() {
 

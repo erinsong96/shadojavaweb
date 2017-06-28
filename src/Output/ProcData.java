@@ -33,10 +33,10 @@ public class ProcData {
 		Dataset = thisone;
 	}
 
-	public void run(double time, Operator you, int trainID) {
+	public void run(double time, Operator you, int trainID, int rep) {
 		trim(time);
 		//System.out.println(load());
-		outpututilization(you, time, trainID);
+		outpututilization(you, time, trainID, rep);
 		debug();
 	}
 
@@ -65,7 +65,7 @@ public class ProcData {
 		
 	}
 
-	public void outpututilization(Operator who, double time, int trainID) {
+	public void outpututilization(Operator who, double time, int trainID, int rep) {
 
         int i = 1;
 
@@ -112,14 +112,12 @@ public class ProcData {
 
 
 		who.getUtilization().avgdata();
+
 		// was in the process of debugging
-		for (double[] x : who.getUtilization().avg) {
-			for (double y : x) {
-
-				System.out.print(y + ",");
-
+		for (int x = 0; x < who.getUtilization().avg.length; x++) {
+			for (int y = 0; y < who.getUtilization().avg[x].length; y++) {
+				who.getOutput().datainc(x, y, i, who.getUtilization().avgget(x, y));
 			}
-			System.out.println();
 		}
 
 	}
