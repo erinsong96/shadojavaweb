@@ -75,7 +75,7 @@ public class DataWrapper {
 
                 for (Operator him : operators) {
 
-                    file_name = "/Users/erinsong/Documents/shadojava/out/" + him.name + ".csv";
+                    file_name = "/Users/erinson g/Documents/shadojava/out/" + him.name + ".csv";
 
                     System.setOut(new PrintStream(new BufferedOutputStream(new FileOutputStream(file_name, true)), true));
                     //System.out.println("for train " + each.trainID);
@@ -88,5 +88,9 @@ public class DataWrapper {
 
     }
 
+    }
+
+    public void process(loadparam param) throws IOException {
+        // I'm going to call in run 
     }
 }
