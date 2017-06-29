@@ -23,9 +23,9 @@ public class Main {
 		Simulation once = new Simulation(data);
 		once.run();
 
-		DataWrapper analyze = new DataWrapper(once);
-		analyze.read();
-        analyze.generate(data);
+        DataWrapper analyze = new DataWrapper(once, data);
+        analyze.read();
+        analyze.generate();
 
 	}
 
