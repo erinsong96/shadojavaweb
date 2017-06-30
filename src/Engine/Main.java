@@ -24,7 +24,6 @@ public class Main {
 		once.run();
 
         DataWrapper analyze = new DataWrapper(once, data);
-        analyze.read();
         analyze.generate();
 
 	}

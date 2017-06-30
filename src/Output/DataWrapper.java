@@ -31,9 +31,7 @@ public class DataWrapper {
     private Simulation where;
 
 
-    private Dispatch[] here;
-
-    private TrainSim[][] there;
+    private Replication what;
 
 
     private String file_name;
@@ -41,31 +39,21 @@ public class DataWrapper {
     public DataWrapper(Simulation o, loadparam param) {
         parameter = param;
         where = o;
-        here = new Dispatch[parameter.numReps];
-        there = new TrainSim[parameter.numReps][parameter.numTrains];
     }
 
-    public void read() {
 
-        for (Replication each : where.getCompletesimulation()) {
-
-            here[each.getRepID()] = each.getDispatch();
-            there[each.getRepID()] = each.getTrains();
-
-        }
-    }
 
     public void generate() throws IOException {
 
 
         for (int i = 0; i < where.getCompletesimulation().length; i++) {
 
+            what = where.getCompletesimulation()[i];
 
-            Operator[] dispatchers = here[i].getDispatch();
+            Dispatch dispatch = what.getDispatch();
+            Operator[] dispatchers = dispatch.getDispatch();
 
-
-            for (TrainSim each : there[i]) {
-
+            for (TrainSim each : what.getTrains()) {
                 for (Operator such : dispatchers) {
                     file_name = "/Users/erinsong/Documents/shadojava/out/" + such.name + ".csv";
                     System.setOut(new PrintStream(new BufferedOutputStream(new FileOutputStream(file_name)), true));
