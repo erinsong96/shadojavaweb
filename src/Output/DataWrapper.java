@@ -56,7 +56,8 @@ public class DataWrapper {
             for (TrainSim each : what.getTrains()) {
                 for (Operator such : dispatchers) {
                     file_name = "/Users/erinsong/Documents/shadojava/out/" + such.name + ".csv";
-                    System.setOut(new PrintStream(new BufferedOutputStream(new FileOutputStream(file_name)), true));
+                    System.setOut(new PrintStream(new BufferedOutputStream(
+                            new FileOutputStream(file_name)), true));
                     new ProcData(such.getQueue().records()).store(where.getCompletesimulation()[i].getTime(), such,
                             each.getTrainID());
                     new ProcData(such.getQueue().records()).run(such,
@@ -72,7 +73,8 @@ public class DataWrapper {
 
                     file_name = "/Users/erinsong/Documents/shadojava/out/" + him.name + ".csv";
 
-                    System.setOut(new PrintStream(new BufferedOutputStream(new FileOutputStream(file_name)), true));
+                    System.setOut(new PrintStream(
+                            new BufferedOutputStream(new FileOutputStream(file_name)), true));
                     //System.out.println("for train " + each.trainID);
                     new ProcData(him.getQueue().records()).store(where.getCompletesimulation()[i].getTime(), him,
                             each.getTrainID());
