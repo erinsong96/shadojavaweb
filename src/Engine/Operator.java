@@ -20,12 +20,13 @@ import Input.loadparam;
 public class Operator {
 
 	public int opId;
+	public int dpId;
 	public String name;
 	public int[] taskType;
 
 
 	private Data utilization;
-	private Data output;
+	//private Data output;
 	//private Data expiredtask;
 	//private Data taskin;
 	//private Data taskout;
@@ -48,9 +49,7 @@ public class Operator {
 		return this.utilization;
 	}
 
-	public Data getOutput() {
-		return this.output;
-	}
+
 
 	/*public Data getExpiredtask() {
 		return this.expiredtask;
@@ -87,7 +86,7 @@ public class Operator {
 		int i = (int) parameters.numHours * 6;
 
 		utilization = new Data(parameters.numTaskTypes, i, param.numTrains);
-		output = new Data(parameters.numTaskTypes, i, param.numReps);
+		//output = new Data(parameters.numTaskTypes, i, param.numReps);
 		//expiredtask = new Data(parameters.numTaskTypes, i + 1, param.numTrains);
 		//taskin = new Data(parameters.numTaskTypes, i + 1, param.numTrains);
 		//taskout = new Data(parameters.numTaskTypes, i + 1, param.numTrains);
@@ -106,13 +105,14 @@ public class Operator {
 
 
 		taskType = task;
+		dpId = dpid;
 		name = "Dispatcher " + Integer.toString(dpid);
 		myQueue = new Queue();
 
 		int i = (int) numHours * 6;
 
 		utilization = new Data(tasktype, i, numTrains);
-		output = new Data(tasktype, i, numReps);
+		//output = new Data(tasktype, i, numReps);
 		//expiredtask = new Data(taskType.length, i + 1, numTrains);
 		//taskin = new Data(taskType.length, i + 1, numTrains);
 		//taskout = new Data(taskType.length, i + 1, numTrains);

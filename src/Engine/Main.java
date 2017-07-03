@@ -25,6 +25,7 @@ public class Main {
 
         DataWrapper analyze = new DataWrapper(once, data);
         analyze.generate();
+		analyze.output();
 
 	}
 

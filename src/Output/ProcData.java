@@ -6,6 +6,7 @@ import java.util.*;
 import Engine.Data;
 import Engine.Operator;
 import Engine.Task;
+import Engine.Simulation;
 import Input.loadparam;
 
 /***************************************************************************
@@ -33,17 +34,13 @@ public class ProcData {
 		Dataset = thisone;
 	}
 
-	public void store(double time, Operator you, int trainID) {
+	public void store(double time, Operator you, int trainID, Simulation o, int repID) {
 		trim(time);
 		outpututilization(you, time, trainID);
+		output(you, o, repID);
 
 	}
 
-	public void run(Operator you, int rep) {
-		//System.out.println(load());
-		output(you, rep);
-		//debug();
-	}
 
 	public void trim(double time) {
 
@@ -127,17 +124,26 @@ public class ProcData {
 
 	}
 
-	public void output(Operator who, int rep) {
+	public void output(Operator who, Simulation o, int rep) {
+		Data data;
+		if (who.name.contains("Dispatcher")) {
+			data = o.getDispatchoutput(who.dpId);
+		} else {
+			data = o.getOperatoroutput(who.opId);
+		}
 
 		for (int x = 0; x < who.getUtilization().avg.length; x++) {
 			for (int y = 0; y < who.getUtilization().avg[x].length; y++) {
-				who.getOutput().datainc(x, y, rep, who.getUtilization().avgget(x, y));
+				data.datainc(x, y, rep, who.getUtilization().avgget(x, y));
+
 			}
 		}
 
-		who.getOutput().avgdata();
+		data.avgdata();
 
-		for (double[] x : who.getOutput().avg) {
+
+
+		/*for (double[] x : who.getOutput().avg) {
 			for (double y : x) {
 
 				System.out.print(y + ",");
@@ -145,7 +151,7 @@ public class ProcData {
 			}
 			System.out.println();
 
-		}
+		}*/
 	}
 
 

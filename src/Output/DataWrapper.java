@@ -45,7 +45,6 @@ public class DataWrapper {
 
     public void generate() throws IOException {
 
-
         for (int i = 0; i < where.getCompletesimulation().length; i++) {
 
             what = where.getCompletesimulation()[i];
@@ -55,35 +54,43 @@ public class DataWrapper {
 
             for (TrainSim each : what.getTrains()) {
                 for (Operator such : dispatchers) {
-                    file_name = "/Users/erinsong/Documents/shadojava/out/" + such.name + ".csv";
-                    System.setOut(new PrintStream(new BufferedOutputStream(
-                            new FileOutputStream(file_name)), true));
+
                     new ProcData(such.getQueue().records()).store(where.getCompletesimulation()[i].getTime(), such,
-                            each.getTrainID());
-                    new ProcData(such.getQueue().records()).run(such,
-                            i);
+                            each.getTrainID(), where, i);
 
                 }
-
 
                 Operator[] operators = each.operators;
 
 
                 for (Operator him : operators) {
 
-                    file_name = "/Users/erinsong/Documents/shadojava/out/" + him.name + ".csv";
 
-                    System.setOut(new PrintStream(
-                            new BufferedOutputStream(new FileOutputStream(file_name)), true));
-                    //System.out.println("for train " + each.trainID);
                     new ProcData(him.getQueue().records()).store(where.getCompletesimulation()[i].getTime(), him,
-                            each.getTrainID());
-                    new ProcData(him.getQueue().records()).run(him,
-                            i);
+                            each.getTrainID(), where, i);
 
 
                 }
             }
+
+        }
+
+    }
+
+    public void output() throws IOException {
+
+        for (int i = 0; i < parameter.numDispatch; i++) {
+            file_name = "/Users/erinsong/Documents/shadojava/out/" + "Dispatcher" + i + ".csv";
+            System.setOut(new PrintStream(new BufferedOutputStream(
+                    new FileOutputStream(file_name, true)), true));
+            where.getDispatchoutput(i).outputdata();
+        }
+
+        for (int j = 0; j < parameter.numOps; j++) {
+            file_name = "/Users/erinsong/Documents/shadojava/out/" + parameter.opNames[j] + ".csv";
+            System.setOut(new PrintStream(new BufferedOutputStream(
+                    new FileOutputStream(file_name, true)), true));
+            where.getOperatoroutput(j).outputdata();
 
         }
 

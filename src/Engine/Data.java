@@ -94,5 +94,16 @@ public class Data {
 
     }
 
+    public void outputdata() {
+
+        for (double[] x : this.avg) {
+            for (double y : x) {
+                System.out.print(y + ",");
+            }
+            System.out.println();
+
+        }
+    }
+
 
 }
