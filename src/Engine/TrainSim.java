@@ -32,6 +32,10 @@ public class TrainSim {
 
     public ArrayList<Task> tasktime;
 
+    public int getTrainID() {
+        return trainID;
+    }
+
     // Inspectors
 
     public double getTotalTime() {
@@ -171,11 +175,15 @@ public class TrainSim {
 
         ArrayList<Queue> proc = new ArrayList<Queue>();
 
+        ArrayList<Operator> working = new ArrayList<>(proc.size());
+
         // If the task can be operated by this operator, get his queue.
 
         for (int i = 0; i < operators.length; i++) {
             if (IntStream.of(operators[i].taskType).anyMatch(x -> x == task.getType())) {
                 proc.add(operators[i].getQueue());
+                working.add(operators[i]);
+
             }
         }
 
@@ -192,6 +200,9 @@ public class TrainSim {
 
         // add task to queue.
 
+
+        // **** I'm setting the operator so that we can access the data arrays of each operator ****
+        proc.get(0).operator = working.get(0);
         proc.get(0).add(task);
 
     }

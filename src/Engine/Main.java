@@ -6,7 +6,7 @@ import java.io.*;
 
 public class Main {
 
-	public static void main(String[] args) throws FileNotFoundException{
+	public static void main(String[] args) throws IOException {
 
 
 		// LOAD the parameter file.
@@ -23,9 +23,9 @@ public class Main {
 		Simulation once = new Simulation(data);
 		once.run();
 
-		DataWrapper analyze = new DataWrapper(once);
-		analyze.read();
+		DataWrapper analyze = new DataWrapper(once, data);
 		analyze.generate();
+		analyze.output();
 
 	}
 

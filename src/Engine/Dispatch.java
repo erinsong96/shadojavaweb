@@ -162,10 +162,10 @@ public class Dispatch {
 
 		for (int i = 0; i < parameters.numDispatch; i++) {
 
-			dispatchers[i] = new Operator(i, parameters.DispatchTasks);
-
+			dispatchers[i] = new Operator(i, parameters.DispatchTasks,
+					parameters.numHours, parameters.numTrains,
+					parameters.numTaskTypes, parameters.numReps);
 		}
-
 	}
 
 	/****************************************************************************
@@ -186,16 +186,16 @@ public class Dispatch {
 			proctasks.addAll(dispatcher.getQueue().records());
 		}
 		for (Task each : proctasks) {
-            if (each.checkexpired() == false) {
-                if (each.linked()) {
-                    totrain.add(each);
-                }
-            }
+			if (each.checkexpired() == false) {
+				if (each.linked()) {
+					totrain.add(each);
+				}
+			}
 		}
 	}
 
 
-    /****************************************************************************
+	/****************************************************************************
 	 *
 	 *	Main Method:	run
 	 *

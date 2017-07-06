@@ -45,6 +45,7 @@ public class ProcData {
 	public void countExpired(Simulation o) {
 		for (Task each : Dataset) {
 			if (each.checkexpired() == true) {
+
 				o.getExpiredtaskinc(each.getType(), 1);
 			} else {
 				o.getCompletedtaskinc(each.getType(), 1);
@@ -140,7 +141,7 @@ public class ProcData {
 	public void output(Operator who, Simulation o, int rep) {
 		Data data;
 		if (who.name.contains("Dispatcher")) {
-			data = o.getDispatchoutput(who.dpId);
+			data = o.getDispatchoutput(who.dpID);
 		} else {
 			data = o.getOperatoroutput(who.opId);
 		}
