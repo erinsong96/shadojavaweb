@@ -35,10 +35,21 @@ public class ProcData {
 	}
 
 	public void store(double time, Operator you, int trainID, Simulation o, int repID) {
+		countExpired(o);
 		trim(time);
 		outpututilization(you, time, trainID);
 		output(you, o, repID);
 
+	}
+
+	public void countExpired(Simulation o) {
+		for (Task each : Dataset) {
+			if (each.checkexpired() == true) {
+				o.getExpiredtaskinc(each.getType(), 1);
+			} else {
+				o.getCompletedtaskinc(each.getType(), 1);
+			}
+		}
 	}
 
 
@@ -46,12 +57,14 @@ public class ProcData {
 
 		ArrayList<Task> newset = new ArrayList<Task>();
 		for (Task each : Dataset) {
-			if (each.getEndTime() < time) {
-				newset.add(each);
+			if (each.checkexpired() == false) {
+				if (each.getEndTime() < time) {
+					newset.add(each);
+				}
 			}
 		}
+
 		Dataset = newset;
-		
 	}
 	
 	public double load(){

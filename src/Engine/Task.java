@@ -34,6 +34,7 @@ public class Task implements Comparable<Task> {
 	private loadparam parameters;
 	private String name;
 	private int trainID;
+	private boolean expired;
 
 	// This adds functionalities of the Dispatcher
 
@@ -44,6 +45,13 @@ public class Task implements Comparable<Task> {
 	private int queued;
 
 // Mutators
+public boolean checkexpired() {
+	return expired;
+}
+
+	public void setexpired() {
+		expired = true;
+	}
 
 	public void setELStime (double time){
 		elapsedTime = time;
@@ -92,6 +100,7 @@ public class Task implements Comparable<Task> {
 		name = parameters.taskNames[Type];
 		isLinked = parameters.linked[Type] == 1;
 		elapsedTime = 0;
+		expired = false;
 	}
 
 	/****************************************************************************

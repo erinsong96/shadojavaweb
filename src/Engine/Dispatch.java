@@ -186,14 +186,16 @@ public class Dispatch {
 			proctasks.addAll(dispatcher.getQueue().records());
 		}
 		for (Task each : proctasks) {
-			if (each.linked()) {
-				totrain.add(each);
-			}
+            if (each.checkexpired() == false) {
+                if (each.linked()) {
+                    totrain.add(each);
+                }
+            }
 		}
-
 	}
 
-	/****************************************************************************
+
+    /****************************************************************************
 	 *
 	 *	Main Method:	run
 	 *

@@ -7,6 +7,8 @@ public class Simulation {
 
 	private loadparam parameters;
 
+    private int[] expiredtaskcount;
+    private int[] completedtaskcount;
     private Data[] operatoroutput;
     private Data[] dispatchoutput;
     private int repnumber;
@@ -31,8 +33,25 @@ public class Simulation {
         for (int i = 0; i < param.numDispatch; i++) {
             dispatchoutput[i] = new Data(param.numTaskTypes, (int) param.numHours * 6, param.numReps);
         }
+        expiredtaskcount = new int[param.numTaskTypes];
+        completedtaskcount = new int[param.numTaskTypes];
     }
 
+    public int[] getExpiredtask() {
+        return expiredtaskcount;
+    }
+
+    public int[] getCompletedtaskcount() {
+        return completedtaskcount;
+    }
+
+    public int getCompletedtaskinc(int i, int j) {
+        return completedtaskcount[i] += j;
+    }
+
+    public int getExpiredtaskinc(int i, int j) {
+        return expiredtaskcount[i] += j;
+    }
 
     public Data getOperatoroutput(int i) {
         return operatoroutput[i];

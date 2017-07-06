@@ -94,6 +94,17 @@ public class DataWrapper {
 
         }
 
+        for (int k = 0; k < parameter.numTaskTypes; k++) {
+            file_name = "/Users/erinsong/Documents/shadojava/out/" + "expiredtask" + ".csv";
+            System.setOut(new PrintStream(new BufferedOutputStream(
+                    new FileOutputStream(file_name, true)), true));
+
+            System.out.println("expired" + where.getExpiredtask()[k]);
+            System.out.println("completed" + where.getCompletedtaskcount()[k]);
+
+        }
     }
 
-}
+    }
+
+

@@ -173,7 +173,9 @@ public class Queue implements Comparable<Queue>{
             if (taskqueue.peek().getExpTime() > time) {
                 break;
             }
-            taskqueue.poll(); // <- expired task removal ** increment the number of expired tasks here
+            taskqueue.peek().setexpired();
+            recordtasks.add(taskqueue.poll());
+            //taskqueue.poll(); // <- expired task removal ** increment the number of expired tasks here
 
         }
 
