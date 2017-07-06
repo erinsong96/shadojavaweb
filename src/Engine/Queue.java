@@ -23,7 +23,10 @@ public class Queue implements Comparable<Queue>{
 
     // Operator ID.
 
+    public Operator operator;
+
     public int opId;
+
 
     // Set the time to move forward with general time. (Tracer variable)
 
@@ -61,6 +64,10 @@ public class Queue implements Comparable<Queue>{
 
     public boolean getStatus() {
         return isBusy;
+    }
+
+    private int timeint() {
+        return (int) time / 10;
     }
 
     // Mutator:
@@ -110,6 +117,12 @@ public class Queue implements Comparable<Queue>{
         }
         taskqueue.add(task);
 
+        // work added update of tasks in!!
+
+
+        //operator.getTaskin().datainc(task.getType(), timeint(), trainId, 1);
+
+
         // If the task is processed as first priority, i.e. began immediately, then:
 
         if (taskqueue.peek().equals(task)) {
@@ -146,7 +159,7 @@ public class Queue implements Comparable<Queue>{
 
             taskqueue.peek().setELStime(taskqueue.peek().getSerTime());
 
-            // Remove the finished task from the queue and put it into recordtask list.
+            // Remove the finished task from the queue and put it into record task list.
 
             recordtasks.add(taskqueue.poll());
 
@@ -160,10 +173,21 @@ public class Queue implements Comparable<Queue>{
             if (taskqueue.peek().getExpTime() > time) {
                 break;
             }
-            taskqueue.poll();
+            taskqueue.peek().setexpired();
+            recordtasks.add(taskqueue.poll());
+            //taskqueue.poll(); // <- expired task removal ** increment the number of expired tasks here
+
         }
 
         if (taskqueue.peek() != null) {
+
+            // before beginning a new task using the current time I will want to update utilization
+
+            //updateUtil(taskqueue.peek().getBeginTime(), taskqueue.peek().getType(),
+            //trainId, time);
+
+            // increment the work done
+            //operator.getTaskout().datainc(taskqueue.peek().getType(), timeint(), trainId, 1);
 
             // Set the beginTime of the Task in question to now, i.e. begin working on this task.
 
@@ -222,4 +246,6 @@ public class Queue implements Comparable<Queue>{
             isBusy = true;
         }
     }
+
+
 }
