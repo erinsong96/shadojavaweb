@@ -207,6 +207,8 @@ public boolean checkexpired() {
 		double normal = rng.nextGaussian();
 		double l = mean + stddev*normal;
 
+        l = Math.exp(l);
+
 		return l;
 
 	}
