@@ -86,7 +86,12 @@ public boolean checkexpired() {
 		Type = type;
 		parameters = Param;
 		prevTime = PrevTime;
-		Phase = getPhase(PrevTime, parameters.numHours);
+		if (parameters.arrPms[type][0] != 0) {
+			Phase = getPhase(PrevTime, parameters.numHours);
+		} else {
+			Phase = getPhase(31, parameters.numHours);
+		}
+
 		Priority = Param.taskPrty[Type][Phase];
 		if (fromPrev == true) {
 			arrTime = genArrTime(PrevTime);
@@ -205,9 +210,7 @@ public boolean checkexpired() {
 
 		Random rng = new Random();
 		double normal = rng.nextGaussian();
-		double l = mean + stddev*normal;
-
-        l = Math.exp(l);
+		double l = Math.exp(mean + stddev * normal);
 
 		return l;
 
