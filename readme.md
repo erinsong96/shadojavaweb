@@ -1,11 +1,12 @@
-This is the java version of SHOW
+This is the java web version of SHOW
 
-CREATOR: ROCKY LI
+CREATOR: ERIN SONG, ANDY WANG, ROHINI SHARMA
 
-SOURCE CODE LOGIC: BRANCH VINCENT
+SOURCE CODE JAVA: ROCKY LI
 
-DATE CREATED: 5/21/2017
+SOURCE CODE LOGIC:BRANCH VINCENT
 
-LAST EDIT DATE: 5/22/2017
+DATE CREATED: 7/18/2017
 
-Currently, I'm working on getting SHOW(shado/master) translated.
+
+Currently, we are working on building the translated SHADOW into a java web-app
